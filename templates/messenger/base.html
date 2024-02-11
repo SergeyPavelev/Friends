@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+
+    <nav class="sidebar">
+        <div class="logo-menu">
+            <h2 class="logo">Friends.com</h2>
+            <i class="bx bx-menu toggle-btn"></i>
+        </div>
+
+        <ul class="list">
+            {% if request.user.is_authenticated %}
+            <li class="list-item active">
+                <a href="#">
+                    <i class="bx bx-user"></i>
+                    <span class="link-name" style="--i:1;">{{ username }}</span>
+                </a>
+            </li>
+                <li class="list-item active">
+                    <a href="{% url 'auth:logout' %}">
+                        <i class='bx bx-log-out'></i>
+                        <span class="link-name" style="--i:2;">Logout</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="list-item active">
+                    <a href="{% url 'auth:login' %}">
+                        <i class='bx bx-log-in'></i>
+                        <span class="link-name" style="--i:1;">Login</span>
+                    </a>
+                </li>
+            {% endif %}
+            <li class="list-item">
+                <a href="{% url 'messenger:messenger' %}">
+                    <i class="bx bx-chat"></i>
+                    <span class="link-name" style="--i:3;">Messages</span>
+                </a>
+            </li>
+            <li class="list-item">
+                <a href="#">
+                    <i class="bx bx-cog"></i>
+                    <span class="link-name" style="--i:4;">Settings</span>
+                </a>
+            </li>
+            {% if request.user.is_superuser %}
+                <li class="list-item">
+                    <a href="/admin/">
+                        <i class='bx bx-user-circle'></i>
+                        <span class="link-name" style="--i:4;">Admin-page</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            <br>
+
+            {% for user in users %}
+                <li class="list-item">
+                    <a href="{% url 'messenger:send_message' reciever_id=user.id %}">
+                        <i class='bx bx-smile'></i>
+                        <span class="link-name" style="--i:6;">{{ user.username }}</span>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+    <div id="chatbox">
+        {% block  content %}
+        {% endblock %}
+    </div>
+
+
+    <script src="{% static 'js/script-for-messages.js' %}"></script>
+</body>
+
+</html>

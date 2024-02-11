@@ -1,0 +1,27 @@
+{% extends 'register/base.html' %}
+
+{% block content %}
+    <form action="{% url 'auth:login' %}" method="post">
+        {% csrf_token %}
+        <h1>Login</h1>
+        <div class="input-box">
+            {{ form.username }}
+            <i class="bx bxs-user"></i>
+        </div>
+
+        <div class="input-box">
+            {{ form.password }}
+            <i class='bx bxs-lock-alt'></i>
+        </div>
+
+        <div class="remember-forgot">
+            <a href="#">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn">Login</button>
+
+        <div class="register-link">
+            <p>Don't have an account? <a href="{% url 'auth:register' %}">Register</a></p>
+        </div>
+    </form>
+{% endblock %}

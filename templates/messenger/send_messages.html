@@ -1,0 +1,30 @@
+{% extends 'messenger/base.html' %}
+
+{% block content %}
+    <div id="reciever-name">
+        <h2>{{ reciever }}</h2>
+    </div>
+    <div id="messages">
+        <ul>
+            {% for message in messages_in_room %}
+                {% if message.sender == request.user %}
+                    <div class="div-message-sender">
+                        <li class="message-sender">{{ message.sender }}: {{ message.text_message }}</li>
+                    </div>
+                {% else %}
+                    <div class="div-message-reciever">
+                        <li class="message-reciever">{{ message.sender }}: {{ message.text_message }}</li>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <form id="messageForm" action="{% url 'messenger:send_message' reciever_id=reciever_id %}" method="post">
+        {% csrf_token %}
+        {{ form.textarea }}
+        <button type="submit">
+            <i class='bx bx-send'></i>
+        </button>
+    </form>
+{% endblock %}

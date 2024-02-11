@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <header class="header">
+        <a href="#" class="logo">Friends.com</a>
+
+        <div class="social-media">
+            <a href="#">
+                <i class="bx bxl-twitter"></i>
+            </a>
+            <a href="#">
+                <i class="bx bxl-facebook"></i>
+            </a>
+            <a href="#">
+                <i class="bx bxl-telegram"></i>
+            </a>
+            <a href="#">
+                <i class="bx bxl-instagram-alt"></i>
+            </a>
+        </div>
+
+        <nav class="navbar">
+            <a href="#">Destinations</a>
+            <a href="#">Booking</a>
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <section class="banner">
+        <div class="slider">
+            <div class="slide">
+                <div class="left-info">
+                    <div class="penetrate-blur">
+                        <h1>Friends</h1>
+                    </div>
+                    <div class="content">
+                        <h3>01. Friedns.com - New Social Network</h3>
+                        <p>
+                            Friends.com - это новая социальная сеть, которая стремится стать номером 1 в списке социальных сетей.
+                            Она предлагает возможность общаться и переписываться друг с другом. Friends.com предлагает ряд функций,
+                            которые делают ее привлекательной для пользователей. Friends.com стремится предоставить пользователям
+                            удобную и безопасную платформу для общения и обмена информацией. Она предлагает множество функций,
+                            которые делают ее привлекательной для пользователей, и стремится стать лидером среди социальных сетей.
+                        </p>
+                        {% if request.user.is_authenticated %}
+                            <a href="{% url 'messenger:messenger' %}" class="btn">Messager</a>
+                        {% else %}
+                            <a href="{% url 'auth:login' %}" class="btn">Messager</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="right-info">
+                    <h1>.com</h1>
+                    <h3>Social Network</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% extends 'register/base.html' %}
+
+{% block content %}
+    <form action="{% url 'auth:register' %}" method="post">
+        {% csrf_token %}
+        <h1>Register</h1>
+        <div class="input-box">
+            {{ form.phone }}
+            <i class='bx bxs-phone'></i>
+        </div>
+
+        <div class="input-box">
+            {{ form.username }}
+            <i class="bx bxs-user"></i>
+        </div>
+
+        <div class="input-box">
+            {{ form.birthday }}
+            <i class='bx bxs-gift'></i>
+        </div>
+
+        <div class="input-box">
+            {{ form.password1 }}
+            <i class='bx bxs-lock-alt'></i>
+        </div>
+
+        <div class="input-box">
+            {{ form.password2 }}
+            <i class='bx bx-repeat'></i>
+        </div>
+
+        <button type="submit" class="btn">Register</button>
+
+        <div class="register-link">
+            <p>Do you have an account? <a href="{% url 'auth:login' %}">Login</a></p>
+        </div>
+    </form>
+{% endblock %}

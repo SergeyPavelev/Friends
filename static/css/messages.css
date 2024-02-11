@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: url('/static/img/background-for-messages2.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 80px;
+    height: 100%;
+    background: transparent;
+    backdrop-filter: blur(40px);
+    border-right: 2px solid rgba(255, 255, 255, .2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    padding: 6px 14px;
+    transition: .5s;
+}
+
+.sidebar.active {
+    width: 260px;
+}
+
+.sidebar .logo-menu {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 70px;
+}
+
+.sidebar .logo-menu .logo {
+    font-size: 25px;
+    color: #000;
+    pointer-events: none;
+    opacity: 0;
+    transition: .3s;
+}
+
+.sidebar.active .logo-menu .logo {
+    opacity: 1;
+    transition-delay: .2s;
+}
+
+.sidebar .logo-menu .toggle-btn {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+    color: #000;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.sidebar.active .logo-menu .toggle-btn {
+    left: 90%;
+}
+
+.sidebar .list {
+    margin-top: 10px;
+}
+
+.list .list-item {
+    list-style: none;
+    width: 100%;
+    height: 50px;
+    margin: 5px 0;
+    line-height: 50px;
+}
+
+.list .list-item a {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: #000;
+    text-decoration: none;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: .5s;
+}
+
+.list .list-item.active a,
+.list .list-item a:hover {
+    background: rgba(255, 255, 255, .2);
+}
+
+.list .list-item a i {
+    min-width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+}
+
+.sidebar .link-name {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s;
+}
+
+.sidebar.active .link-name {
+    opacity: 1;
+    pointer-events: auto;
+    transition-delay: calc(.1s * var(--i));
+}
+
+
+
+
+
+
+#chatbox {
+    position: absolute;
+    display: block;
+    width: 55%;
+    height: 95%;
+    border: 1px solid #000;
+    border-radius: 5px;
+    margin: auto auto;
+    padding: 5px;
+    backdrop-filter: blur(40px);
+}
+
+#reciever-name {
+    margin: 10px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#messages {
+    overflow-y: auto;
+    padding: 10px;
+    max-height: calc(100vh - 200px);
+    overflow-y: scroll;
+}
+
+#chatbox .div-message-sender {
+    margin: 5px;
+    width: 30%;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-radius: 5px;
+    background: #436dc9;
+    box-shadow: 0 0 2px rgba(0, 0, 0, .2);
+}
+
+#chatbox .div-message-reciever {
+    margin: 5px;
+    width: 30%;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-radius: 5px;
+    /* background: #0d6ecf; */
+    background: #25b5bf;
+    box-shadow: 0 0 2px rgba(0, 0, 0, .2);
+}
+
+#chatbox .message-sender {
+    padding: 5px;
+    display: block;
+    list-style: none;
+    word-wrap: break-word;
+}
+
+#chatbox .message-reciever {
+    padding: 5px;
+    display: block;
+    list-style: none;
+    word-wrap: break-word;
+}
+
+#messageForm {
+    display: flex;
+    justify-content: space-between;
+}
+
+#messageForm textarea {
+    margin: 0 0 10px 15px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 85%;
+    height: 5%;
+    resize: none;
+    border-radius: 5px;
+}
+
+#messageForm button[type="submit"] {
+    margin: 0 15px 10px 0;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 10%;
+    height: 5%;
+    border-radius: 5px;
+    transition: .3s;
+}
+
+#messageForm button[type="submit"]:hover {
+    background: #878686;
+}
