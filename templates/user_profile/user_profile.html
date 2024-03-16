@@ -1,0 +1,31 @@
+{% extends 'messenger/base.html' %}
+
+{% block content %}
+    <h2>{{ user }}</h2>
+
+    {% if user in my_friends %}
+        <form action="{% url 'messenger:delete_from_friends' friend_id=user.id %}" method="post">
+            {% csrf_token %}
+            <button class="btn-delete-friend" type="submit">
+                <p>Delete from friends</p>
+            </button>
+        </form>
+    {% else %}
+        <form action="{% url 'messenger:add_to_friends' friend_id=user.id %}" method="post">
+            {% csrf_token %}
+            <button class="btn-add-friend" type="submit">
+                <p>Add to friends</p>
+            </button>
+        </form>
+    {% endif %}
+
+    <p>Phone - {{ user.phone }}</p>
+
+    {% if user.email %}
+        <p>Email - {{ user.email }}</p>
+    {% endif %}
+
+    {% if user.birthday %}
+        <p>Birthday - {{ user.birthday }}</p>
+    {% endif %}
+{% endblock %}

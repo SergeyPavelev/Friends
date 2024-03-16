@@ -97,6 +97,17 @@ body {
     transition: .5s;
 }
 
+.list .list-item .link-user-profile {
+    display: inline;
+    align-items: center;
+    font-size: 18px;
+    color: #000;
+    text-decoration: none;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: .5s;
+}
+
 .list .list-item.active a,
 .list .list-item a:hover {
     background: rgba(255, 255, 255, .2);
@@ -143,6 +154,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+#reciever-name a {
+    text-decoration: none;
+    color: #000;
 }
 
 #messages {

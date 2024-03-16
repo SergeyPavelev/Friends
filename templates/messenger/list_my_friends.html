@@ -1,0 +1,19 @@
+{% extends 'messenger/base.html' %}
+
+{% block content %}
+    {% for friend in my_friends %}
+        <ul class="list">
+            <li class="list-item">
+                <form action="{% url 'messenger:delete_from_friends' friend_id=friend.id %}" method="post">
+                {% csrf_token %}
+                <a class="link-user-profile" href="{% url 'user_profile:profile' user_id=friend.id %}">
+                    <span class="link-name">{{ friend.username }}</span>
+                </a>
+                <button class="btn-delete-friend" type="submit">
+                    <i class='bx bx-user-minus' ></i>
+                </button>
+                </form>
+            </li>
+        </ul>
+    {% endfor %}
+{% endblock %}

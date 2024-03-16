@@ -27,17 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Указывает Django использовать HTTPS для генерации URL-адресов
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-# Указывает Django использовать безопасные куки
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-
-# Указывает Django, что он работает в безопасной среде
-SECURE_HSTS_SECONDS = 31536000  # 1 год
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-
 LOGIN_REDIRECT_URL = '/auth/login/'
 LOGOUT_REDIRECT_URL = '/'
 # AUTH_USER_MODEL = '...'

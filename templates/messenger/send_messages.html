@@ -2,7 +2,9 @@
 
 {% block content %}
     <div id="reciever-name">
-        <h2>{{ reciever }}</h2>
+        <a href="{% url 'user_profile:profile' user_id=reciever.id %}">
+            <h2>{{ reciever }}</h2>
+        </a>
     </div>
     <div id="messages">
         <ul>
