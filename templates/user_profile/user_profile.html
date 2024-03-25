@@ -1,31 +1,107 @@
 {% extends 'messenger/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/user_profile.css' %}">
+{% endblock %}
 
 {% block content %}
-    <h2>{{ user }}</h2>
+    <div class="top-of-page">
+        <div class="add-profile-photo">
+            {% if user.profile_photo %}
+                <img src="{{ user.profile_photo.url }}" alt="Profile Picture" class="picture">
+            {% else %}
+                <img src="{% static 'img/null-profile-photo.jpg' %}" alt="Profile Picture" class="picture">
+            {% endif %}
 
-    {% if user in my_friends %}
-        <form action="{% url 'messenger:delete_from_friends' friend_id=user.id %}" method="post">
-            {% csrf_token %}
-            <button class="btn-delete-friend" type="submit">
-                <p>Delete from friends</p>
-            </button>
-        </form>
-    {% else %}
-        <form action="{% url 'messenger:add_to_friends' friend_id=user.id %}" method="post">
-            {% csrf_token %}
-            <button class="btn-add-friend" type="submit">
-                <p>Add to friends</p>
-            </button>
-        </form>
-    {% endif %}
+            {% if user == request.user %}
+                <form class="upload-form" action="{% url 'user_profile:profile' user_id=user.id %}" enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+                    <label for="upload" class="upload-label">Выбрать фото</label>
+                    {{ form_image.photo }}
+                    <button type="submit" class="upload-button" name="Upload profile photo">Загрузить фотографию</button>
+                </form>
+            {% endif %}
+        </div>
+        
+        <div class="container-with-username">
+            <h2 class="profile-name">{{ user }}</h2>
+        </div>
 
-    <p>Phone - {{ user.phone }}</p>
+        <div class="add-and-delete-user">
+            {% if user != request.user %}
+                {% if user in my_friends %}
+                    <form action="{% url 'messenger:delete_from_friends' friend_id=user.id %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn-delete-friend" type="submit" name="Delete from friends">
+                            <p>Delete from friends</p>
+                        </button>
+                    </form>
+                {% else %}
+                    <form action="{% url 'messenger:add_to_friends' friend_id=user.id %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn-add-friend" type="submit" name="Add to friends">
+                            <p>Add to friends</p>
+                        </button>
+                    </form>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
 
-    {% if user.email %}
-        <p>Email - {{ user.email }}</p>
-    {% endif %}
+    <div class="additional-information-about-user">
+        <div class="info-block">
+            <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
+                {% csrf_token %}
+                <label for="phone">Phone: </label>
+                {% if user == request.user %}
+                    <input type="tel" placeholder="Phone" class="input-profile-data" name="phone" value="{{ user.phone }}">
+                    <button type="submit" class="change-data-user" name="Change phone">Change</button>
+                {% else %}
+                    <input type="tel" placeholder="Phone" class="input-profile-data" name="phone" value="{{ user.phone }}" disabled>
+                {% endif %}
+            </form>
+        </div>
 
-    {% if user.birthday %}
-        <p>Birthday - {{ user.birthday }}</p>
-    {% endif %}
+        {% if user.email %}
+            <div class="info-block">
+                <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
+                    {% csrf_token %}
+                    <label for="email">Email: </label>
+                    {% if user == request.user %}
+                        <input type="email" placeholder="Email" class="input-profile-data" name="email" value="{{ user.email }}">
+                        <button type="submit" class="change-data-user" name="Change email">Change</button>
+                    {% else %}
+                        <input type="email" placeholder="Email" class="input-profile-data" name="email" value="{{ user.email }}" disabled>
+                    {% endif %}
+                </form>
+            </div>
+        {% endif %}
+
+        {% if user.birthday %}
+            <div class="info-block">
+                <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
+                    {% csrf_token %}
+                    <label for="birthday">Birthday: </label>
+                    {% if user == request.user %}
+                        <input type="text" placeholder="Birthday" class="input-profile-data" name="birthday" value="{{ user.birthday }}">
+                        <button type="submit" class="change-data-user" name="Change birthday">Change</button>
+                    {% else %}
+                        <input type="text" placeholder="Birthday" class="input-profile-data" name="birthday" value="{{ user.birthday }}" disabled>
+                    {% endif %}
+                </form>
+            </div>
+        {% endif %}
+        
+        <div class="info-block">
+            {% if user == request.user %}
+                <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
+                    {% csrf_token %}
+                    <label for="password">Password: </label>
+                    <input type="password" placeholder="Password" class="input-profile-data" name="password" value="******">
+                    <button type="submit" class="change-data-user" name="Change password">Change</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

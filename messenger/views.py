@@ -11,20 +11,20 @@ User = get_user_model()
 
 class Index_Messages_View(View):
     def get(self, request):
-        if request.user.is_authenticated:
-            my_friends = [User.objects.get(pk=friend[0]) for friend in User.objects.filter(pk=request.user.id).values_list('friends') if friend[0]]
-            
-            data = {
-                'title': "Messenger",
-                'request': request,
-                'username': request.user.username,
-                'my_friends': my_friends,
-                'form': MessageForm(),
-            }
-            
-            return render(request, "messenger/messages.html", context=data)
-        else:
-            return  HttpResponseRedirect(reverse('login'))
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('auth:login'))
+        
+        my_friends = [User.objects.get(pk=friend[0]) for friend in User.objects.filter(pk=request.user.id).values_list('friends') if friend[0]]
+        
+        data = {
+            'title': "Messenger",
+            'request': request,
+            'username': request.user.username,
+            'my_friends': my_friends,
+            'form': MessageForm(),
+        }
+        
+        return render(request, "messenger/messages.html", context=data)
     
     def post(self, request):
         pass
@@ -32,6 +32,9 @@ class Index_Messages_View(View):
 
 class Send_Messages_View(View):
     def get(self, request, reciever_id):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('auth:login'))
+        
         form = MessageForm()
         
         my_friends = [User.objects.get(pk=friend[0]) for friend in User.objects.filter(pk=request.user.id).values_list('friends')]
@@ -78,7 +81,7 @@ class Send_Messages_View(View):
             return render(request, 'messenger/send_messages.html', context=data)
         
 
-class Show_My_Friends(ListView):
+class Show_My_Friends(ListView):    
     model = User
     template_name = 'messenger/list_my_friends.html'
     

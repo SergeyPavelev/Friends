@@ -1,6 +1,10 @@
 {% extends 'messenger/base.html' %}
 
 {% block content %}
+    <div id="reciever-name">
+        <h2>My friends</h2>
+    </div>
+
     {% for friend in my_friends %}
         <ul class="list">
             <li class="list-item">

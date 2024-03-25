@@ -7,6 +7,7 @@ class Users(auth_models.AbstractUser):
     phone = models.CharField(max_length=20, unique=True)
     username = models.CharField(max_length=50, unique=True)
     birthday = models.CharField(max_length=50, null=True)
+    profile_photo = models.ImageField(null=True, blank=True)
     password = models.TextField()
     friends = models.ManyToManyField('self', blank=True, default=None)
     

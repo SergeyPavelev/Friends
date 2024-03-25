@@ -1,6 +1,10 @@
 {% extends 'messenger/base.html' %}
 
 {% block content %}
+    <div id="reciever-name">
+        <h2>All people</h2>
+    </div>
+
     {% for user in users %}
         <ul class="list">
                 <li class="list-item">

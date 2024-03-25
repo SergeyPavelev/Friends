@@ -233,3 +233,11 @@ body {
 #messageForm button[type="submit"]:hover {
     background: #878686;
 }
+
+.btn-delete-friend {
+    padding: 1px;
+}
+
+.btn-add-friend {
+    padding: 1px;
+}

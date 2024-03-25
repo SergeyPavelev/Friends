@@ -1,0 +1,104 @@
+.top-of-page {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    padding: 20px;
+}
+  
+.add-profile-photo {
+    position: relative;
+}
+  
+.picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+  
+.upload-form {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 150px;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity .3s ease;
+    cursor: pointer;
+    border-radius: 50%;
+    object-fit: cover;
+}
+  
+.upload-form:hover {
+    opacity: 1;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+  
+.upload-label {
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.upload-label:hover {
+  font-size: 18px;
+}
+
+.upload-button {
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 10px;
+    background: none;
+    border: none;
+}
+
+.upload-button:hover {
+  font-size: 18px;
+}
+  
+.upload-input {
+    display: none;
+}
+  
+.profile-name {
+    font-size: 32px;
+    margin-top: 20px;
+    color: #333;
+}
+
+.additional-information-about-user {
+    margin: 15px;
+}
+
+.user-data {
+    margin: 20px;
+}
+
+.additional-information-about-user .info-block {
+    display: block;
+}
+
+.additional-information-about-user .info-block button {
+    padding: 1px;
+    margin-left: 15px;
+}
+
+.input-profile-data {
+    width: 30%;
+    height: 30px;
+    padding: 7px 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-radius: 4px;
+    border: solid 1px #333;
+    background: #fff;
+    color: #000;
+}
