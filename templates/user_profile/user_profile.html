@@ -50,6 +50,15 @@
     </div>
 
     <div class="additional-information-about-user">
+        {% if user == request.user %}
+            <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
+                {% csrf_token %}
+                <label for="username">Username: </label>
+                <input type="text" placeholder="Username" class="input-profile-data" name="username" value="{{ user.username }}">
+                <button type="submit" class="change-data-user" name="Change username">Change</button>
+            </form>
+        {% endif %}
+
         <div class="info-block">
             <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
                 {% csrf_token %}

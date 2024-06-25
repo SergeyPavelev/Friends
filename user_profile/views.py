@@ -41,6 +41,16 @@ class User_Profile(View):
             user.profile_photo = image
             user.save()
         
+        elif 'Change username' in request.POST:
+            new_username = request.POST['username']
+            list_all_username = [i[0] for i in User.objects.values_list('username')]
+            
+            if new_username in list_all_username:
+                return HttpResponse('This username is already used!')
+            else:
+                user.username = new_username
+                user.save()
+        
         elif 'Change phone' in request.POST:
             new_phone = request.POST['phone']
             list_all_phone = [i[0] for i in User.objects.values_list('phone')]

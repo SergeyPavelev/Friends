@@ -11,18 +11,18 @@ User = get_user_model()
 
 class Message(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender', verbose_name='Отправитель')
-    reciever = models.ForeignKey(User, on_delete=models.CASCADE, related_name='receiver', verbose_name='Получатель', default=None)
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name='receiver', verbose_name='Получатель')
     room = models.CharField('Chat Room', max_length=10)
     text_message = models.TextField('Текст сообщения')
     date_created = models.DateTimeField('Время отправки', auto_now_add=True)
     is_readed = models.BooleanField('Прочитано', default=False)
     sender_visibility = models.BooleanField('Отображение у отправителя', default=True)
-    reciever_visibility = models.BooleanField('Отображение у получателя', default=True)
+    receiver_visibility = models.BooleanField('Отображение у получателя', default=True)
     
     objects = models.Manager() # менеджер по-умолчанию, для работы с объектами модели
         
     def __str__(self):
-        return  f'{self.sender} - {self.reciever}: {self.text_message} [{self.date_created}]'
+        return  f'{self.sender} - {self.receiver}: {self.text_message} [{self.date_created}]'
 
     
     class Meta:
@@ -55,7 +55,9 @@ class Room(models.Model):
     @staticmethod
     def create_or_get_room(user1, user2):
         # Проверяем, существует ли комната с этими пользователями
-        existing_room = Room.objects.filter(users=user1).filter(users=user2).first()
+        existing_room = Room.objects.filter(users__in=[user1]).filter(users__in=[user2]).first()
+        
+        print(Room.objects.filter(users__in=[user1]).filter(users__in=[user2]))
 
         if existing_room:
             # Если комната уже существует, возвращаем ее

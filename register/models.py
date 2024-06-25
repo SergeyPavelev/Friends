@@ -12,7 +12,7 @@ class Users(auth_models.AbstractUser):
     friends = models.ManyToManyField('self', blank=True, default=None)
     
     def __str__(self) -> str:
-        return self.username
+        return f'{self.username}'
     
     class Meta:
         ordering = ['pk']

@@ -31,7 +31,7 @@ def login_user(request):
         form = LoginUserForm()
     
     data = {
-        'title': "Вход",
+        'title': "Log in",
         'form' : form,
     }
     
@@ -69,7 +69,7 @@ def register_user(request):
         form = RegisterUserForm()
     
     data = {
-        'title': "Регистрация",
+        'title': "Sig in",
         'form' : form,
     }
     

@@ -1,0 +1,40 @@
+.chat-list {
+    margin: 10px auto;
+    padding: 5px;
+    width: 50%;
+    border: solid 1px #000;
+    border-radius: 5px;
+}
+
+.link-chat-list {
+    text-decoration: none;
+    color: #000;
+}
+
+.chat-list .link-chat-list .chat-with-my-friend {
+    font-size: 20px;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: .2s;
+}
+
+.chat-list .link-chat-list:hover .last-message {
+    font-size: 16px;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: .2s;
+}
+
+.chat-list .link-chat-list:hover .chat-with-my-friend {
+    font-size: 24px;
+}
+
+.chat-list .link-chat-list:hover .last-message {
+    font-size: 18px;
+}
+
+

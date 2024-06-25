@@ -71,10 +71,24 @@
             {% endif %}
 
             <br>
+            
+            <li class="list-item">
+                <a href="{% url 'messenger:send_message_favorites' %}">
+                    <i class='bx bx-message-square'></i>
+                    <span class="link-name" style="--i:6;">Favorites</span>
+                </a>
+            </li>
+
+            <li class="list-item">
+                <a href="#">
+                    <i class='bx bxl-graphql'></i>
+                    <span class="link-name" style="--i:6;">Chat-GPT</span>
+                </a>
+            </li>
 
             {% for my_friend in my_friends %}
                     <li class="list-item">
-                        <a href="{% url 'messenger:send_message' reciever_id=my_friend.id %}">
+                        <a href="{% url 'messenger:send_message' receiver_id=my_friend.id %}">
                             <i class='bx bx-smile'></i>
                             <span class="link-name" style="--i:6;">{{ my_friend }}</span>
                         </a>
