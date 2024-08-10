@@ -15,9 +15,3 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
         fields = ('textarea',)
-    
-    
-    # def save(self, commit=True):
-    #     message = super().save(commit=False)
-    #     message.sender = self.request.user
-    #     message.room = get_object_or_404

@@ -1,10 +1,5 @@
-from email.policy import default
-from tabnanny import verbose
-from django.dispatch import receiver
-from django.urls import reverse
 from django.db import models
 from django.contrib.auth import get_user_model
-import random
 
 
 User = get_user_model()

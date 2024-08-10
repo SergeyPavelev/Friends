@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.views.generic import View, ListView
 from django.urls import reverse
 from.models import Message, Room
@@ -274,3 +274,16 @@ class Show_All_People(ListView):
             friend.friends.remove(user)
             
         return redirect(request.META.get('HTTP_REFERER'))
+    
+
+class Chat_Gpt_View(View):
+    def get(self, request):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('auth:login'))
+        
+        form = MessageForm()
+        
+        return render(request, 'messenger/chat-gpt.html')
+    
+    def post(self, request):
+        pass

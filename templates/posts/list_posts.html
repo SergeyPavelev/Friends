@@ -1,0 +1,30 @@
+{% extends 'messenger/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/posts.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="div-post-form">
+        <form id="PostForm" action="{% url 'messenger:posts:posts' %}" method="post">
+            {% csrf_token %}
+            <div class="form-title">
+                {{ form.title }}
+            </div>
+            <div class="form-textarea">
+                {{ form.textarea }}
+            </div>
+            <button type="submit">
+                <i class='bx bx-send'></i>
+            </button>
+        </form>
+    </div>
+
+    {% for post in posts %}
+        <p>{{ post.author }}</p>
+        <p>{{ post.title }}</p>
+        <p>{{ post.text }}</p>
+        <p>{{ post.date_created }}</p>
+    {% endfor %}
+{% endblock %}

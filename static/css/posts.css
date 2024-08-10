@@ -1,0 +1,39 @@
+.div-post-form{
+    display: flex;
+    justify-content: center;
+    border: 1px solid #000;
+    border-radius: 4px;
+    width: 50%;
+    margin: 5px auto;
+    padding: 5px;
+}
+
+#PostForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#messageForm title {
+    margin: 0 0 10px 15px;
+    padding: 3px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 85%;
+    height: 5%;
+    resize: none;
+    border-radius: 5px;
+}
+
+#messageForm textarea {
+    margin: 0 0 10px 15px;
+    padding: 3px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 85%;
+    height: 5%;
+    resize: none;
+    border-radius: 5px;
+}

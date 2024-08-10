@@ -50,22 +50,28 @@
                 </a>
             </li>
             <li class="list-item">
+                <a href="{% url 'messenger:posts:posts' %}">
+                    <i class='bx bx-photo-album'></i>
+                    <span class="link-name" style="--i:4;">Posts</span>
+                </a>
+            </li>
+            <li class="list-item">
                 <a href="{% url 'messenger:my_friends' %}">
                     <i class='bx bx-user-check' ></i>
-                    <span class="link-name" style="--i:4;">My friends</span>
+                    <span class="link-name" style="--i:5;">My friends</span>
                 </a>
             </li>
             <li class="list-item">
                 <a href="{% url 'messenger:all_people' %}">
                     <i class='bx bx-user-plus'></i>
-                    <span class="link-name" style="--i:4;">All people</span>
+                    <span class="link-name" style="--i:6;">All people</span>
                 </a>
             </li>
             {% if request.user.is_superuser %}
                 <li class="list-item">
                     <a href="/admin/">
                         <i class='bx bx-shield-minus'></i>
-                        <span class="link-name" style="--i:4;">Admin-page</span>
+                        <span class="link-name" style="--i:7;">Admin-page</span>
                     </a>
                 </li>
             {% endif %}
@@ -75,14 +81,14 @@
             <li class="list-item">
                 <a href="{% url 'messenger:send_message_favorites' %}">
                     <i class='bx bx-message-square'></i>
-                    <span class="link-name" style="--i:6;">Favorites</span>
+                    <span class="link-name" style="--i:7;">Favorites</span>
                 </a>
             </li>
 
             <li class="list-item">
-                <a href="#">
+                <a href="{% url 'messenger:chat_gpt' %}">
                     <i class='bx bxl-graphql'></i>
-                    <span class="link-name" style="--i:6;">Chat-GPT</span>
+                    <span class="link-name" style="--i:7;">Chat-GPT</span>
                 </a>
             </li>
 
@@ -90,7 +96,7 @@
                     <li class="list-item">
                         <a href="{% url 'messenger:send_message' receiver_id=my_friend.id %}">
                             <i class='bx bx-smile'></i>
-                            <span class="link-name" style="--i:6;">{{ my_friend }}</span>
+                            <span class="link-name" style="--i:7;">{{ my_friend }}</span>
                         </a>
                     </li>
             {% endfor %}

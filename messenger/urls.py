@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 
@@ -14,4 +14,6 @@ urlpatterns = [
     path('delete_from_friends/<int:friend_id>/', views.Show_All_People.delete_from_friends, name="delete_from_friends"),
     path('delete_message/<int:message_id>/', views.Send_Messages_View.delete_message, name="delete_message"),
     path('<int:receiver_id>/edit_message/<int:message_id>/', views.Send_Messages_View.edit_message, name="edit_message"),
+    path('chat-gpt/', views.Chat_Gpt_View.as_view(), name="chat_gpt"),
+    path('posts/', include('posts.urls', namespace='posts'), name='posts'),
 ]
