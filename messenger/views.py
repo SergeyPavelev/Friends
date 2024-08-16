@@ -283,7 +283,21 @@ class Chat_Gpt_View(View):
         
         form = MessageForm()
         
-        return render(request, 'messenger/chat-gpt.html')
+        my_friends = [User.objects.get(pk=friend[0]) for friend in User.objects.filter(pk=request.user.id).values_list('friends')]
+        room = Room.create_or_get_room(user1=request.user, user2=request.user) #!!! Исправить баг в этой функции
+        messages_in_room = Message.objects.filter(room=str(room.pk))
+        
+        data = {
+            'title': f"Favorites",
+            'request': request,
+            'username': request.user.username,
+            'room_id': room,
+            'my_friends': my_friends,
+            'messages_in_room': messages_in_room,
+            'form': form,
+        }
+        
+        return render(request, 'messenger/chat-gpt.html', context=data)
     
     def post(self, request):
         pass

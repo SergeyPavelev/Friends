@@ -21,10 +21,14 @@
         </form>
     </div>
 
-    {% for post in posts %}
-        <p>{{ post.author }}</p>
-        <p>{{ post.title }}</p>
-        <p>{{ post.text }}</p>
-        <p>{{ post.date_created }}</p>
-    {% endfor %}
+    <div class="posts-container">
+        {% for post in posts %}
+            <ul class="lists-posts">
+                <p class='post-author'>{{ post.author }}</p>
+                <p class='post-title'>{{ post.title }}</p>
+                <p class='post-text'>{{ post.text }}</p>
+                <p class='post-date-created'>{{ post.date_created }}</p>
+            </ul>
+        {% endfor %}
+    </div>
 {% endblock %}

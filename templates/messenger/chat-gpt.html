@@ -5,8 +5,8 @@
         <h2>Chat-GPT</h2>
     </div>
     <div id="messages">
-        <ul>
-            <!-- {% for message in messages_in_room %}
+        <!-- <ul>
+            {% for message in messages_in_room %}
                 {% if message.sender == request.user %}
                     <div class="message">
                         <div class="div-message-sender">
@@ -49,8 +49,9 @@
                         </div>
                     </div>
                 {% endif %}
-            {% endfor %} -->
-        </ul>
+            {% endfor %}
+        </ul> -->
+        <p>Разрабатывается!</p>
     </div>
     
     <!-- {% if 'edit_message' in request.path %}
@@ -62,7 +63,7 @@
             </button>
         </form>
     {% else %}
-        <form id="messageForm" action="{% url 'messenger:send_message' receiver_id=receiver_id %}" method="post">
+        <form id="messageForm" action="" method="post">
             {% csrf_token %}
             {{ form.textarea }}
             <button type="submit">
