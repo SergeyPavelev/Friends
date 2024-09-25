@@ -39,7 +39,7 @@
                 <li class="list-item active">
                     <a href="{% url 'auth:login' %}">
                         <i class='bx bx-log-in'></i>
-                        <span class="link-name" style="--i:1;">Login</span>
+                        <span class="link-name" style="--i:2;">Login</span>
                     </a>
                 </li>
             {% endif %}
@@ -81,14 +81,14 @@
             <li class="list-item">
                 <a href="{% url 'messenger:send_message_favorites' %}">
                     <i class='bx bx-message-square'></i>
-                    <span class="link-name" style="--i:7;">Favorites</span>
+                    <span class="link-name" style="--i:8;">Favorites</span>
                 </a>
             </li>
 
             <li class="list-item">
                 <a href="{% url 'messenger:chat_gpt' %}">
                     <i class='bx bxl-graphql'></i>
-                    <span class="link-name" style="--i:7;">Chat-GPT</span>
+                    <span class="link-name" style="--i:9;">Chat-GPT</span>
                 </a>
             </li>
 
@@ -96,7 +96,7 @@
                     <li class="list-item">
                         <a href="{% url 'messenger:send_message' receiver_id=my_friend.id %}">
                             <i class='bx bx-smile'></i>
-                            <span class="link-name" style="--i:7;">{{ my_friend }}</span>
+                            <span class="link-name" style="--i:10;">{{ my_friend }}</span>
                         </a>
                     </li>
             {% endfor %}
