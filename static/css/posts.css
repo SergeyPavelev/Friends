@@ -1,11 +1,12 @@
 .div-post-form{
     display: flex;
     justify-content: center;
-    border: 1px solid #000;
-    border-radius: 4px;
+    border: 1px solid #b6b6b6;
+    border-radius: 7px;
     width: 50%;
     margin: 5px auto;
-    padding: 5px;
+    padding: 10px;
+    box-shadow: -.5px .5px 7px 0px rgba(0, 0, 0, .5);
 }
 
 #PostForm{
@@ -23,7 +24,7 @@
     width: 85%;
     height: 5%;
     resize: none;
-    border-radius: 5px;
+    border-radius: 7px;
 }
 
 #messageForm textarea {
@@ -35,16 +36,18 @@
     width: 85%;
     height: 5%;
     resize: none;
-    border-radius: 5px;
+    border-radius: 7px;
 }
 
 .lists-posts {
-    margin: 15px auto;
-    padding: 5px;
+    margin: 20px auto;
+    padding: 10px;
     width: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #000;
-    border-radius: 4px;
+    border: 1px solid #b6b6b6;
+    border-radius: 7px;
+    box-shadow: -.5px .5px 7px 0px rgba(0, 0, 0, .5);
 }
+

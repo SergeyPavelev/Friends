@@ -9,7 +9,9 @@
 
 body {
     min-height: 100vh;
-    background: url('/static/img/background-for-messages2.jpg') no-repeat;
+    /* background: url('/static/img/background-for-messages2.jpg') no-repeat; */
+    background: linear-gradient(to bottom left, #e4e6dc, #a2a89eda);
+    backdrop-filter: blur(100px);
     background-size: cover;
     background-position: center;
 
@@ -142,11 +144,13 @@ body {
     display: block;
     width: 55%;
     height: 95%;
-    border: 1px solid #000;
-    border-radius: 5px;
+    border: 1px solid #b6b6b6;
+    border-radius: 10px;
     margin: auto auto;
-    padding: 5px;
-    backdrop-filter: blur(40px);
+    padding: 10px;
+    /* backdrop-filter: blur(40px); */
+    background: #e6e8df;
+    box-shadow: -2px 2px 10px 0px rgba(0, 0, 0, .5);
 }
 
 #reciever-name {
@@ -173,7 +177,7 @@ body {
     width: 30%;
     color: #fff;
     border: 1px solid rgba(255, 255, 255, .2);
-    border-radius: 5px;
+    border-radius: 7px;
     background: #436dc9;
     box-shadow: 0 0 2px rgba(0, 0, 0, .2);
 }
@@ -183,7 +187,7 @@ body {
     width: 30%;
     color: #fff;
     border: 1px solid rgba(255, 255, 255, .2);
-    border-radius: 5px;
+    border-radius: 7px;
     /* background: #0d6ecf; */
     background: #25b5bf;
     box-shadow: 0 0 2px rgba(0, 0, 0, .2);
@@ -211,28 +215,28 @@ body {
 #messageForm textarea {
     margin: 0 0 10px 15px;
     padding: 3px;
-    position: fixed;
+    position: absolute;
     bottom: 0;
     left: 0;
     width: 85%;
     height: 5%;
     resize: none;
-    border-radius: 5px;
+    border-radius: 7px;
 }
 
 #messageForm button[type="submit"] {
     margin: 0 15px 10px 0;
-    position: fixed;
+    position: absolute;
     bottom: 0;
     right: 0;
     width: 10%;
     height: 5%;
-    border-radius: 5px;
-    transition: .3s;
+    border-radius: 7px;
+    transition: .2s;
 }
 
 #messageForm button[type="submit"]:hover {
-    background: #878686;
+    background: #d4d4d4;
 }
 
 .btn-delete-friend {
