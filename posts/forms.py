@@ -5,7 +5,7 @@ from .models import Post
 
 class PostForm(forms.ModelForm):
     title = forms.CharField(widget=forms.Textarea(attrs={
-        'name': 'textarea',
+        'name': 'title',
         'placeholder': 'Ввести название поста...',
         'spellcheck': 'True',
         'required': 'True',

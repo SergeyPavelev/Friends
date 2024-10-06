@@ -15,26 +15,18 @@
     justify-content: space-between;
 }
 
-#messageForm title {
+#PostForm #id_title {
     margin: 0 0 10px 15px;
     padding: 3px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 85%;
-    height: 5%;
+    width: 90%;
     resize: none;
     border-radius: 7px;
 }
 
-#messageForm textarea {
+#PostForm #id_textarea {
     margin: 0 0 10px 15px;
     padding: 3px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 85%;
-    height: 5%;
+    width: 90%;
     resize: none;
     border-radius: 7px;
 }
