@@ -1,45 +1,91 @@
 .div-post-form{
     display: flex;
     justify-content: center;
-    border: 1px solid #b6b6b6;
     border-radius: 7px;
     width: 50%;
     margin: 5px auto;
     padding: 10px;
-    box-shadow: -.5px .5px 7px 0px rgba(0, 0, 0, .5);
+    box-shadow: -.1px .1px 5px 0px rgba(0, 0, 0, .5);
+}
+
+.lists-posts {
+    justify-content: center;
+    border-radius: 7px;
+    margin: 5px auto;
+    padding: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.lists-posts::-webkit-scrollbar {
+    width: 5px;
+}
+
+.lists-posts::-webkit-scrollbar-track {
+    background: #e6e8df;
+}
+
+.lists-posts::-webkit-scrollbar-thumb {
+    background-color: #898989;
+    border-radius: 20px;
 }
 
 #PostForm{
     display: flex;
+    padding: auto 5px;
+    padding-bottom: 0px;
     flex-direction: column;
-    justify-content: space-between;
+    width: 90%;
 }
 
-#PostForm #id_title {
-    margin: 0 0 10px 15px;
+#PostForm textarea {
+    margin: 10px auto;
     padding: 3px;
+    height: 15%;
     width: 90%;
     resize: none;
+    border: none;
     border-radius: 7px;
+    box-shadow: -.1px .1px 3px 0px rgba(0, 0, 0, .5);
 }
 
-#PostForm #id_textarea {
-    margin: 0 0 10px 15px;
-    padding: 3px;
+#PostForm #id_title:focus {
+    border: none;
+    outline: none;
+}
+
+#PostForm #id_textarea:focus {
+    border: none;
+    outline: none;
+}
+
+#PostForm button[type='submit'] {
+    margin: 10px auto;
+    padding: 10px;
     width: 90%;
-    resize: none;
+    height: 7%;
+    border: none;
     border-radius: 7px;
+    box-shadow: -.1px .1px 3px 0px rgba(0, 0, 0, .5);
+    transition: opacity transform .3s;
 }
 
-.lists-posts {
+.posts-container {
     margin: 20px auto;
     padding: 10px;
     width: 50%;
-    display: flex;
+    display: grid;
     align-items: center;
     justify-content: center;
     border: 1px solid #b6b6b6;
     border-radius: 7px;
-    box-shadow: -.5px .5px 7px 0px rgba(0, 0, 0, .5);
+    box-shadow: -.1px .1px 5px 0px rgba(0, 0, 0, .5);
 }
 
+.lists-posts p {
+    margin: 5px;
+}
+
+body {
+    overflow: hidden;
+}

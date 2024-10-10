@@ -37,6 +37,8 @@
                             <p>Delete from friends</p>
                         </button>
                     </form>
+
+                    <a class="href-for-message-from-profile" href="{% url 'messenger:send_message' receiver_id=user.id %}">Message</a>
                 {% else %}
                     <form action="{% url 'messenger:add_to_friends' friend_id=user.id %}" method="post">
                         {% csrf_token %}

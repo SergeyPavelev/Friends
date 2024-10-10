@@ -9,34 +9,32 @@
     <div class="div-post-form">
         <form id="PostForm" action="{% url 'messenger:posts:posts' %}" method="post">
             {% csrf_token %}
-            <div class="form-title">
-                {{ form.title }}
-            </div>
-            <div class="form-textarea">
-                {{ form.textarea }}
-            </div>
+            {{ form.title }}
+            {{ form.textarea }}
             <button type="submit">
                 <i class='bx bx-send'></i>
             </button>
         </form>
     </div>
 
-    <div class="posts-container">
-        {% for post in posts %}
-            <ul class="lists-posts">
-                <div class="div-post-author">
-                    <p class='post-author'>{{ post.author }}</p>
+    <div class="div-lists-posts">
+        <ul class="lists-posts">
+            {% for post in posts %}
+                <div class="posts-container">
+                    <div class="div-post-author">
+                        <p class='post-author'>{{ post.author }}</p>
+                    </div>
+                    <div class="div-post-title">
+                        <p class='post-title'>{{ post.title }}</p>
+                    </div>
+                    <div class="div-post-text">
+                        <p class='post-text'>{{ post.text }}</p>
+                    </div>
+                    <div class="div-post-date-created">
+                        <p class='post-date-created'>{{ post.date_created }}</p>
+                    </div>
                 </div>
-                <div class="div-post-title">
-                    <p class='post-title'>{{ post.title }}</p>
-                </div>
-                <div class="div-post-text">
-                    <p class='post-text'>{{ post.text }}</p>
-                </div>
-                <div class="div-post-date-created">
-                    <p class='post-date-created'>{{ post.date_created }}</p>
-                </div>
-            </ul>
-        {% endfor %}
+            {% endfor %}
+        </ul>
     </div>
 {% endblock %}
