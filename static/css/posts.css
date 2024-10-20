@@ -6,6 +6,7 @@
     margin: 5px auto;
     padding: 10px;
     box-shadow: -.1px .1px 5px 0px rgba(0, 0, 0, .5);
+    height: 25%;
 }
 
 .lists-posts {
@@ -13,7 +14,7 @@
     border-radius: 7px;
     margin: 5px auto;
     padding: 10px;
-    max-height: 400px;
+    max-height: 680px;
     overflow-y: auto;
 }
 
@@ -32,6 +33,7 @@
 
 #PostForm{
     display: flex;
+    flex-direction: column;
     padding: auto 5px;
     padding-bottom: 0px;
     flex-direction: column;
@@ -39,14 +41,15 @@
 }
 
 #PostForm textarea {
-    margin: 10px auto;
-    padding: 3px;
-    height: 15%;
+    margin: 5px auto;
+    padding: 5px;
+    height: 100%;
     width: 90%;
     resize: none;
     border: none;
     border-radius: 7px;
     box-shadow: -.1px .1px 3px 0px rgba(0, 0, 0, .5);
+    background: #f4f5f2;
 }
 
 #PostForm textarea:focus {
@@ -54,15 +57,23 @@
     outline: none;
 }
 
+#PostForm textarea:hover {
+    box-shadow: -.2px .2px 4px 0px rgba(0, 0, 0, .5);
+}
+
 #PostForm input[type='submit'] {
-    margin: 10px auto;
+    margin: 5px auto;
     padding: 10px;
     width: 90%;
-    height: 7%;
+    height: 50%;
     border: none;
     border-radius: 7px;
     box-shadow: -.1px .1px 3px 0px rgba(0, 0, 0, .5);
     transition: opacity transform .3s;
+}
+
+#PostForm input[type='submit']:hover {
+    box-shadow: -.2px .2px 4px 0px rgba(0, 0, 0, .5);
 }
 
 .posts-container {

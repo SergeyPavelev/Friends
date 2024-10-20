@@ -32,6 +32,24 @@
                     <div class="div-post-date-created">
                         <p class='post-date-created'>{{ post.date_created }}</p>
                     </div>
+                    {% if request.user == post.author %}
+                        <div class="div-post-edit">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <button>
+                                    <i class='bx bxs-edit'></i>
+                                </button>
+                            </form>
+                        </div>
+                        <div class="div-post-delete">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <button>
+                                    <i class='bx bx-trash'></i>
+                                </button>
+                            </form>
+                        </div>
+                    {% endif %}
                 </div>
             {% endfor %}
         </ul>
