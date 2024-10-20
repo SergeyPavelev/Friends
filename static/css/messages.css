@@ -165,7 +165,7 @@ body {
 
 #messages {
     padding: 10px;
-    max-height: calc(100vh - 200px);
+    max-height: 85%;
     overflow-y: auto;
 }
 
@@ -217,6 +217,7 @@ body {
 }
 
 #messageForm {
+    margin: 2px auto;
     display: flex;
     justify-content: space-between;
 }
@@ -233,6 +234,7 @@ body {
     border: none;
     border-radius: 7px;
     box-shadow: -.1px .1px 3px 0px rgba(0, 0, 0, .5);
+    box-sizing: border-box;
 }
 
 #messageForm textarea:focus {
@@ -240,7 +242,7 @@ body {
     outline: none;
 }
 
-#messageForm button[type="submit"] {
+#messageForm input[type="submit"] {
     margin: 0 15px 10px 0;
     position: absolute;
     bottom: 0;
@@ -251,10 +253,11 @@ body {
     border-radius: 7px;
     box-shadow: -.1px .1px 3px 0px rgba(0, 0, 0, .5);
     transition: opacity transform .3s;
+    box-sizing: border-box;
 }
 
-#messageForm button[type="submit"]:hover {
-    background: #d4d4d4;
+#messageForm input[type="submit"]:hover {
+    background: #898989;
 }
 
 .btn-delete-friend {
@@ -267,14 +270,20 @@ body {
 
 .message {
     display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+
 }
 
-.message-btn-trash {
+.message-btn button {
     margin: auto 2px;
-}
-
-.message-btn-edit {
-    margin: auto 2px;
+    padding: 3px;
+    border: none;
+    box-shadow: -.1px .1px 3px 0px rgba(0, 0, 0, .5);
+    border-radius: 5px;
+    background: none;
 }
 
 .message-time-created {

@@ -7,13 +7,12 @@
 
 {% block content %}
     <div class="div-post-form">
-        <form id="PostForm" action="{% url 'messenger:posts:posts' %}" method="post">
+        <form id="PostForm" method="post">
             {% csrf_token %}
             {{ form.title }}
             {{ form.textarea }}
-            <button type="submit">
-                <i class='bx bx-send'></i>
-            </button>
+            <div class="error"></div>
+            <input type="submit" name="submit" value="Сохранить">
         </form>
     </div>
 
@@ -37,4 +36,8 @@
             {% endfor %}
         </ul>
     </div>
+{% endblock %}
+
+{% block java_script %}
+    <script src="{% static 'js/posts-forms.js' %}"></script>
 {% endblock %}

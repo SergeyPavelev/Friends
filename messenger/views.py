@@ -20,7 +20,7 @@ class Index_Messages_View(View):
         chats_data = {}
         
         for chat_id in chats_id:
-            last_message = Message.objects.filter(room=chat_id.pk).order_by('-id').first()
+            last_message = Message.objects.filter(room=chat_id.pk, sender_visibility=1, receiver_visibility=1).order_by('-id').first()
             
             for user in chat_id.users.all():
                 if user != request.user:
@@ -103,7 +103,20 @@ class Send_Messages_View(View):
             return render(request, 'messenger/send_messages.html', context=data)
     
     @staticmethod
-    def delete_message(request, message_id):
+    def delete_message_from_everyone(request, message_id):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('auth:login'))
+        
+        if request.method == "POST":        
+            message = Message.objects.get(id=message_id)
+            message.sender_visibility = 0
+            message.receiver_visibility = 0
+            message.save()
+        
+        return redirect(request.META.get('HTTP_REFERER'))
+    
+    @staticmethod
+    def delete_message_from_me(request, message_id):
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('auth:login'))
         
@@ -113,7 +126,7 @@ class Send_Messages_View(View):
                 message.sender_visibility = 0
             else:
                 message.receiver_visibility = 0
-            message.save()
+                message.save()
         
         return redirect(request.META.get('HTTP_REFERER'))
     
