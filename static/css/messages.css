@@ -297,6 +297,18 @@ body {
     background: none;
 }
 
+.activate-btn:hover {
+    box-shadow: -.2px .2px 4px 0px rgba(0, 0, 0, .5);
+}
+
+.message-btns {
+    display: none;
+}
+
+.message-btns.active {
+    display: flex;
+}
+
 .message-btn button {
     margin: auto 2px;
     padding: 3px;

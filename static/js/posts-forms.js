@@ -44,19 +44,21 @@ $(document).on('submit', '#PostForm', function(e){
                             <div class="div-post-date-created">
                                 <p class='post-date-created'>${date_created}</p>
                             </div>
-                            <div class="div-post-edit">
-                                <form action="" method="post">
-                                    <button>
-                                        <i class='bx bxs-edit'></i>
-                                    </button>
-                                </form>
-                            </div>
-                            <div class="div-post-delete">
-                                <form action="" method="post">
-                                    <button>
-                                        <i class='bx bx-trash'></i>
-                                    </button>
-                                </form>
+                            <div class="post-btns">
+                                <div class="div-post-btn">
+                                    <form action="" method="post">
+                                        <button>
+                                            <i class='bx bxs-edit'></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="div-post-btn">
+                                    <form action="" method="post">
+                                        <button>
+                                            <i class='bx bx-trash'></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     `;

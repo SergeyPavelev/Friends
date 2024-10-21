@@ -21,33 +21,35 @@
                                 <i class='bx bx-chevron-right'></i>
                             </div>
 
-                            <div class="message-btn">
-                                {% if message.sender == request.user %}
-                                    <form action="{% url 'messenger:edit_message' receiver_id=receiver_id message_id=message.id %}">
+                            <div class="message-btns">
+                                <div class="message-btn">
+                                    {% if message.sender == request.user %}
+                                        <form action="{% url 'messenger:edit_message' receiver_id=receiver_id message_id=message.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit">
+                                                <i class='bx bxs-edit'></i>
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+        
+                                <div class="message-btn">
+                                    <form action="{% url 'messenger:delete_message_from_everyone' message_id=message.id %}" method="post">
                                         {% csrf_token %}
                                         <button type="submit">
-                                            <i class='bx bxs-edit'></i>
+                                            <i class='bx bx-trash'></i>
                                         </button>
                                     </form>
-                                {% endif %}
-                            </div>
-    
-                            <div class="message-btn">
-                                <form action="{% url 'messenger:delete_message_from_everyone' message_id=message.id %}" method="post">
-                                    {% csrf_token %}
-                                    <button type="submit">
-                                        <i class='bx bx-trash'></i>
-                                    </button>
-                                </form>
-                            </div>
-    
-                            <div class="message-btn">
-                                <form action="{% url 'messenger:delete_message_from_me' message_id=message.id %}" method="post">
-                                    {% csrf_token %}
-                                    <button type="submit">
-                                        <i class='bx bx-trash'></i>
-                                    </button>
-                                </form>
+                                </div>
+        
+                                <div class="message-btn">
+                                    <form action="{% url 'messenger:delete_message_from_me' message_id=message.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit">
+                                            <i class='bx bx-trash'></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -63,22 +65,24 @@
                                 <i class='bx bx-chevron-right'></i>
                             </div>
 
-                            <div class="message-btn">
-                                <form action="{% url 'messenger:delete_message_from_everyone' message_id=message.id %}" method="post">
-                                    {% csrf_token %}
-                                    <button type="submit">
-                                        <i class='bx bx-trash'></i>
-                                    </button>
-                                </form>
-                            </div>
-    
-                            <div class="message-btn">
-                                <form action="{% url 'messenger:delete_message_from_me' message_id=message.id %}" method="post">
-                                    {% csrf_token %}
-                                    <button type="submit">
-                                        <i class='bx bx-trash'></i>
-                                    </button>
-                                </form>
+                            <div class="message-btns">
+                                <div class="message-btn">
+                                    <form action="{% url 'messenger:delete_message_from_everyone' message_id=message.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit">
+                                            <i class='bx bx-trash'></i>
+                                        </button>
+                                    </form>
+                                </div>
+        
+                                <div class="message-btn">
+                                    <form action="{% url 'messenger:delete_message_from_me' message_id=message.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit">
+                                            <i class='bx bx-trash'></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -102,4 +106,8 @@
             <input class="submit-message" type="submit" name="SubmitMessage" placeholder="Отправить">
         </form>
     {% endif %}
+{% endblock %}
+
+{% block java_script %}
+    <script src="/static/js/script-for-message-buttons.js"></script>
 {% endblock %}
