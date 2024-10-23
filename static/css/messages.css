@@ -9,7 +9,8 @@
 
 body {
     min-height: 100vh;
-    background: linear-gradient(to bottom left, #e4e6dc, #a2a89eda);
+    /* background: linear-gradient(to bottom left, #e4e6dc, #a2a89eda); */
+    background: linear-gradient(to bottom left, #d1d1d1, #b6b6b6);
     backdrop-filter: blur(100px);
     background-size: cover;
     background-position: center;
@@ -30,7 +31,7 @@ body {
     border-right: 2px solid rgba(255, 255, 255, .2);
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
     padding: 6px 14px;
-    transition: transform .3s;
+    transition: all .1s ease;
 }
 
 .sidebar.active {
@@ -49,7 +50,7 @@ body {
     color: #000;
     pointer-events: none;
     opacity: 0;
-    transition: transform .3s;
+    transition: all .1s ease;
 }
 
 .sidebar.active .logo-menu .logo {
@@ -68,7 +69,7 @@ body {
     text-align: center;
     line-height: 40px;
     cursor: pointer;
-    transition: transform .3s;
+    transition: all .1s ease;
 }
 
 .sidebar.active .logo-menu .toggle-btn {
@@ -95,7 +96,7 @@ body {
     text-decoration: none;
     border-radius: 6px;
     white-space: nowrap;
-    transition: transform .3s;
+    transition: all .1s ease;
 }
 
 .list .list-item .link-user-profile {
@@ -106,7 +107,7 @@ body {
     text-decoration: none;
     border-radius: 6px;
     white-space: nowrap;
-    transition: transform .3s;
+    transition: all .1s ease;
 }
 
 .list .list-item.active a,
@@ -147,7 +148,8 @@ body {
     border-radius: 10px;
     margin: auto auto;
     padding: 10px;
-    background: #e6e8df;
+    /* background: #e6e8df; */
+    background: #e7e7e7;
     box-shadow: -.1px .1px 5px 0px rgba(0, 0, 0, .5);
 }
 
@@ -167,6 +169,8 @@ body {
     padding: 10px;
     max-height: 85%;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
 }
 
 #messages::-webkit-scrollbar {
@@ -184,22 +188,22 @@ body {
 
 #chatbox .div-message-sender {
     margin: 5px;
+    padding: 2px;
     width: 30%;
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, .2);
+    border: none;
     border-radius: 7px;
-    background: #d4bca8;
-    box-shadow: 0 0 2px rgba(0, 0, 0, .2);
+    background: #b6b6b6;
+    box-shadow: -.1px .1px 5px 0px rgba(0, 0, 0, .5);
 }
 
 #chatbox .div-message-reciever {
     margin: 5px;
+    padding: 2px;
     width: 30%;
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, .2);
+    border: none;    
     border-radius: 7px;
-    background: #b1bbb7;
-    box-shadow: 0 0 2px rgba(0, 0, 0, .2);
+    background: #d1d1d1;
+    box-shadow: -.1px .1px 5px 0px rgba(0, 0, 0, .5);
 }
 
 #chatbox .message-sender {
@@ -216,13 +220,13 @@ body {
     word-wrap: break-word;
 }
 
-#messageForm {
+.message-form {
     margin: 2px auto;
     display: flex;
     justify-content: space-between;
 }
 
-#messageForm textarea {
+.message-form textarea {
     margin: 0 0 10px 15px;
     padding: 3px;
     position: absolute;
@@ -237,34 +241,35 @@ body {
     box-sizing: border-box;
 }
 
-#messageForm textarea:hover {
+.message-form textarea:hover {
     box-shadow: -.2px .2px 4px 0px rgba(0, 0, 0, .5);
 }
 
-#messageForm textarea:focus {
+.message-form textarea:focus {
     border: none;
     outline: none;
 }
 
-#messageForm input[type="submit"] {
+.message-form textarea:focus::-webkit-input-placeholder {
+    color: #000;
+}
+
+.message-form input[type="submit"] {
     margin: 0 15px 10px 0;
     position: absolute;
     bottom: 0;
     right: 0;
     width: 10%;
     height: 5%;
+    background: #fff;
     border: none;
     border-radius: 7px;
     box-shadow: -.1px .1px 3px 0px rgba(0, 0, 0, .5);
-    transition: opacity transform .3s;
+    transition: all .1s ease;
     box-sizing: border-box;
 }
 
-/* #messageForm input[type="submit"]:hover {
-    background: #898989;
-} */
-
-#messageForm input[type='submit']:hover {
+.message-form input[type='submit']:hover {
     box-shadow: -.2px .2px 4px 0px rgba(0, 0, 0, .5);
 }
 

@@ -36,7 +36,7 @@ class View_Posts(View):
         title_post = request.POST.get('title', '').strip()
         text_post = request.POST.get('textarea', '').strip()
                 
-        if title_post and text_post:
+        if form.is_valid():
             new_post = Post(title=title_post, text=text_post, author=request.user)
             new_post.save()
             

@@ -5,6 +5,7 @@
     border: 1px solid #b6b6b6;
     border-radius: 7px;
     box-shadow: -.1px .1px 5px 0px rgba(0, 0, 0, .5);
+    transition: all .1s ease;
 }
 
 .link-chat-list {
@@ -18,7 +19,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    transition: transform .3s;
+    transition: all .1s ease;
 }
 
 .chat-list .link-chat-list:hover .last-message {
@@ -27,7 +28,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    transition: transform .3s;
+    transition: all .1s ease;
 }
 
 .chat-list .link-chat-list:hover .chat-with-my-friend {

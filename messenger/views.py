@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.views.generic import View, ListView
 from django.urls import reverse
 from.models import Message, Room
@@ -85,22 +85,25 @@ class Send_Messages_View(View):
             receiver = User.objects.get(pk=receiver_id)
             room = Room.create_or_get_room(user1=request.user, user2=User.objects.get(pk=receiver_id))
             message = str(request.POST['textarea']).strip()
-            Message(text_message=message, sender=request.user, receiver=receiver, room=room.pk).save()
-            
-            return HttpResponseRedirect(reverse(f'messenger:send_message', kwargs={'receiver_id': receiver_id}))            
-        else:
-            form = MessageForm()
+            new_message = Message(text_message=message, sender=request.user, receiver=receiver, room=room.pk)
+            new_message.save()
             
             data = {
-                'title': f"Messenger",
-                'request': request,
-                'username': request.user.username,
-                'form': form,
-                'receiver_id': receiver_id,
-                'room_id': Room.create_or_get_room(user1=request.user, user2=User.objects.get(pk=receiver_id)),
+                'user': request.user.username,
+                'sender_message': new_message.sender.username,
+                'textarea': message,
+                'time_created': new_message.time_created.strftime("%H:%M"),
             }
             
-            return render(request, 'messenger/send_messages.html', context=data)
+            return JsonResponse({
+                'success': data,
+                'status': 'success'
+            })           
+        else:
+            return JsonResponse({
+                'errors': form.errors,
+                'status': 'errors'
+            })
     
     @staticmethod
     def delete_message_from_everyone(request, message_id):

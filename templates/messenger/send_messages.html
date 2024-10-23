@@ -1,4 +1,5 @@
 {% extends 'messenger/base.html' %}
+{% load static %}
 
 {% block content %}
     <div id="reciever-name">
@@ -7,7 +8,7 @@
         </a>
     </div>
     <div id="messages">
-        <ul>
+        <ul class="lists-messages">
             {% for message in messages_in_room %}
                 {% if message.sender == request.user %}
                     <div class="message">
@@ -92,22 +93,21 @@
     </div>
     
     {% if 'edit_message' in request.path %}
-        <form id="messageForm" action="{% url 'messenger:edit_message' receiver_id=receiver_id message_id=message.id %}" method="post">
-            {% csrf_token %}
-            {{ form.textarea }}
-            <button type="submit">
-                <i class='bx bx-send'></i>
-            </button>
-        </form>
-    {% else %}
-        <form id="messageForm" action="{% url 'messenger:send_message' receiver_id=receiver_id %}" method="post">
+        <form id="EditMessageForm" class="message-form" action="{% url 'messenger:edit_message' receiver_id=receiver_id message_id=message.id %}" method="post">
             {% csrf_token %}
             {{ form.textarea }}
             <input class="submit-message" type="submit" name="SubmitMessage" placeholder="Отправить">
+        </form>
+    {% else %}
+        <form id="SendMessageForm" class="message-form" method="post">
+            {% csrf_token %}
+            {{ form.textarea }}
+            <input class="submit-message" id="input-message-form" type="submit" name="SubmitMessage" placeholder="Отправить">
         </form>
     {% endif %}
 {% endblock %}
 
 {% block java_script %}
-    <script src="/static/js/script-for-message-buttons.js"></script>
+    <script src="{% static 'js/script-for-message-buttons.js' %}"></script>
+    <script src="{% static 'js/messages-forms.js' %}"></script>
 {% endblock %}

@@ -12,7 +12,7 @@
             {{ form.title }}
             {{ form.textarea }}
             <div class="error"></div>
-            <input type="submit" name="submit" value="Сохранить">
+            <input id="input-post-form" type="submit" name="submit" value="Сохранить">
         </form>
     </div>
 
@@ -35,7 +35,7 @@
                     {% if request.user == post.author %}
                         <div class="post-btns">
                             <div class="div-post-btn">
-                                <form action="" method="post">
+                                <form id="edit-post-form" action="" method="post">
                                     {% csrf_token %}
                                     <button>
                                         <i class='bx bxs-edit'></i>
@@ -43,7 +43,7 @@
                                 </form>
                             </div>
                             <div class="div-post-btn">
-                                <form action="" method="post">
+                                <form id="delete-post-form" action="" method="post">
                                     {% csrf_token %}
                                     <button>
                                         <i class='bx bx-trash'></i>
