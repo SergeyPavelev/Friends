@@ -35,17 +35,17 @@
                     {% if request.user == post.author %}
                         <div class="post-btns">
                             <div class="div-post-btn">
-                                <form id="edit-post-form" action="" method="post">
+                                <form id="edit-post-form" action="{% url 'messenger:posts:edit_post' post_id=post.id %}" method="post">
                                     {% csrf_token %}
-                                    <button>
+                                    <button class="button-post" id="button-edit-post" type="submit">
                                         <i class='bx bxs-edit'></i>
                                     </button>
                                 </form>
                             </div>
                             <div class="div-post-btn">
-                                <form id="delete-post-form" action="" method="post">
+                                <form id="delete-post-form" action="{% url 'messenger:posts:delete_post' post_id=post.id %}" method="post">
                                     {% csrf_token %}
-                                    <button>
+                                    <button class="button-post" id="button-delete-post" type="submit">
                                         <i class='bx bx-trash'></i>
                                     </button>
                                 </form>

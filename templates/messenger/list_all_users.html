@@ -1,0 +1,40 @@
+{% extends 'messenger/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/list_users.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="div-h2">
+        <h2>All people</h2>
+    </div>
+
+    <ul class="list-users">
+        {% for user in users %}
+            <li class="list-item">
+                {% if user in my_friends %}
+                <form action="{% url 'messenger:delete_from_friends' friend_id=user.id %}" method="post">
+                    {% csrf_token %}
+                    <a class="link-user-profile" href="{% url 'user_profile:profile' user_id=user.id %}">
+                        <span class="link-name">{{ user.username }}</span>
+                    </a>
+                    <button class="users-buttons" type="submit">
+                        <i class='bx bx-user-minus' ></i>
+                    </button>
+                </form>
+                {% else %}
+                <form action="{% url 'messenger:add_to_friends' friend_id=user.id %}" method="post">
+                    {% csrf_token %}
+                    <a class="link-user-profile" href="{% url 'user_profile:profile' user_id=user.id %}">
+                        <span class="link-name">{{ user.username }}</span>
+                    </a>
+                    <button class="users-buttons" type="submit">
+                        <i class='bx bx-user-plus' ></i>
+                    </button>
+                </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

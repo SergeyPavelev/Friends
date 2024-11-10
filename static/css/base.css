@@ -1,0 +1,128 @@
+@font-face {
+    font-family: "Roboto";
+    src: url("../fonts/Roboto-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    background: #1b1b20;
+    font-family: 'Roboto';
+}
+
+.header {
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+}
+
+.header-left-position {
+    float: left;
+    display: flex;
+}
+
+.header-right-position {
+    float: right;
+    display: flex;
+}
+
+.block-img-site {
+    margin: auto 1px;
+}
+
+.block-name-site {
+    margin: auto 1px;
+}
+
+.block-form-search {
+    margin: 5px 30px;
+    display: flex;
+    align-items: center;
+}
+
+.block-form-search input {
+    padding: 5px;
+    width: 80%;
+    background: #39373e;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+}
+
+.block-form-search input:focus {
+    border: none;
+    outline: none;
+}
+
+.block-form-search input::placeholder {
+    color: #858090;
+    text-align: center;
+}
+
+.block-button-notification button {
+    margin: 5px;
+    padding: 5px;
+    background: #39373e;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+}
+
+.block-form-search input:hover,
+.block-button-notification button:hover,
+.block-button-logout button:hover,
+.block-my-account:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, .5);;
+}
+
+.block-button-logout button {
+    margin: 5px 30px 5px 5px;
+    padding: 5px;
+    background: #39373e;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+}
+
+.block-my-account {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+    background: #39373e;
+}
+
+.navigation {
+    display: inline;
+    width: 20%;
+    position: fixed;
+}
+
+.block-nav-buttons {
+    margin: 20px;
+    padding: 20px;
+}
+
+.block-nav-buttons .nav-link {
+    margin: 10px;
+    padding: 10px;
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.block-nav-buttons .nav-link:hover {
+    background: #39373e;
+    transition: .1s;
+}
+
+.main-block {
+    padding: 10px;
+    position: fixed;
+    width: 80%;
+    right: 0;
+}

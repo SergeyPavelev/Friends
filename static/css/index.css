@@ -47,7 +47,7 @@ body {
     border-radius: 6px;
     text-decoration: none;
     margin-right: 10px;
-    transition: transform .3s;
+    transition: .3s;
 }
 
 .social-media a:hover {
@@ -57,7 +57,7 @@ body {
 .social-media a i {
     font-size: 20px;
     color: #fff;
-    transition: transform .3s;
+    transition: .3s;
 }
 
 .social-media a:hover i {
@@ -93,7 +93,7 @@ body {
     object-fit: cover;
     pointer-events: none;
     opacity: 0;
-    transition: transform .3s ease;
+    transition: .3s ease;
 }
 
 .slide .left-info {
@@ -152,7 +152,7 @@ body {
     color: #444;
     text-decoration: none;
     font-weight: 600;
-    transition: transform .3s;
+    transition: .3s;
 }
 
 .content .btn:hover {

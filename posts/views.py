@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth import get_user_model
@@ -17,7 +17,7 @@ class View_Posts(View):
             return HttpResponseRedirect(reverse('auth:login'))
         
         my_friends = [User.objects.get(pk=friend[0]) for friend in User.objects.filter(pk=self.request.user.id).values_list('friends') if friend[0]]
-        posts = Post.objects.all().order_by("-date_created") # filter('если автор поста у меня в друзьях')
+        posts = Post.objects.all().filter(visibility=1).order_by("-date_created") # filter('если автор поста у меня в друзьях')
         
         data = {
             'title': 'Posts',
@@ -57,3 +57,52 @@ class View_Posts(View):
                 'errors': form.errors,
                 'status': 'errors'
             })
+    
+    @staticmethod
+    def delete_post(request, post_id):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('auth:login'))
+        
+        if request.method == 'POST':
+            post = Post.objects.get(pk=post_id)
+            post.visibility = 0
+            post.save()
+        
+        return redirect(request.META.get('HTTP_REFERER'))
+    
+    @staticmethod
+    def edit_post(request, post_id):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('auth:login'))
+        
+        post = Post.objects.get(pk=post_id)
+        my_friends = [User.objects.get(pk=friend[0]) for friend in User.objects.filter(pk=request.user.id).values_list('friends') if friend[0]]
+        posts = Post.objects.all().filter(visibility=1).order_by("-date_created") # filter('если автор поста у меня в друзьях')
+        
+        if request.method == "POST":
+            form = PostForm(request.POST)
+            if form.is_valid():
+                new_title_text = form.cleaned_data['title']
+                new_textarea_text = form.cleaned_data['textarea']
+                
+                post.title = new_title_text
+                post.text = new_textarea_text
+                
+                post.save()
+                return HttpResponseRedirect(reverse('messenger:posts:posts'))
+        else:
+            form = PostForm(initial={
+                'title': post.title,
+                'textarea': post.text,
+            })
+
+        data = {
+            'title': 'Posts',
+            'request': request,
+            'username': request.user.username,
+            'my_friends': my_friends,
+            'posts': posts,
+            'form': form,
+        }
+
+        return render(request, 'posts/list_posts.html', context=data)

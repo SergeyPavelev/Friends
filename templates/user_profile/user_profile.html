@@ -33,16 +33,22 @@
                 {% if user in my_friends %}
                     <form action="{% url 'messenger:delete_from_friends' friend_id=user.id %}" method="post">
                         {% csrf_token %}
-                        <button class="btn-delete-friend" type="submit" name="Delete from friends">
+                        <button class="user-profile-button" type="submit" name="Delete from friends">
                             <p>Delete from friends</p>
                         </button>
                     </form>
 
-                    <a class="href-for-message-from-profile" href="{% url 'messenger:send_message' receiver_id=user.id %}">Message</a>
+                    <div class="div-message-profile-button">
+                        <a class="href-message-profile" href="{% url 'messenger:send_message' receiver_id=user.id %}">
+                            <button class="message-profile-button">
+                                Message
+                            </button>
+                        </a>
+                    </div>
                 {% else %}
                     <form action="{% url 'messenger:add_to_friends' friend_id=user.id %}" method="post">
                         {% csrf_token %}
-                        <button class="btn-add-friend" type="submit" name="Add to friends">
+                        <button class="user-profile-button" type="submit" name="Add to friends">
                             <p>Add to friends</p>
                         </button>
                     </form>
@@ -52,14 +58,16 @@
     </div>
 
     <div class="additional-information-about-user">
-        {% if user == request.user %}
-            <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
-                {% csrf_token %}
-                <label for="username">Username: </label>
-                <input type="text" placeholder="Username" class="input-profile-data" name="username" value="{{ user.username }}">
-                <button type="submit" class="change-data-user" name="Change username">Change</button>
-            </form>
-        {% endif %}
+        <div class="info-block">
+            {% if user == request.user %}
+                <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
+                    {% csrf_token %}
+                    <label for="username">Username: </label>
+                    <input type="text" placeholder="Username" class="input-profile-data" name="username" value="{{ user.username }}">
+                    <button type="submit" class="change-data-user" name="Change username">Change</button>
+                </form>
+            {% endif %}
+        </div>
 
         <div class="info-block">
             <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">

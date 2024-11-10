@@ -1,23 +1,28 @@
 {% extends 'messenger/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/list_users.css' %}">
+{% endblock %}
 
 {% block content %}
-    <div id="reciever-name">
+    <div class="div-h2">
         <h2>My friends</h2>
     </div>
 
-    {% for friend in my_friends %}
-        <ul class="list">
-            <li class="list-item">
-                <form action="{% url 'messenger:delete_from_friends' friend_id=friend.id %}" method="post">
-                {% csrf_token %}
-                <a class="link-user-profile" href="{% url 'user_profile:profile' user_id=friend.id %}">
-                    <span class="link-name">{{ friend.username }}</span>
-                </a>
-                <button class="btn-delete-friend" type="submit">
-                    <i class='bx bx-user-minus' ></i>
-                </button>
-                </form>
-            </li>
+        <ul class="list-users">
+            {% for friend in my_friends %}
+                <li class="list-item">
+                    <form action="{% url 'messenger:delete_from_friends' friend_id=friend.id %}" method="post">
+                        {% csrf_token %}
+                        <a class="link-user-profile" href="{% url 'user_profile:profile' user_id=friend.id %}">
+                            <span class="link-name">{{ friend.username }}</span>
+                        </a>
+                        <button class="users-buttons" type="submit">
+                            <i class='bx bx-user-minus' ></i>
+                        </button>
+                    </form>
+                </li>
+            {% endfor %}
         </ul>
-    {% endfor %}
 {% endblock %}

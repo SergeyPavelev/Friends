@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.contrib import auth
 from django.contrib.auth.hashers import make_password
 from django.urls import reverse
+from django.contrib.auth.signals import user_logged_in, user_logged_out
+from django.dispatch import receiver
 from .models import Users
 from .forms import LoginUserForm, RegisterUserForm
 
@@ -18,6 +20,10 @@ def login_user(request):
             username = request.POST['username']
             password = request.POST['password']
             user = auth.authenticate(request=request, username=username, password=password)
+            
+            print(username, password)
+            
+            print(user)
                         
             if user is not None:
                 auth.login(request, user)
@@ -97,3 +103,13 @@ def confirmation_phone_and_username(phone, username):
 def logout_user(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse('auth:login'))
+
+# @receiver(user_logged_in)
+# def set_user_active(sender, request, user, **kwargs):
+#     user.is_active = True
+#     user.save()
+    
+# @receiver(user_logged_out)
+# def set_user_inactive(sender, request, user, **kwargs):
+#     user.is_active = False
+#     user.save()

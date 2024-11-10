@@ -1,0 +1,58 @@
+.block-chats {
+    margin: 5px 20px;
+    padding: 5px;
+    display: block;
+    width: 80%;
+}
+
+.chat {
+    margin: 20px auto;
+    padding: 15px;
+    transition: .1s;
+    border-radius: 10px;
+}
+
+.chat:hover {
+    background: #39373e;
+}
+
+.link-chat {
+    padding: 10px;
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-img {
+    display: flex;
+    margin-right: 20px;
+    flex-shrink: 0;
+    max-width: 50px;
+    max-height: 50px;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-chat {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    margin: 2px;
+    padding: 2px;
+    font-size: 18px;
+    color: #fff;
+}
+
+.last-message {
+    margin: 2px;
+    padding: 2px;
+    color: #858090;
+}
+
+.time-submit {
+    margin-left: auto;
+    color: #858090;
+}

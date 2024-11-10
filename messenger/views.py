@@ -3,8 +3,9 @@ from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect, JsonResponse
 from django.views.generic import View, ListView
 from django.urls import reverse
-from.models import Message, Room
-from.forms import MessageForm
+from django.utils import timezone
+from .models import Message, Room
+from .forms import MessageForm
 
 
 User = get_user_model()
@@ -27,9 +28,29 @@ class Index_Messages_View(View):
                     my_friend = user
                 
             if last_message:
-                chats_data[my_friend] = f'{last_message.sender}: {last_message.text_message}'
-            else:
-                chats_data[my_friend] = 'No messages'
+                time_submit = ''
+                time_difference = timezone.now() - last_message.date_created
+                seconds = time_difference.total_seconds()
+    
+                if seconds < 60:
+                    time_submit = 'только что'
+                elif seconds < 3600:  # Менее 1 часа
+                    minutes = int(seconds // 60)
+                    time_submit = f'{minutes} минут назад'
+                elif seconds < 86400:  # Менее 1 дня
+                    hours = int(seconds // 3600)
+                    time_submit = f'{hours} часов назад'
+                elif seconds < 31536000:  # Менее 1 года
+                    days = int(seconds // 86400)
+                    time_submit = f'{days} дней назад'
+                else:  # Более 1 года
+                    years = int(seconds // 31536000)
+                    time_submit = f'{years} лет назад'
+                
+                chats_data[my_friend] = [
+                    f'{last_message.sender}: {last_message.text_message}',
+                    time_submit,
+                ]
         
         data = {
             'title': "Messenger",
@@ -40,7 +61,7 @@ class Index_Messages_View(View):
             'chats_data': chats_data,
         }
         
-        return render(request, "messenger/messages.html", context=data)
+        return render(request, "messenger/list_messages.html", context=data)
 
 
 class Send_Messages_View(View):
@@ -161,8 +182,6 @@ class Send_Messages_View(View):
                 return HttpResponseRedirect(reverse('messenger:send_message', kwargs={'receiver_id': message.receiver_id}))
         else:
             form = MessageForm(initial={'textarea': message.text_message})
-        
-        print(request.path)
 
         data = {
             'title': f"Messenger with {message.receiver}",
@@ -178,53 +197,7 @@ class Send_Messages_View(View):
         }
 
         return render(request, 'messenger/send_messages.html', context=data)
-
-
-class Send_Messages_Favorites_View(View):
-    def get(self, request):
-        if not request.user.is_authenticated:
-            return HttpResponseRedirect(reverse('auth:login'))
-        
-        form = MessageForm()
-        
-        my_friends = [User.objects.get(pk=friend[0]) for friend in User.objects.filter(pk=request.user.id).values_list('friends')]
-        room = Room.create_or_get_room(user1=request.user, user2=request.user) #!!! Исправить баг в этой функции
-        messages_in_room = Message.objects.filter(room=str(room.pk))
-        
-        data = {
-            'title': f"Favorites",
-            'request': request,
-            'username': request.user.username,
-            'room_id': room,
-            'my_friends': my_friends,
-            'messages_in_room': messages_in_room,
-            'form': form,
-        }
-        
-        return render(request, 'messenger/send_messages_favorites.html', context=data)
     
-    def post(self, request):
-        form = MessageForm(request.POST)
-        
-        if form.is_valid():
-            message = str(request.POST['textarea']).strip()
-            room = Room.create_or_get_room(user1=request.user, user2=request.user)
-            Message(text_message=message, sender=request.user, receiver=request.user, room=room.pk).save()
-            
-            return HttpResponseRedirect(reverse('messenger:send_message_favorites'))            
-        else:
-            form = MessageForm()
-            
-            data ={
-                'title': f"Messenger",
-                'equest': request,
-                'username': request.user.username,
-                'form': form,
-                'room_id': Room.create_or_get_room(user1=request.user, user2=request.user),
-            }
-            
-            return render(request, 'essenger/send_messages_favorites.html', context=data)
-
 
 class Show_My_Friends(ListView):    
     model = User
@@ -244,9 +217,9 @@ class Show_My_Friends(ListView):
         return context
     
 
-class Show_All_People(ListView):
+class Show_All_Users(ListView):
     model = User
-    template_name = 'messenger/list_all_people.html'
+    template_name = 'messenger/list_all_users.html'
     
     def get_context_data(self, *, object_list=None, **kwargs):
         if not self.request.user.is_authenticated:
@@ -290,30 +263,3 @@ class Show_All_People(ListView):
             friend.friends.remove(user)
             
         return redirect(request.META.get('HTTP_REFERER'))
-    
-
-class Chat_Gpt_View(View):
-    def get(self, request):
-        if not request.user.is_authenticated:
-            return HttpResponseRedirect(reverse('auth:login'))
-        
-        form = MessageForm()
-        
-        my_friends = [User.objects.get(pk=friend[0]) for friend in User.objects.filter(pk=request.user.id).values_list('friends')]
-        room = Room.create_or_get_room(user1=request.user, user2=request.user) #!!! Исправить баг в этой функции
-        messages_in_room = Message.objects.filter(room=str(room.pk))
-        
-        data = {
-            'title': f"Favorites",
-            'request': request,
-            'username': request.user.username,
-            'room_id': room,
-            'my_friends': my_friends,
-            'messages_in_room': messages_in_room,
-            'form': form,
-        }
-        
-        return render(request, 'messenger/chat-gpt.html', context=data)
-    
-    def post(self, request):
-        pass
