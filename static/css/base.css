@@ -26,8 +26,10 @@ body {
 }
 
 .header-right-position {
+    margin: 5px;
     float: right;
     display: flex;
+    align-items: center;
 }
 
 .block-img-site {
@@ -44,6 +46,12 @@ body {
     align-items: center;
 }
 
+.block-form-search form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .block-form-search input {
     padding: 5px;
     width: 80%;
@@ -51,6 +59,7 @@ body {
     border: none;
     outline: none;
     border-radius: 10px;
+    color: #fff;
 }
 
 .block-form-search input:focus {
@@ -63,36 +72,41 @@ body {
     text-align: center;
 }
 
-.block-button-notification button {
+.block-button-header button {
     margin: 5px;
     padding: 5px;
+    display: flex;
     background: #39373e;
     border: none;
     outline: none;
     border-radius: 10px;
+    height: 40px;
+    align-items: center;
+    color: #fff;
 }
 
 .block-form-search input:hover,
-.block-button-notification button:hover,
-.block-button-logout button:hover,
+.block-button-header button:hover,
 .block-my-account:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, .5);;
 }
 
-.block-button-logout button {
-    margin: 5px 30px 5px 5px;
-    padding: 5px;
-    background: #39373e;
-    border: none;
-    outline: none;
-    border-radius: 10px;
+.block-my-account {
+    margin: 5px 5px 5px 40px;
+    display: flex;
+    border-radius: 50%;
+    align-items: center;
+    flex-shrink: 0;
+    max-width: 40px;
+    max-height: 40px;
+    justify-content: center;
+    overflow: hidden;
 }
 
-.block-my-account {
-    margin: 5px;
-    padding: 5px;
-    border-radius: 10px;
-    background: #39373e;
+.block-my-account img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .navigation {

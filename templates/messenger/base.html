@@ -27,20 +27,32 @@
                     <input type="text" name="search" placeholder="Search">
                 </form>
             </div>
-            <div class="block-button-notification">
+            <div class="block-button-header">
                 <button>
                     <img src="{% static 'img/notification-button.png' %}" alt="Notification-img">
                 </button>
             </div>
-            <div class="block-button-logout">
+            <div class="block-button-header">
                 <button>
-                    <img src="{% static 'img/logout-img.png' %}" alt="Logout-button">
+                    <img src="{% static 'img/button-sun.png' %}" alt="Logout-button">
+                    <!-- <img src="{% static 'img/button-moon.png' %}" alt="Logout-button"> -->
+                </button>
+            </div>
+            <div class="block-button-header">
+                <button>
+                     Logout
                 </button>
             </div>
             <div class="block-my-account">
-                <a href="{% url 'user_profile:profile' user_id=request.user.id %}">
-                    <img src="{% static 'img/user-profile.png' %}" alt="User-profile">
-                </a>
+                {% if request.user.profile_photo %}
+                    <a href="{% url 'user_profile:profile' user_id=request.user.id %}">
+                        <img src="{{ request.user.profile_photo.url }}" alt="User -avatar">
+                    </a>
+                {% else %}
+                    <a href="{% url 'user_profile:profile' user_id=request.user.id %}">
+                        <img src="{% static 'img/user-profile.png' %}" alt="User -profile">
+                    </a>
+                {% endif %}
             </div>
         </div>
     </section>

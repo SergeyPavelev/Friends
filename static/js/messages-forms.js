@@ -27,62 +27,63 @@ $(document).ready(function() {
                     
                     if (user == sender_message) {
                         var message = `
-                            <div class="message">
-                                <div class="div-message-sender">
-                                    <li class="message-sender">${sender_message}: ${text_message}</li>
-                                    <p class="message-time-created">${time_created_message}</p>
+                            <div class="block-message-me">
+                                <div class="block-text-message">
+                                    <li class="message-info">
+                                        <span class="message-sender">${message.sender}</span>
+                                        <div class="message-text">
+                                            <p>${ message.text_message}</p>
+                                            <span class="message-time-created">${ message.time_created}</span>
+                                        </div>
+                                    </li>
                                 </div>
 
-                                <div class="list-message-btns">
-                                    <div class="activate-btn">
-                                        <i class='bx bx-chevron-right'></i>
+                                <div class="block-message-buttons">
+                                    <div class="block-message-button">
+                                        <form action="{% url 'messenger:edit_message' receiver_id=receiver_id message_id=message.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit">
+                                                <i class='bx bxs-edit'></i>
+                                            </button>
+                                        </form>
                                     </div>
-
-                                    <div class="message-btns">
-                                        <div class="message-btn">
-                                            <form action="{% url 'messenger:edit_message' receiver_id=receiver_id message_id=message.id %}">
-                                                {% csrf_token %}
-                                                <button type="submit">
-                                                    <i class='bx bxs-edit'></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                
-                                        <div class="message-btn">
-                                            <form action="{% url 'messenger:delete_message_from_everyone' message_id=message.id %}" method="post">
-                                                {% csrf_token %}
-                                                <button type="submit">
-                                                    <i class='bx bx-trash'></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                
-                                        <div class="message-btn">
-                                            <form action="{% url 'messenger:delete_message_from_me' message_id=message.id %}" method="post">
-                                                {% csrf_token %}
-                                                <button type="submit">
-                                                    <i class='bx bx-trash'></i>
-                                                </button>
-                                            </form>
-                                        </div>
+            
+                                    <div class="block-message-button">
+                                        <form action="{% url 'messenger:delete_message_from_everyone' message_id=message.id %}" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit">
+                                                <i class='bx bx-trash'></i>
+                                            </button>
+                                        </form>
+                                    </div>
+            
+                                    <div class="block-message-button">
+                                        <form action="{% url 'messenger:delete_message_from_me' message_id=message.id %}" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit">
+                                                <i class='bx bx-trash'></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         `
                     } else {
                         var message = `
-                            <div class="message">
-                                <div class="div-message-sender">
-                                    <li class="message-sender">${sender_message}: ${text_message}</li>
-                                    <p class="message-time-created">${time_created_message}</p>
+                            <div class="block-message-receiver">
+                                <div class="block-text-message">
+                                    <li class="message-info">
+                                        <span class="message-sender">${message.sender}</span>
+                                        <div class="message-text">
+                                            <p>${message.text_message}</p>
+                                            <span class="message-time-created">${message.time_created}</span>
+                                        </div>
+                                    </li>
                                 </div>
-
-                                <div class="list-message-btns">
-                                    <div class="activate-btn">
-                                        <i class='bx bx-chevron-right'></i>
-                                    </div>
-                
-                                        <div class="message-btn">
+            
+                                <div class="block-message-buttons">
+                                    <div class="block-edit-buttons">
+                                        <div class="block-message-button">
                                             <form action="{% url 'messenger:delete_message_from_everyone' message_id=message.id %}" method="post">
                                                 {% csrf_token %}
                                                 <button type="submit">
@@ -91,7 +92,7 @@ $(document).ready(function() {
                                             </form>
                                         </div>
                 
-                                        <div class="message-btn">
+                                        <div class="block-message-button">
                                             <form action="{% url 'messenger:delete_message_from_me' message_id=message.id %}" method="post">
                                                 {% csrf_token %}
                                                 <button type="submit">

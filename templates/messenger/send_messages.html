@@ -15,8 +15,18 @@
         <ul class="lists-messages">
             {% for message in messages_in_room %}
                 {% if message.sender == request.user %}
-                    <div class="block-message">
+                    <div class="block-message-me">
                         <div class="block-text-message">
+                            {% if message.sender.profile_photo %}
+                                <div class="block-message-img">
+                                    <img src="{{ message.sender.profile_photo.url }}" alt="User -avatar">
+                                </div>
+                            {% else %}
+                                <div class="block-message-img">
+                                    <img src="{% static 'img/user-profile.png' %}" alt="User -profile">
+                                </div>
+                                </a>
+                            {% endif %}
                             <li class="message-info">
                                 <span class="message-sender">{{ message.sender }}</span>
                                 <div class="message-text">
@@ -27,50 +37,55 @@
                         </div>
 
                         <div class="block-message-buttons">
-                            <div class="block-edit-buttons">
-                                <div class="block-message-button">
-                                    {% if message.sender == request.user %}
-                                        <form action="{% url 'messenger:edit_message' receiver_id=receiver_id message_id=message.id %}">
-                                            {% csrf_token %}
-                                            <button type="submit">
-                                                <i class='bx bxs-edit'></i>
-                                            </button>
-                                        </form>
-                                    {% endif %}
-                                </div>
-        
-                                <div class="block-message-button">
-                                    <form action="{% url 'messenger:delete_message_from_everyone' message_id=message.id %}" method="post">
-                                        {% csrf_token %}
-                                        <button type="submit">
-                                            <i class='bx bx-trash'></i>
-                                        </button>
-                                    </form>
-                                </div>
-        
-                                <div class="block-message-button">
-                                    <form action="{% url 'messenger:delete_message_from_me' message_id=message.id %}" method="post">
-                                        {% csrf_token %}
-                                        <button type="submit">
-                                            <i class='bx bx-trash'></i>
-                                        </button>
-                                    </form>
-                                </div>
+                            <div class="block-message-button">
+                                <form action="{% url 'messenger:edit_message' receiver_id=receiver_id message_id=message.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit">
+                                        <i class='bx bxs-edit'></i>
+                                    </button>
+                                </form>
+                            </div>
+    
+                            <div class="block-message-button">
+                                <form action="{% url 'messenger:delete_message_from_everyone' message_id=message.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit">
+                                        <i class='bx bx-trash'></i>
+                                    </button>
+                                </form>
+                            </div>
+    
+                            <div class="block-message-button">
+                                <form action="{% url 'messenger:delete_message_from_me' message_id=message.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit">
+                                        <i class='bx bx-trash'></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 {% else %}
-                    <div class="block-message">
+                    <div class="block-message-receiver">
                         <div class="block-text-message">
+                            {% if message.sender.profile_photo %}
+                                <div class="block-message-img">
+                                    <img src="{{ message.sender.profile_photo.url }}" alt="User -avatar">
+                                </div>
+                            {% else %}
+                                <div class="block-message-img">
+                                    <img src="{% static 'img/user-profile.png' %}" alt="User -profile">
+                                </div>
+                            {% endif %}
                             <li class="message-info">
-                                <span>{{ message.sender }}</span>
+                                <span class="message-sender">{{ message.sender }}</span>
                                 <div class="message-text">
                                     <p>{{ message.text_message }}</p>
                                     <span class="message-time-created">{{ message.time_created }}</span>
                                 </div>
                             </li>
                         </div>
-
+    
                         <div class="block-message-buttons">
                             <div class="block-edit-buttons">
                                 <div class="block-message-button">
@@ -102,13 +117,13 @@
         <form id="EditMessageForm" class="block-message-form" action="{% url 'messenger:edit_message' receiver_id=receiver_id message_id=message.id %}" method="post">
             {% csrf_token %}
             {{ form.textarea }}
-            <input class="submit-message" id="input-edit-message-form" type="submit" name="SubmitMessage" placeholder="Отправить">
+            <input class="submit-message" id="input-edit-message-form" type="submit" name="SubmitMessage" placeholder="Send">
         </form>
     {% else %}
         <form id="SendMessageForm" class="block-message-form" method="post">
             {% csrf_token %}
             {{ form.textarea }}
-            <input class="submit-message" id="input-message-form" type="submit" name="SubmitMessage" placeholder="Отправить">
+            <input class="submit-message" id="input-message-form" type="submit" name="SubmitMessage" placeholder="Send" value="Send">
         </form>
     {% endif %}
 {% endblock %}
