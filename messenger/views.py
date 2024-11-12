@@ -150,7 +150,7 @@ class Send_Messages_View(View):
                 message.sender_visibility = 0
             else:
                 message.receiver_visibility = 0
-                message.save()
+            message.save()
         
         return redirect(request.META.get('HTTP_REFERER'))
     

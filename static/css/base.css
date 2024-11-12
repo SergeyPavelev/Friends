@@ -9,6 +9,7 @@
 body {
     background: #1b1b20;
     font-family: 'Roboto';
+    height: 100%;
 }
 
 .header {
@@ -16,7 +17,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid #39373e;
     color: #fff;
 }
 
@@ -60,6 +61,7 @@ body {
     outline: none;
     border-radius: 10px;
     color: #fff;
+    transition: .1s;
 }
 
 .block-form-search input:focus {
@@ -83,12 +85,13 @@ body {
     height: 40px;
     align-items: center;
     color: #fff;
+    transition: .1s;
 }
 
 .block-form-search input:hover,
 .block-button-header button:hover,
 .block-my-account:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, .5);;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .5);
 }
 
 .block-my-account {
@@ -101,6 +104,7 @@ body {
     max-height: 40px;
     justify-content: center;
     overflow: hidden;
+    transition: .1s;
 }
 
 .block-my-account img {
@@ -113,6 +117,7 @@ body {
     display: inline;
     width: 20%;
     position: fixed;
+    font-size: 18px;
 }
 
 .block-nav-buttons {
