@@ -1,11 +1,14 @@
-const message_btns = document.querySelectorAll('.message-btns');
-const activate_btns = document.querySelectorAll('.activate-btn');
+const blockMessageButtons = document.querySelectorAll('.block-message-buttons');
+const blockMessage = document.querySelectorAll('.message-text');
 
-console.log(message_btns);
+console.log(blockMessageButtons);
+console.log();
+console.log(blockMessage);
 
 
-activate_btns.forEach((activate_btn, index) => {
-    activate_btn.addEventListener('click', () => {
-        message_btns[index].classList.toggle('active');
+
+blockMessage.forEach((message, index) => {
+    message.addEventListener('click', () => {
+        blockMessageButtons[index].classList.toggle('active');
     });
 });

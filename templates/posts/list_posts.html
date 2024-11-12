@@ -6,55 +6,61 @@
 {% endblock %}
 
 {% block content %}
-    <div class="div-post-form">
-        <form id="PostForm" method="post">
-            {% csrf_token %}
-            {{ form.title }}
-            {{ form.textarea }}
-            <div class="error"></div>
-            <input id="input-post-form" type="submit" name="submit" value="Сохранить">
-        </form>
-    </div>
-
-    <div class="div-lists-posts">
-        <ul class="lists-posts">
-            {% for post in posts %}
-                <div class="posts-container">
-                    <div class="div-post-author">
-                        <p class='post-author'>{{ post.author }}</p>
-                    </div>
-                    <div class="div-post-title">
-                        <p class='post-title'>{{ post.title }}</p>
-                    </div>
-                    <div class="div-post-text">
-                        <p class='post-text'>{{ post.text }}</p>
-                    </div>
-                    <div class="div-post-date-created">
-                        <p class='post-date-created'>{{ post.date_created }}</p>
-                    </div>
-                    {% if request.user == post.author %}
-                        <div class="post-btns">
-                            <div class="div-post-btn">
-                                <form id="edit-post-form" action="{% url 'messenger:posts:edit_post' post_id=post.id %}" method="post">
-                                    {% csrf_token %}
-                                    <button class="button-post" id="button-edit-post" type="submit">
-                                        <i class='bx bxs-edit'></i>
-                                    </button>
-                                </form>
-                            </div>
-                            <div class="div-post-btn">
-                                <form id="delete-post-form" action="{% url 'messenger:posts:delete_post' post_id=post.id %}" method="post">
-                                    {% csrf_token %}
-                                    <button class="button-post" id="button-delete-post" type="submit">
-                                        <i class='bx bx-trash'></i>
-                                    </button>
-                                </form>
-                            </div>
+    <div class="container">
+        <div class="title-page">
+            <h2>Create a post</h2>
+        </div>
+    
+        <div class="block-post-form">
+            <form id="PostForm" method="post">
+                {% csrf_token %}
+                {{ form.title }}
+                {{ form.textarea }}
+                <div class="error"></div>
+                <input id="save-post" type="submit" name="submit" value="Save post">
+            </form>
+        </div>
+    
+        <div class="block-list-posts">
+            <ul class="list-posts">
+                {% for post in posts %}
+                    <div class="block-post">
+                        <div class="block-post-author">
+                            <p class='post-author'>{{ post.author }}</p>
                         </div>
-                    {% endif %}
-                </div>
-            {% endfor %}
-        </ul>
+                        <div class="block-post-title">
+                            <p class='post-title'>{{ post.title }}</p>
+                        </div>
+                        <div class="block-post-text">
+                            <p class='post-text'>{{ post.text }}</p>
+                        </div>
+                        <div class="block-post-date-created">
+                            <p class='post-date-created'>{{ post.date_created }}</p>
+                        </div>
+                        {% if request.user == post.author %}
+                            <div class="block-post-buttons">
+                                <div class="block-post-button">
+                                    <form id="edit-post-form" action="{% url 'messenger:posts:edit_post' post_id=post.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button class="button-post" id="button-edit-post" type="submit">
+                                            <i class='bx bxs-edit'></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="block-post-button">
+                                    <form id="delete-post-form" action="{% url 'messenger:posts:delete_post' post_id=post.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button class="button-post" id="button-delete-post" type="submit">
+                                            <i class='bx bx-trash'></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 {% endblock %}
 

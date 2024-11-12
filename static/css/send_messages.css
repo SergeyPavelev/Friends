@@ -1,7 +1,9 @@
 .container {
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 100vh;
+    flex-grow: 1;
 }
 
 #receiver-name {
@@ -17,10 +19,10 @@
 .block-messages {
     display: flex;
     padding: 50px;
+    padding-right: 80px;
     margin: 0;
     color: #fff;
-    /* max-height: calc(100% - 120px); */
-    max-height: 900px;
+    max-height: calc(100vh - 370px);
     overflow-y: auto;
     flex-direction: column-reverse;
     border-radius: 10px;
@@ -33,26 +35,26 @@
 }
 
 .block-messages::-webkit-scrollbar-track {
-    background: #858090;
+    background: #9EA6B8;
     border-radius: 10px;
 }
 
 .block-messages::-webkit-scrollbar-thumb {
-    background-color: #39373e;
+    background-color: #292e38;
     border-radius: 10px;
 }
 
 .block-message-me {
-    margin: 5px;
-    padding: 5px;
+    margin: 15px;
+    padding: 10px;
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
 }
 
 .block-message-receiver {
-    margin: 5px;
-    padding: 5px;
+    margin: 15px;
+    padding: 10px;
     display: flex;
     align-items: flex-end;
 }
@@ -80,13 +82,22 @@
     object-fit: cover;
 }
 
-.message-sender {
-    color: #858090;
+.block-message-me .message-sender {
+    display: flex;
+    color: #9EA6B8;
+    justify-content: right;
+}
+
+.block-message-receiver .message-sender {
+    display: flex;
+    color: #9EA6B8;
+    justify-content: left;
 }
 
 .message-text p {
     margin: 2px;
-    font-size: 18px;
+    margin-bottom: 5px;
+    font-size: 20px;
 }
 
 .block-message-me .message-text {
@@ -107,7 +118,7 @@
     padding: 10px;
     padding-bottom: 2px;
     display: flex;
-    background: #39373e;
+    background: #292e38;
     border-radius: 10px;
     color: #fff;
     min-width: 150px;
@@ -125,6 +136,10 @@
 }
 
 .block-message-buttons {
+    display: none;
+}
+
+.block-message-buttons.active {
     margin: 0 10px 0 10px;
     display: flex;
     align-items: center;
@@ -132,13 +147,9 @@
     transition: .1s;
 }
 
-.block-message-button {
-
-}
-
 .block-message-button button {
     padding: 5px;
-    background: #39373e;
+    background: #292e38;
     border: none;
     border-radius: 10px;
     transition: .1s;
@@ -164,7 +175,7 @@
 .block-message-form textarea {
     padding: 10px;
     padding-right: 50px;
-    background: #39373e;
+    background: #292e38;
     border: none;
     outline: none;
     border-radius: 10px;
@@ -176,7 +187,11 @@
 }
 
 .block-message-form textarea::placeholder {
-    color: #858090;
+    color: #9EA6B8;
+}
+
+.block-message-form textarea:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, .5);
 }
 
 .submit-message {

@@ -7,13 +7,14 @@
 }
 
 body {
-    background: #1b1b20;
+    background: #121217;
     font-family: 'Roboto';
-    height: 100%;
+    flex-direction: column;
+    height: 100vh;
 }
 
 .header {
-    padding: 5px;
+    padding: 2px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -56,7 +57,7 @@ body {
 .block-form-search input {
     padding: 5px;
     width: 80%;
-    background: #39373e;
+    background: #292e38;
     border: none;
     outline: none;
     border-radius: 10px;
@@ -70,7 +71,7 @@ body {
 }
 
 .block-form-search input::placeholder {
-    color: #858090;
+    color: #9EA6B8;
     text-align: center;
 }
 
@@ -78,7 +79,7 @@ body {
     margin: 5px;
     padding: 5px;
     display: flex;
-    background: #39373e;
+    background: #292e38;
     border: none;
     outline: none;
     border-radius: 10px;
@@ -135,7 +136,7 @@ body {
 }
 
 .block-nav-buttons .nav-link:hover {
-    background: #39373e;
+    background: #292e38;
     transition: .1s;
 }
 

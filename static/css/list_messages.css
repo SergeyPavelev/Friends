@@ -13,7 +13,7 @@
 }
 
 .chat:hover {
-    background: #39373e;
+    background: #292e38;
 }
 
 .link-chat {
@@ -28,8 +28,8 @@
     display: flex;
     margin-right: 20px;
     flex-shrink: 0;
-    max-width: 50px;
-    max-height: 50px;
+    max-width: 60px;
+    max-height: 60px;
     border-radius: 50%;
     align-items: center;
     justify-content: center;
@@ -50,17 +50,17 @@
 .user-name {
     margin: 2px;
     padding: 2px;
-    font-size: 18px;
+    font-size: 24px;
     color: #fff;
 }
 
 .last-message {
     margin: 2px;
     padding: 2px;
-    color: #858090;
+    color: #9EA6B8;
 }
 
 .time-submit {
     margin-left: auto;
-    color: #858090;
+    color: #9EA6B8;
 }

@@ -4,7 +4,11 @@ $(document).ready(function() {
         e.stopPropagation();
     
         var element = document.getElementById('SendMessageForm');
-        var textarea = element.textarea.value; 
+        var textarea = element.textarea.value;
+
+        if(!textarea) {
+            return;
+        };
                     
         if (textarea != "") {
             $.ajax({
@@ -28,16 +32,6 @@ $(document).ready(function() {
                     if (user == sender_message) {
                         var message = `
                             <div class="block-message-me">
-                                <div class="block-text-message">
-                                    <li class="message-info">
-                                        <span class="message-sender">${message.sender}</span>
-                                        <div class="message-text">
-                                            <p>${ message.text_message}</p>
-                                            <span class="message-time-created">${ message.time_created}</span>
-                                        </div>
-                                    </li>
-                                </div>
-
                                 <div class="block-message-buttons">
                                     <div class="block-message-button">
                                         <form action="{% url 'messenger:edit_message' receiver_id=receiver_id message_id=message.id %}">
@@ -66,6 +60,16 @@ $(document).ready(function() {
                                         </form>
                                     </div>
                                 </div>
+
+                                <div class="block-text-message">
+                                    <li class="message-info">
+                                        <span class="message-sender">${sender_message}</span>
+                                        <div class="message-text">
+                                            <p>${text_message}</p>
+                                            <span class="message-time-created">${time_created_message}</span>
+                                        </div>
+                                    </li>
+                                </div>
                             </div>
                         `
                     } else {
@@ -73,10 +77,10 @@ $(document).ready(function() {
                             <div class="block-message-receiver">
                                 <div class="block-text-message">
                                     <li class="message-info">
-                                        <span class="message-sender">${message.sender}</span>
+                                        <span class="message-sender">${sender_message}</span>
                                         <div class="message-text">
-                                            <p>${message.text_message}</p>
-                                            <span class="message-time-created">${message.time_created}</span>
+                                            <p>${text_message}</p>
+                                            <span class="message-time-created">${time_created_message}</span>
                                         </div>
                                     </li>
                                 </div>
@@ -109,7 +113,7 @@ $(document).ready(function() {
                     list_messages.insertAdjacentHTML('beforeend', message);
                 },
     
-                errors: function (data) {
+                error: function (data) {
                     alert(data['errors']);
                 },
             });

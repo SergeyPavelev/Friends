@@ -1,4 +1,4 @@
-.div-post-form{
+/* .div-post-form{
     display: flex;
     justify-content: center;
     border-radius: 7px;
@@ -116,4 +116,61 @@
 
 .div-post-btn button:hover {
     box-shadow: -.2px .2px 4px 0px rgba(0, 0, 0, .5);
+} */
+
+
+
+
+.container {
+    padding: 20px 100px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    flex-grow: 1;
+    color: #fff;
+}
+
+.title-page {
+    padding-left: 10px;
+    font-size: 28px;
+}
+
+#PostForm textarea {
+    padding: 15px;
+    margin: 10px;
+    margin-bottom: 20px;
+    display: block;
+    background: #292e38;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    transition: .1s;
+    color: #fff;
+    resize: none;
+    width: 40%;
+}
+
+#title-input {
+    max-height: 65px;
+}
+
+#textarea-input {
+    max-height: 150px;
+}
+
+#PostForm textarea::placeholder {
+    color: #9EA6B8;
+}
+
+#PostForm textarea:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+}
+
+#save-post {
+    margin: 5px 5px 20px 10px;
+    padding: 10px;
+    background: #3f62ff;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
 }

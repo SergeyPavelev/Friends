@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#input-post-form').click(function(e){
+    $('#save-post').click(function(e){
         e.preventDefault();
         e.stopPropagation();
     
@@ -29,25 +29,26 @@ $(document).ready(function() {
                     var date_created = data['success']['date_created'];
                     
     
-                    var lists_posts = document.querySelector('.lists-posts');
+                    var lists_posts = document.querySelector('.list-posts');
     
                     if(data['success']['user'] == data['success']['author']){
                         var post = `
-                            <div class="posts-container">
-                                <div class="div-post-author">
+                            <div class="block-post">
+                                <div class="block-post-author">
                                     <p class='post-author'>${author}</p>
                                 </div>
-                                <div class="div-post-title">
+                                <div class="block-post-title">
                                     <p class='post-title'>${title}</p>
                                 </div>
-                                <div class="div-post-text">
+                                <div class="block-post-text">
                                     <p class='post-text'>${text}</p>
                                 </div>
-                                <div class="div-post-date-created">
+                                <div class="block-post-date-created">
                                     <p class='post-date-created'>${date_created}</p>
                                 </div>
-                                <div class="post-btns">
-                                    <div class="div-post-btn">
+                                
+                                <div class="block-post-buttons">
+                                    <div class="block-post-button">
                                         <form action="" method="post">
                                             <button>
                                                 <i class='bx bxs-edit'></i>
@@ -66,17 +67,17 @@ $(document).ready(function() {
                         `;
                     } else {
                         var post = `
-                            <div class="posts-container">
-                                <div class="div-post-author">
+                            <div class="block-post">
+                                <div class="block-post-author">
                                     <p class='post-author'>${author}</p>
                                 </div>
-                                <div class="div-post-title">
+                                <div class="block-post-title">
                                     <p class='post-title'>${title}</p>
                                 </div>
-                                <div class="div-post-text">
+                                <div class="block-post-text">
                                     <p class='post-text'>${text}</p>
                                 </div>
-                                <div class="div-post-date-created">
+                                <div class="block-post-date-created">
                                     <p class='post-date-created'>${date_created}</p>
                                 </div>
                             </div>

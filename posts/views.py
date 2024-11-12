@@ -41,7 +41,6 @@ class View_Posts(View):
             new_post.save()
             
             data = {
-                'request': request,
                 'user': request.user.username,
                 'author': new_post.author.username,
                 'title': new_post.title,

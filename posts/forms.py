@@ -7,7 +7,7 @@ class PostForm(forms.ModelForm):
     title = forms.CharField(widget=forms.Textarea(attrs={
         'id': 'title-input',
         'name': 'title',
-        'placeholder': 'Ввести название поста...',
+        'placeholder': 'What do you want to talk about?',
         'spellcheck': 'True',
         'required': 'True',
     }))
@@ -15,7 +15,7 @@ class PostForm(forms.ModelForm):
     textarea = forms.CharField(widget=forms.Textarea(attrs={
         'id': 'textarea-input',
         'name': 'textarea',
-        'placeholder': 'Написать пост...',
+        'placeholder': 'Your post here...',
         'spellcheck': 'True',
         'required': 'True',
     }))

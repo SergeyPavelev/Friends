@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.views.generic import View, ListView
 from django.urls import reverse
 from django.utils import timezone
+from django.middleware.csrf import get_token
 from .models import Message, Room
 from .forms import MessageForm
 
@@ -50,7 +51,7 @@ class Index_Messages_View(View):
                 chats_data[my_friend] = [
                     f'{last_message.sender}: {last_message.text_message}',
                     time_submit,
-                ]
+                ]            
         
         data = {
             'title': "Messenger",
@@ -109,11 +110,15 @@ class Send_Messages_View(View):
             new_message = Message(text_message=message, sender=request.user, receiver=receiver, room=room.pk)
             new_message.save()
             
+            token = get_token(request)
+            
+            
             data = {
                 'user': request.user.username,
                 'sender_message': new_message.sender.username,
                 'textarea': message,
                 'time_created': new_message.time_created.strftime("%H:%M"),
+                'csrf_token': token,
             }
             
             return JsonResponse({
