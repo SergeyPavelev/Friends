@@ -14,5 +14,4 @@ urlpatterns = [
     path('delete_message_from_everyone/<int:message_id>/', views.Send_Messages_View.delete_message_from_everyone, name="delete_message_from_everyone"),
     path('delete_message_from_me/<int:message_id>/', views.Send_Messages_View.delete_message_from_me, name="delete_message_from_me"),
     path('<int:receiver_id>/edit_message/<int:message_id>/', views.Send_Messages_View.edit_message, name="edit_message"),
-    path('posts/', include('posts.urls', namespace='posts'), name='posts'),
 ]

@@ -10,7 +10,7 @@ $(document).ready(function() {
         if (title != "" & textarea != "") {
             $.ajax({
                 type: "POST",
-                url: "http://127.0.0.1:8000/messenger/im/posts/",
+                url: "http://127.0.0.1:8000/posts/",
                 dataType: 'json',
                 data: {
                     title: title,

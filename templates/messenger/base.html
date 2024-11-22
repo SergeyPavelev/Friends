@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/restart.css' %}">
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% if request.user.theme == 'Light' %}
+        <link rel="stylesheet" href="{% static 'css/base-light-theme.css' %}">
+    {% else %}
+        <link rel="stylesheet" href="{% static 'css/base-dark-theme.css' %}">
+    {% endif %}
     {% block  css %}
     {% endblock %}
     <title>{{ title }}</title>
@@ -34,8 +38,11 @@
             </div>
             <div class="block-button-header">
                 <button>
-                    <img src="{% static 'img/button-sun.png' %}" alt="Logout-button">
-                    <!-- <img src="{% static 'img/button-moon.png' %}" alt="Logout-button"> -->
+                    {% if request.user.theme == 'Light' %}
+                        <img src="{% static 'img/button-sun.png' %}" alt="Logout-button">
+                    {% else %}
+                        <img src="{% static 'img/button-moon.png' %}" alt="Logout-button">
+                    {% endif %}
                 </button>
             </div>
             <div class="block-button-header">
@@ -62,7 +69,7 @@
             <a href="{% url 'messenger:messenger' %}" class="nav-link">
                 <p>Messenger</p>
             </a>
-            <a href="{% url 'messenger:posts:posts' %}" class="nav-link">
+            <a href="{% url 'posts:posts' %}" class="nav-link">
                 <p>Posts</p>
             </a>
             <a href="{% url 'messenger:my_friends' %}" class="nav-link">

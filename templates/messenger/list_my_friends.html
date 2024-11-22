@@ -6,23 +6,38 @@
 {% endblock %}
 
 {% block content %}
-    <div class="div-h2">
-        <h2>My friends</h2>
-    </div>
+    <div class="container">
+        <div class="block-header">
+            <h2>My friends</h2>
+        </div>
+    
+        <div class="block-list-users">
+            <ul class="list-users">
+                {% for friend in my_friends %}
+                    <li class="list-item">
+                        {% if friend.profile_photo %}
+                            <div class="block-user-img">
+                                <img src="{{ friend.profile_photo.url }}" alt="User-avatar">
+                            </div>
+                        {% else %}
+                            <div class="block-user-img">
+                                <img src="{% static 'img/user-profile.png' %}" alt="User-avatar">
+                            </div>
+                        {% endif %}
 
-        <ul class="list-users">
-            {% for friend in my_friends %}
-                <li class="list-item">
-                    <form action="{% url 'messenger:delete_from_friends' friend_id=friend.id %}" method="post">
-                        {% csrf_token %}
                         <a class="link-user-profile" href="{% url 'user_profile:profile' user_id=friend.id %}">
                             <span class="link-name">{{ friend.username }}</span>
                         </a>
-                        <button class="users-buttons" type="submit">
-                            <i class='bx bx-user-minus' ></i>
-                        </button>
-                    </form>
-                </li>
-            {% endfor %}
-        </ul>
+
+                        <form action="{% url 'messenger:delete_from_friends' friend_id=friend.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="button-user" type="submit">
+                                <img src="{% static 'img/delete-from-friends.png' %}" alt="Edit">
+                            </button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 {% endblock %}

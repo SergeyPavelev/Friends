@@ -136,12 +136,15 @@
 }
 
 .block-message-buttons {
-    display: none;
+    display: flex;
+    opacity: 0;
+    transition: .1s;
 }
 
 .block-message-buttons.active {
     margin: 0 10px 0 10px;
     display: flex;
+    opacity: 1;
     align-items: center;
     gap: 5px;
     transition: .1s;
@@ -149,19 +152,18 @@
 
 .block-message-button button {
     padding: 5px;
-    background: #292e38;
     border: none;
-    border-radius: 10px;
     transition: .1s;
+    background: none;
+    border-radius: 10px;
 }
 
 .block-message-button img {
     max-height: 20px;
-    max-width: 20px;
 }
 
 .block-message-button button:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, .5);;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .5);
 }
 
 .block-message-form {
@@ -199,7 +201,7 @@
     display: flex;
     position: absolute;
     right: 10px;
-    height: 35px;
+    height: 40px;
     width: 100px;
     border: none;
     border-radius: 10px;

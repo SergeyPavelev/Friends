@@ -6,35 +6,49 @@
 {% endblock %}
 
 {% block content %}
-    <div class="div-h2">
-        <h2>All people</h2>
+    <div class="container">
+        <div class="block-header">
+            <h2>All people</h2>
+        </div>
+    
+        <div class="block-list-users">
+            <ul class="list-users">
+                {% for user in users %}
+                    <li class="list-item">
+                        {% if user.profile_photo %}
+                            <div class="block-user-img">
+                                <img src="{{ user.profile_photo.url }}" alt="User-avatar">
+                            </div>
+                        {% else %}
+                            <div class="block-user-img">
+                                <img src="{% static 'img/user-profile.png' %}" alt="User-avatar">
+                            </div>
+                        {% endif %}
+    
+                        <a class="link-user-profile" href="{% url 'user_profile:profile' user_id=user.id %}">
+                            <span class="link-name">{{ user.username }}</span>
+                        </a>
+    
+                        <div class="form-button-user">
+                            {% if user in my_friends %}
+                                <form action="{% url 'messenger:delete_from_friends' friend_id=user.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="button-user" type="submit">
+                                        <img src="{% static 'img/delete-from-friends.png' %}" alt="Edit">
+                                    </button>
+                                </form>
+                            {% else %}
+                                <form action="{% url 'messenger:add_to_friends' friend_id=user.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="button-user" type="submit">
+                                        <img src="{% static 'img/add-to-friends.png' %}" alt="Edit">
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-
-    <ul class="list-users">
-        {% for user in users %}
-            <li class="list-item">
-                {% if user in my_friends %}
-                <form action="{% url 'messenger:delete_from_friends' friend_id=user.id %}" method="post">
-                    {% csrf_token %}
-                    <a class="link-user-profile" href="{% url 'user_profile:profile' user_id=user.id %}">
-                        <span class="link-name">{{ user.username }}</span>
-                    </a>
-                    <button class="users-buttons" type="submit">
-                        <i class='bx bx-user-minus' ></i>
-                    </button>
-                </form>
-                {% else %}
-                <form action="{% url 'messenger:add_to_friends' friend_id=user.id %}" method="post">
-                    {% csrf_token %}
-                    <a class="link-user-profile" href="{% url 'user_profile:profile' user_id=user.id %}">
-                        <span class="link-name">{{ user.username }}</span>
-                    </a>
-                    <button class="users-buttons" type="submit">
-                        <i class='bx bx-user-plus' ></i>
-                    </button>
-                </form>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
 {% endblock %}

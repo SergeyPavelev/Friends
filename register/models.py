@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model, models as auth_models
 
-# User = get_user_model()
 
 class Users(auth_models.AbstractUser):
     phone = models.CharField(max_length=20, unique=True)
@@ -10,6 +9,7 @@ class Users(auth_models.AbstractUser):
     profile_photo = models.ImageField(null=True, blank=True)
     password = models.TextField()
     friends = models.ManyToManyField('self', blank=True, default=None)
+    theme = models.CharField(max_length=15, default='Light')
     
     def __str__(self) -> str:
         return f'{self.username}'

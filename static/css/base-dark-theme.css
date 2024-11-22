@@ -7,7 +7,7 @@
 }
 
 body {
-    background: #121217;
+    background-color: #121217;
     font-family: 'Roboto';
     flex-direction: column;
     height: 100vh;
@@ -57,7 +57,7 @@ body {
 .block-form-search input {
     padding: 5px;
     width: 80%;
-    background: #292e38;
+    background-color: #292e38;
     border: none;
     outline: none;
     border-radius: 10px;
@@ -77,9 +77,9 @@ body {
 
 .block-button-header button {
     margin: 5px;
-    padding: 5px;
+    padding: 5px 15px;
     display: flex;
-    background: #292e38;
+    background-color: #292e38;
     border: none;
     outline: none;
     border-radius: 10px;
@@ -87,6 +87,10 @@ body {
     align-items: center;
     color: #fff;
     transition: .1s;
+}
+
+.block-button-header img {
+    max-height: 25px;
 }
 
 .block-form-search input:hover,
@@ -128,7 +132,7 @@ body {
 
 .block-nav-buttons .nav-link {
     margin: 10px;
-    padding: 10px;
+    padding: 15px 20px;
     display: block;
     color: #fff;
     text-decoration: none;
@@ -136,7 +140,7 @@ body {
 }
 
 .block-nav-buttons .nav-link:hover {
-    background: #292e38;
+    background-color: #292e38;
     transition: .1s;
 }
 

@@ -3,6 +3,21 @@
     padding: 5px;
     display: block;
     width: 80%;
+    overflow-y: auto;
+}
+
+.block-chats::-webkit-scrollbar {
+    width: 7px;
+}
+
+.block-chats::-webkit-scrollbar-track {
+    background: #9EA6B8;
+    border-radius: 10px;
+}
+
+.block-chats::-webkit-scrollbar-thumb {
+    background-color: #292e38;
+    border-radius: 10px;
 }
 
 .chat {
