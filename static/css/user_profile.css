@@ -1,115 +1,142 @@
-.top-of-page {
-    display: flex;
-    flex-direction: column;
-    align-items:center;
-    padding: 20px;
+.container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    color: #fff;
 }
-  
-.add-profile-photo {
+
+.block-header {
+    padding: 20px;
+    display: flex;
+    position: relative;
+    left: -10%;
+    flex-direction: column;
+    align-items: center;
+}
+
+.block-load-photo {
     position: relative;
 }
-  
-.picture {
+
+.block-load-photo .user-avatar {
     width: 150px;
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
 }
-  
+
 .upload-form {
+    display: flex;
     position: absolute;
     top: 0;
     left: 0;
-    width: 150px;
-    height: 150px;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 150px;
+    height: 150px;
+    background-color: #292e38cc;
     opacity: 0;
-    transition: transfrom opacity .3s ease;
+    transition: opacity .3s ease;
     cursor: pointer;
     border-radius: 50%;
     object-fit: cover;
 }
-  
+
 .upload-form:hover {
     opacity: 1;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
 }
-  
+
 .upload-label {
+    margin-bottom: 10px;
     color: #fff;
     font-size: 16px;
-    margin-bottom: 10px;
 }
 
 .upload-label:hover {
-  font-size: 18px;
+    color: #9EA6B8;
 }
 
 .upload-button {
+    margin-bottom: 10px;
     color: #fff;
     font-size: 16px;
-    margin-bottom: 10px;
     background: none;
     border: none;
 }
 
 .upload-button:hover {
-  font-size: 18px;
+    color: #9EA6B8;
 }
-  
+
 .upload-input {
     display: none;
 }
-  
-.profile-name {
-    font-size: 32px;
-    margin: 15px auto;
-    color: #333;
+
+.block-username {
+    margin: 20px;
+    padding: 5px;
+    font-size: 24px;
 }
 
-.additional-information-about-user {
-    margin: 15px;
+.block-profile-buttons {
+    margin: 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-button {
+    margin: 5px;
+    padding: 5px 10px;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    background-color: #292e38;
+    transition: .1s;
+    
+}
+
+.profile-button:hover {
+    box-shadow: 0 0 7px rgba(0, 0, 0, .5);
+}
+
+.link-to-messenger {
+    text-decoration: none;
+}
+
+.block-data-user {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.block-info-profile {
+    margin: 15px 5px;
+    padding: 5px;
 }
 
 .user-data {
-    margin: 20px;
+    position: relative;
 }
 
-.additional-information-about-user .info-block {
-    display: block;
-}
-
-.additional-information-about-user .info-block button {
-    margin: 5px auto 5px 10px;
-    padding: 3px;
-    border: none;
-    box-shadow: -.1px .1px 3px 0px rgba(0, 0, 0, .5);
-    border-radius: 5px;
-    background: none;
-}
-
-.additional-information-about-user .info-block button:hover {
-    box-shadow: -.2px .2px 4px 0px rgba(0, 0, 0, .5);
+.profile-data-span {
+    position: absolute;
+    top: -20px;
+    font-size: 14px;
+    color: #9EA6B8;
 }
 
 .input-profile-data {
-    width: 30%;
-    height: 30px;
-    padding: 7px 10px;
-    font-size: 14px;
-    line-height: 1.5;
-    border-radius: 7px;
+    margin-right: 5px;
+    padding: 7px 12px;
+    font-size: 18px;
+    border-radius: 10px;
     border: none;
-    background: #fff;
-    color: #000;
-    box-shadow: -.1px .1px 3px 0px rgba(0, 0, 0, .5);
+    background: #292e38;
+    color: #9EA6B8;
 }
 
 .input-profile-data:focus {
@@ -117,41 +144,16 @@
     outline: none;
 }
 
-.div-message-profile-button {
-    margin: 5px auto;
-    padding: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.href-message-profile {
-    text-decoration: none;
-    color: #000;
-}
-
-.message-profile-button {
-    margin: 5px auto;
-    padding: 3px;
+.profile-data-button {
+    padding: 7px 12px;
+    font-size: 18px;
+    border-radius: 10px;
     border: none;
-    box-shadow: -.1px .1px 3px 0px rgba(0, 0, 0, .5);
-    border-radius: 5px;
-    background: none;
+    background: #292e38;
+    color: #9EA6B8;
+    transition: .1s;
 }
 
-.message-profile-button:hover {
-    box-shadow: -.2px .2px 4px 0px rgba(0, 0, 0, .5);
-}
-
-.user-profile-button {
-    margin: 5px auto;
-    padding: 3px;
-    border: none;
-    box-shadow: -.1px .1px 3px 0px rgba(0, 0, 0, .5);
-    border-radius: 5px;
-    background: none;
-}
-
-.user-profile-button:hover {
-    box-shadow: -.2px .2px 4px 0px rgba(0, 0, 0, .5);
+.profile-data-button:hover {
+    box-shadow: 0 0 7px rgba(0, 0, 0, .5);
 }

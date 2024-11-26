@@ -6,121 +6,117 @@
 {% endblock %}
 
 {% block content %}
-    <div class="top-of-page">
-        <div class="add-profile-photo">
-            {% if user.profile_photo %}
-                <img src="{{ user.profile_photo.url }}" alt="Profile Picture" class="picture">
-            {% else %}
-                <img src="{% static 'img/null-profile-photo.jpg' %}" alt="Profile Picture" class="picture">
-            {% endif %}
-
-            {% if user == request.user %}
-                <form class="upload-form" action="{% url 'user_profile:profile' user_id=user.id %}" enctype="multipart/form-data" method="post">
-                    {% csrf_token %}
-                    <label for="upload" class="upload-label">Выбрать фото</label>
-                    {{ form_image.photo }}
-                    <button type="submit" class="upload-button" name="Upload profile photo">Загрузить фотографию</button>
-                </form>
-            {% endif %}
-        </div>
-        
-        <div class="container-with-username">
-            <h2 class="profile-name">{{ user }}</h2>
-        </div>
-
-        <div class="add-and-delete-user">
-            {% if user != request.user %}
-                {% if user in my_friends %}
-                    <form action="{% url 'messenger:delete_from_friends' friend_id=user.id %}" method="post">
-                        {% csrf_token %}
-                        <button class="user-profile-button" type="submit" name="Delete from friends">
-                            <p>Delete from friends</p>
-                        </button>
-                    </form>
-
-                    <div class="div-message-profile-button">
-                        <a class="href-message-profile" href="{% url 'messenger:send_message' receiver_id=user.id %}">
-                            <button class="message-profile-button">
-                                Message
-                            </button>
-                        </a>
-                    </div>
+    <div class="container">
+        <div class="block-header">
+            <div class="block-load-photo">
+                {% if user.profile_photo %}
+                    <img src="{{ user.profile_photo.url }}" alt="Profile Picture" class="user-avatar">
                 {% else %}
-                    <form action="{% url 'messenger:add_to_friends' friend_id=user.id %}" method="post">
-                        {% csrf_token %}
-                        <button class="user-profile-button" type="submit" name="Add to friends">
-                            <p>Add to friends</p>
-                        </button>
-                    </form>
+                    <img src="{% static 'img/null-profile-photo.jpg' %}" alt="Profile Picture" class="user-avatar">
                 {% endif %}
-            {% endif %}
-        </div>
-    </div>
-
-    <div class="additional-information-about-user">
-        <div class="info-block">
-            {% if user == request.user %}
-                <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
-                    {% csrf_token %}
-                    <label for="username">Username: </label>
-                    <input type="text" placeholder="Username" class="input-profile-data" name="username" value="{{ user.username }}">
-                    <button type="submit" class="change-data-user" name="Change username">Change</button>
-                </form>
-            {% endif %}
-        </div>
-
-        <div class="info-block">
-            <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
-                {% csrf_token %}
-                <label for="phone">Phone: </label>
+    
                 {% if user == request.user %}
-                    <input type="tel" placeholder="Phone" class="input-profile-data" name="phone" value="{{ user.phone }}">
-                    <button type="submit" class="change-data-user" name="Change phone">Change</button>
-                {% else %}
-                    <input type="tel" placeholder="Phone" class="input-profile-data" name="phone" value="{{ user.phone }}" disabled>
+                    <form class="upload-form" action="{% url 'user_profile:profile' user_id=user.id %}" enctype="multipart/form-data" method="post">
+                        {% csrf_token %}
+                        <label for="upload" class="upload-label">Выбрать фото</label>
+                        {{ form_image.photo }}
+                        <button type="submit" class="upload-button" name="Upload profile photo">Загрузить фотографию</button>
+                    </form>
                 {% endif %}
-            </form>
+            </div>
+            
+            <div class="block-username">
+                <h2 class="username">{{ user }}</h2>
+            </div>
+    
+            <div class="block-profile-buttons">
+                {% if user != request.user %}
+                    {% if user in my_friends %}
+                        <form action="{% url 'messenger:delete_from_friends' friend_id=user.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="profile-button" type="submit" name="Delete from friends">Delete from friends</button>
+                        </form>
+    
+                        <div class="block-to-messenger-button">
+                            <a class="link-to-messenger" href="{% url 'messenger:send_message' receiver_id=user.id %}">
+                                <button class="profile-button">Message</button>
+                            </a>
+                        </div>
+                    {% else %}
+                        <form action="{% url 'messenger:add_to_friends' friend_id=user.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="profile-button" type="submit" name="Add to friends">Add to friends</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+            </div>
         </div>
-
-        {% if user.email %}
-            <div class="info-block">
+    
+        <div class="block-data-user">
+            <div class="block-info-profile">
+                {% if user == request.user %}
+                    <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
+                        {% csrf_token %}
+                        <span class="profile-data-span" for="username">Username</span>
+                        <input type="text" placeholder="Username" class="input-profile-data" name="username" value="{{ user.username }}">
+                        <button type="submit" class="profile-data-button" name="Change username">Change</button>
+                    </form>
+                {% endif %}
+            </div>
+    
+            <div class="block-info-profile">
                 <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
                     {% csrf_token %}
-                    <label for="email">Email: </label>
+                    <span class="profile-data-span" for="phone">Phone</span>
                     {% if user == request.user %}
-                        <input type="email" placeholder="Email" class="input-profile-data" name="email" value="{{ user.email }}">
-                        <button type="submit" class="change-data-user" name="Change email">Change</button>
+                        <input type="tel" placeholder="Phone" class="input-profile-data" name="phone" value="{{ user.phone }}">
+                        <button type="submit" class="profile-data-button" name="Change phone">Change</button>
                     {% else %}
-                        <input type="email" placeholder="Email" class="input-profile-data" name="email" value="{{ user.email }}" disabled>
+                        <input type="tel" placeholder="Phone" class="input-profile-data" name="phone" value="{{ user.phone }}" disabled>
                     {% endif %}
                 </form>
             </div>
-        {% endif %}
-
-        {% if user.birthday %}
-            <div class="info-block">
-                <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
-                    {% csrf_token %}
-                    <label for="birthday">Birthday: </label>
-                    {% if user == request.user %}
-                        <input type="text" placeholder="Birthday" class="input-profile-data" name="birthday" value="{{ user.birthday }}">
-                        <button type="submit" class="change-data-user" name="Change birthday">Change</button>
-                    {% else %}
-                        <input type="text" placeholder="Birthday" class="input-profile-data" name="birthday" value="{{ user.birthday }}" disabled>
-                    {% endif %}
-                </form>
-            </div>
-        {% endif %}
-        
-        <div class="info-block">
-            {% if user == request.user %}
-                <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
-                    {% csrf_token %}
-                    <label for="password">Password: </label>
-                    <input type="password" placeholder="Password" class="input-profile-data" name="password" value="******">
-                    <button type="submit" class="change-data-user" name="Change password">Change</button>
-                </form>
+    
+            {% if user.email %}
+                <div class="block-info-profile">
+                    <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
+                        {% csrf_token %}
+                        <span class="profile-data-span" for="email">Email</span>
+                        {% if user == request.user %}
+                            <input type="email" placeholder="Email" class="input-profile-data" name="email" value="{{ user.email }}">
+                            <button type="submit" class="profile-data-button" name="Change email">Change</button>
+                        {% else %}
+                            <input type="email" placeholder="Email" class="input-profile-data" name="email" value="{{ user.email }}" disabled>
+                        {% endif %}
+                    </form>
+                </div>
             {% endif %}
+    
+            {% if user.birthday %}
+                <div class="block-info-profile">
+                    <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
+                        {% csrf_token %}
+                        <span class="profile-data-span" for="birthday">Birthday</span>
+                        {% if user == request.user %}
+                            <input type="text" placeholder="Birthday" class="input-profile-data" name="birthday" value="{{ user.birthday }}">
+                            <button type="submit" class="profile-data-button" name="Change birthday">Change</button>
+                        {% else %}
+                            <input type="text" placeholder="Birthday" class="input-profile-data" name="birthday" value="{{ user.birthday }}" disabled>
+                        {% endif %}
+                    </form>
+                </div>
+            {% endif %}
+            
+            <div class="block-info-profile">
+                {% if user == request.user %}
+                    <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
+                        {% csrf_token %}
+                        <span class="profile-data-span" for="password">Password</span>
+                        <input type="password" placeholder="Password" class="input-profile-data" name="password" value="******">
+                        <button type="submit" class="profile-data-button" name="Change password">Change</button>
+                    </form>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}
