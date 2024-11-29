@@ -2,7 +2,11 @@
 {% load static %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/list_users.css' %}">
+    {% if request.user.theme == 'Light' %}
+        <link rel="stylesheet" href="{% static 'css/messenger/list-users-light-theme.css' %}">
+    {% else %}
+        <link rel="stylesheet" href="{% static 'css/messenger/list-users-dark-theme.css' %}">
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -21,7 +25,11 @@
                             </div>
                         {% else %}
                             <div class="block-user-img">
-                                <img src="{% static 'img/user-profile.png' %}" alt="User-avatar">
+                                {% if request.user.theme == 'Light' %}
+                                    <img src="{% static 'img/user-avatar-black.png' %}" alt="User-avatar">
+                                {% else %}
+                                    <img src="{% static 'img/user-avatar-white.png' %}" alt="User-avatar">
+                                {% endif %}
                             </div>
                         {% endif %}
 
@@ -32,7 +40,11 @@
                         <form action="{% url 'messenger:delete_from_friends' friend_id=friend.id %}" method="post">
                             {% csrf_token %}
                             <button class="button-user" type="submit">
-                                <img src="{% static 'img/delete-from-friends.png' %}" alt="Edit">
+                                {% if request.user.theme == 'Light' %}
+                                    <img src="{% static 'img/delete-from-friends-black.png' %}" alt="Edit">
+                                {% else %}
+                                    <img src="{% static 'img/delete-from-friends-white.png' %}" alt="Edit">
+                                {% endif %}
                             </button>
                         </form>
                     </li>

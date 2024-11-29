@@ -2,7 +2,11 @@
 {% load static %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/send_messages.css' %}">
+    {% if request.user.theme == 'Light' %}
+        <link rel="stylesheet" href="{% static 'css/messenger/send-messages-light-theme.css' %}">
+    {% else %}
+        <link rel="stylesheet" href="{% static 'css/messenger/send-messages-dark-theme.css' %}">
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -22,7 +26,11 @@
                                     <form action="{% url 'messenger:edit_message' receiver_id=receiver_id message_id=message.id %}">
                                         {% csrf_token %}
                                         <button type="submit" title="Edit">
-                                            <img src="{% static 'img/button-edit.png' %}" alt="Edit">
+                                            {% if request.user.theme == 'Light' %}
+                                                <img src="{% static 'img/edit-black.png' %}" alt="Edit">
+                                            {% else %}
+                                                <img src="{% static 'img/edit-white.png' %}" alt="Edit">
+                                            {% endif %}
                                         </button>
                                     </form>
                                 </div>
@@ -31,7 +39,11 @@
                                     <form action="{% url 'messenger:delete_message_from_everyone' message_id=message.id %}" method="post">
                                         {% csrf_token %}
                                         <button type="submit" title="Delete all">
-                                            <img src="{% static 'img/button-trash.png' %}" alt="Delete all">
+                                            {% if request.user.theme == 'Light' %}
+                                                <img src="{% static 'img/trash-black.png' %}" alt="Delete all">
+                                            {% else %}
+                                                <img src="{% static 'img/trash-white.png' %}" alt="Delete all">
+                                            {% endif %}
                                         </button>
                                     </form>
                                 </div>
@@ -40,7 +52,11 @@
                                     <form action="{% url 'messenger:delete_message_from_me' message_id=message.id %}" method="post">
                                         {% csrf_token %}
                                         <button type="submit" title="Delete me">
-                                            <img src="{% static 'img/button-trash.png' %}" alt="Delete me">
+                                            {% if request.user.theme == 'Light' %}
+                                                <img src="{% static 'img/trash-black.png' %}" alt="Delete me">
+                                            {% else %}
+                                                <img src="{% static 'img/trash-white.png' %}" alt="Delete me">
+                                            {% endif %}
                                         </button>
                                     </form>
                                 </div>
@@ -61,9 +77,12 @@
                                     </div>
                                 {% else %}
                                     <div class="block-message-img">
-                                        <img src="{% static 'img/user-profile.png' %}" alt="User -profile">
+                                        {% if request.user.theme == 'Light' %}
+                                            <img src="{% static 'img/user-avatar-black.png' %}" alt="User-avatar">
+                                        {% else %}
+                                            <img src="{% static 'img/user-avatar-white.png' %}" alt="User-avatar">
+                                        {% endif %}
                                     </div>
-                                    </a>
                                 {% endif %}
                             </div>
                         </div>
@@ -76,7 +95,11 @@
                                     </div>
                                 {% else %}
                                     <div class="block-message-img">
-                                        <img src="{% static 'img/user-profile.png' %}" alt="User -profile">
+                                        {% if request.user.theme == 'Light' %}
+                                            <img src="{% static 'img/user-avatar-black.png' %}" alt="User-avatar">
+                                        {% else %}
+                                            <img src="{% static 'img/user-avatar-white.png' %}" alt="User-avatar">
+                                        {% endif %}
                                     </div>
                                 {% endif %}
                                 <li class="block-message-text">
@@ -93,7 +116,11 @@
                                     <form action="{% url 'messenger:delete_message_from_everyone' message_id=message.id %}" method="post">
                                         {% csrf_token %}
                                         <button type="submit" title="Delete all">
-                                            <img src="{% static 'img/button-trash.png' %}" alt="Delete all">
+                                            {% if request.user.theme == 'Light' %}
+                                                <img src="{% static 'img/trash-black.png' %}" alt="Delete all">
+                                            {% else %}
+                                                <img src="{% static 'img/trash-white.png' %}" alt="Delete all">
+                                            {% endif %}
                                         </button>
                                     </form>
                                 </div>
@@ -102,7 +129,11 @@
                                     <form action="{% url 'messenger:delete_message_from_me' message_id=message.id %}" method="post">
                                         {% csrf_token %}
                                         <button type="submit" title="Delete me">
-                                            <img src="{% static 'img/button-trash.png' %}" alt="Delete me">
+                                            {% if request.user.theme == 'Light' %}
+                                                <img src="{% static 'img/trash-black.png' %}" alt="Delete me">
+                                            {% else %}
+                                                <img src="{% static 'img/trash-white.png' %}" alt="Delete me">
+                                            {% endif %}
                                         </button>
                                     </form>
                                 </div>

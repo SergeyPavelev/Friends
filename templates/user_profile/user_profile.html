@@ -2,7 +2,11 @@
 {% load static %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/user_profile.css' %}">
+    {% if request.user.theme == 'Light' %}
+        <link rel="stylesheet" href="{% static 'css/user_profile/user-profile-light-theme.css' %}">
+    {% else %}
+        <link rel="stylesheet" href="{% static 'css/user_profile/user-profile-dark-theme.css' %}">
+    {% endif %}
 {% endblock %}
 
 {% block content %}

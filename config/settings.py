@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-p(1h_h!%9r(p3rrbrh7_9b$n7^-w*9q3mphq!g*u&5n1vjx7hp'
+SECRET_KEY = 'django-insecure-p(1h_h!(p3rrbrh7_9b$n7^-w*9q3mphq!g*u&5n1vjx7hp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -30,7 +30,6 @@ ALLOWED_HOSTS = []
 
 LOGIN_REDIRECT_URL = '/auth/login/'
 LOGOUT_REDIRECT_URL = '/'
-# AUTH_USER_MODEL = '...'
 
 # Application definition
 
@@ -41,10 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main',
-    'register',
-    'messenger',
-    'posts',
+    'rest_framework',
+    'djoser',
+    
+    'src.main',
+    'src.register',
+    'src.messenger',
+    'src.posts',
 ]
 
 MIDDLEWARE = [
@@ -90,9 +92,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "friends",
+        "USER": "postgres",
+        "PASSWORD": "Sergey24012008",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 
@@ -132,10 +138,8 @@ DATE_FORMAT = 'd E Y'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = (
-    BASE_DIR / 'static',
-)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -144,3 +148,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+# SIMPLE_JWT = {
+#    'AUTH_HEADER_TYPES': ('JWT',),
+# }

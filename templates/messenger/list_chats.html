@@ -1,0 +1,48 @@
+{% extends 'messenger/base.html' %}
+{% load static %}
+
+
+{% block css %}
+    {% if request.user.theme == 'Light' %}
+        <link rel="stylesheet" href="{% static 'css/messenger/list-chats-light-theme.css' %}">
+    {% else %}
+        <link rel="stylesheet" href="{% static 'css/messenger/list-chats-dark-theme.css' %}">
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="block-chats">
+            {% for my_friend, info_chat in chats_data.items %}
+                <div class="chat">
+                    <a href="{% url 'messenger:send_message' receiver_id=my_friend.id %}" class="link-chat">
+                        {% if my_friend.profile_photo %}
+                            <div class="user-img">
+                                <img src="{{ my_friend.profile_photo.url }}" alt="User-avatar">
+                            </div>
+                        {% else %}
+                            <div class="user-img">
+                                {% if request.user.theme == 'Light' %}
+                                    <img src="{% static 'img/user-avatar-black.png' %}" alt="User-avatar">
+                                {% else %}
+                                    <img src="{% static 'img/user-avatar-white.png' %}" alt="User-avatar">
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                        <div class="info-chat">
+                            <div class="user-name">
+                                <span>{{ my_friend }}</span>
+                            </div>
+                            <div class="last-message">
+                                <p>{{ info_chat.0 }}</p>
+                            </div>
+                        </div>
+                        <div class="time-submit">
+                            <p class="time-submit">{{ info_chat.1 }}</p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
