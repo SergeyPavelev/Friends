@@ -139,8 +139,12 @@ body {
     border-radius: 10px;
 }
 
+.block-nav-buttons .nav-link.active {
+    outline: 2px solid #292e38;
+}
+
 .block-nav-buttons .nav-link:hover {
-    background-color: #292e38;
+    margin-left: 20px;
     transition: .1s;
 }
 
@@ -148,9 +152,9 @@ body {
     margin-right: 5px;
 }
 
-.block-nav-icon img {
+/* .block-nav-icon img {
 
-}
+} */
 
 .main-block {
     padding: 10px;

@@ -25,7 +25,7 @@
                             </div>
                         {% else %}
                             <div class="block-user-img">
-                                {% if user.theme == 'Light' %}
+                                {% if request.user.theme == 'Light' %}
                                     <img src="{% static 'img/user-avatar-black.png' %}" alt="User-avatar">
                                 {% else %}
                                     <img src="{% static 'img/user-avatar-white.png' %}" alt="User-avatar">
@@ -42,7 +42,7 @@
                                 <form action="{% url 'messenger:delete_from_friends' friend_id=user.id %}" method="post">
                                     {% csrf_token %}
                                     <button class="button-user" type="submit">
-                                        {% if user.theme == 'Light' %}
+                                        {% if request.user.theme == 'Light' %}
                                             <img src="{% static 'img/delete-from-friends-black.png' %}" alt="Edit">
                                         {% else %}
                                             <img src="{% static 'img/delete-from-friends-white.png' %}" alt="Edit">
@@ -53,7 +53,7 @@
                                 <form action="{% url 'messenger:add_to_friends' friend_id=user.id %}" method="post">
                                     {% csrf_token %}
                                     <button class="button-user" type="submit">
-                                        {% if user.theme == 'Light' %}
+                                        {% if request.user.theme == 'Light' %}
                                             <img src="{% static 'img/add-to-friends-black.png' %}" alt="Edit">
                                         {% else %}
                                             <img src="{% static 'img/add-to-friends-white.png' %}" alt="Edit">

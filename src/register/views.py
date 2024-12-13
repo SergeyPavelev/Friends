@@ -3,45 +3,13 @@ from django.shortcuts import render
 from django.contrib import auth
 from django.contrib.auth.hashers import make_password
 from django.urls import reverse
-from django.contrib.auth.signals import user_logged_in, user_logged_out
-from django.dispatch import receiver
-from .models import Users
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from .forms import LoginUserForm, RegisterUserForm
 
 
-def login_user(request):
-    if request.user.is_authenticated:
-       return HttpResponseRedirect(reverse(f'messenger:messenger'))
-    
-    elif request.method == 'POST':
-        form = LoginUserForm(request.POST)
-
-        if form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
-            user = auth.authenticate(request=request, username=username, password=password)
-            
-            print(username, password)
-            
-            print(user)
-                        
-            if user is not None:
-                auth.login(request, user)
-                return HttpResponseRedirect(reverse(f'messenger:messenger'))
-            else:
-                return HttpResponse(f'Invalid login! - {user} - {form.errors}')
-        else:
-            return HttpResponse(f'{form.errors}')
-    
-    else:
-        form = LoginUserForm()
-    
-    data = {
-        'title': "Log in",
-        'form' : form,
-    }
-    
-    return render(request, "register/login.html", context=data)
+User = auth.get_user_model()
 
 def register_user(request):
     if request.user.is_authenticated:
@@ -53,13 +21,13 @@ def register_user(request):
         if form.is_valid():
             phone = request.POST['phone']
             username = request.POST['username']
-            birthday = request.POST['birthday']
+            # birthday = request.POST['birthday']
             password1 = request.POST['password1']
             password2 = request.POST['password2']
                         
             if confirmation_phone_and_username(phone=phone, username=username):
                 if password1 == password2:
-                    Users(phone=phone, username=username, birthday=birthday, password=make_password(password=password1)).save()
+                    User(phone=phone, username=username, password=make_password(password=password1)).save()
                     
                     user = auth.authenticate(request=request, username=username, password=password1)
                     if user is not None:
@@ -75,7 +43,7 @@ def register_user(request):
         form = RegisterUserForm()
     
     data = {
-        'title': "Sig in",
+        'title': "Sigin",
         'form' : form,
     }
     
@@ -93,23 +61,46 @@ def confirmation_phone_and_username(phone, username):
         bool: True or False
     """
     
-    list_phone = Users.objects.values_list('phone', flat=True)
-    list_username = Users.objects.values_list('username', flat=True)
+    list_phone = User.objects.values_list('phone', flat=True)
+    list_username = User.objects.values_list('username', flat=True)
     
     if phone not in list_phone and username not in list_username:
         return True
     return False
 
-def logout_user(request):
-    auth.logout(request)
-    return HttpResponseRedirect(reverse('auth:login'))
 
-# @receiver(user_logged_in)
-# def set_user_active(sender, request, user, **kwargs):
-#     user.is_active = True
-#     user.save()
+class LoginUser(APIView):
+    permission_classes = [AllowAny]
     
-# @receiver(user_logged_out)
-# def set_user_inactive(sender, request, user, **kwargs):
-#     user.is_active = False
-#     user.save()
+    def get(self, request):
+        form = LoginUserForm()
+        
+        data = {
+            'title': "Login",
+            'form' : form,
+        }
+        
+        return render(request, "register/login.html", context=data)
+    
+    def post(self, request):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(reverse(f'messenger:messenger'))
+
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = auth.authenticate(request=request, username=username, password=password)
+                    
+        if user is not None:
+            auth.login(request, user)
+            return Response(data={'detail': 'Login successful'}, status=200)
+        else:
+            return Response(data={'error': 'Invalid username or password'}, status=400)
+
+
+class LogoutUser(APIView):
+    permission_classes = [AllowAny]
+    
+    def post(self, request):
+        auth.logout(request)
+        
+        return Response(data={'detail': 'Вы успешно вышли',}, status=200)

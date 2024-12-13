@@ -49,14 +49,14 @@
             <div class="block-button-header">
                 <button>
                     {% if request.user.theme == 'Light' %}
-                        <img src="{% static 'img/sunshine-black.png' %}" alt="Logout-button">
+                        <img src="{% static 'img/sunshine-black.png' %}" alt="Change-theme">
                     {% else %}
-                        <img src="{% static 'img/moon-white.png' %}" alt="Logout-button">
+                        <img src="{% static 'img/moon-white.png' %}" alt="Change-theme">
                     {% endif %}
                 </button>
             </div>
             <div class="block-button-header">
-                <button>
+                <button id="logout-button">
                      Logout
                 </button>
             </div>
@@ -161,6 +161,8 @@
     </section>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'js/messenger/base.js' %}"></script>
+    <script src="{% static 'js/register/logout_user.js' %}"></script>
     {% block java_script %}
     {% endblock %}
 </body>

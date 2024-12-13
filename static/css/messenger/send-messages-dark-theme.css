@@ -138,6 +138,7 @@
 .block-message-buttons {
     display: flex;
     opacity: 0;
+    pointer-events: none;
     transition: .1s;
 }
 

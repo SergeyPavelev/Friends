@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'src.register',
     'src.messenger',
     'src.posts',
+    'src.user_profile',
 ]
 
 MIDDLEWARE = [
@@ -63,7 +64,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     )
 
-AUTH_USER_MODEL = "register.Users"
+AUTH_USER_MODEL = "register.User"
 
 ROOT_URLCONF = 'config.urls'
 
@@ -90,6 +91,17 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": os.environ.get("POSTGRES_ENGINE", "django.db.backends.postgresql"),
+#         "NAME": os.environ.get("POSTGRES_DATABASE", os.path.join(BASE_DIR, "db.postgresql")),
+#         "USER": os.environ.get("POSTGRES_USER", "user"),
+#         "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "password"),
+#         "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
+#         "PORT": os.environ.get("POSTGRES_PORT", "5434"),
+#     }
+# }
 
 DATABASES = {
     "default": {

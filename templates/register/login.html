@@ -1,7 +1,7 @@
 {% extends 'register/base.html' %}
 
 {% block content %}
-    <form action="{% url 'auth:login' %}" method="post">
+    <form id="LoginForm" method="post">
         {% csrf_token %}
         <h1>Login</h1>
         <div class="input-box">
@@ -18,7 +18,7 @@
             <a href="#">Forgot password?</a>
         </div>
 
-        <button type="submit" class="btn">Login</button>
+        <button type="submit" class="btn" id="login-button">Login</button>
 
         <div class="register-link">
             <p>Don't have an account? <a href="{% url 'auth:register' %}">Register</a></p>

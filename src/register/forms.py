@@ -1,22 +1,24 @@
 from django import forms
-from .models import Users
+from .models import User
 
 
 class LoginUserForm(forms.Form):
     username = forms.CharField(max_length=255, widget=forms.TextInput(attrs={
         'placeholder': 'Username',
+        'id': 'username-input',
         'type':'text',
         'name': 'username',
         }))
     
     password = forms.CharField(max_length=255, widget=forms.PasswordInput(attrs={
         'placeholder': 'Password',
+        'id': 'password-input',
         'type':'password',
         'name': 'password',
         }))
     
     class Meta:
-        model = Users
+        model = User
         fields = ('username', 'password',)
 
 
@@ -33,11 +35,11 @@ class RegisterUserForm(forms.Form):
         'name': 'username',
     }))
 
-    birthday = forms.CharField(max_length=255, widget=forms.TextInput(attrs={
-        'placeholder': 'Birthday',
-        'type':'text',
-        'name': 'birthday',
-    }))
+    # birthday = forms.CharField(max_length=255, widget=forms.TextInput(attrs={
+    #     'placeholder': 'Birthday',
+    #     'type':'text',
+    #     'name': 'birthday',
+    # }))
 
     password1 = forms.CharField(max_length=255, widget=forms.PasswordInput(attrs={
         'placeholder': 'Password',
@@ -52,5 +54,5 @@ class RegisterUserForm(forms.Form):
     }))
     
     class Meta:
-        model = Users
-        fields = ('phone', 'username', 'birthday', 'password1', 'password2',)
+        model = User
+        fields = ('phone', 'username', 'password1', 'password2',)

@@ -5,7 +5,7 @@ from . import views
 app_name = 'auth'
 
 urlpatterns = [
-    path('login/', views.login_user, name="login"),
+    path('login/', views.LoginUser.as_view(), name="login"),
     path('register/', views.register_user, name="register"),
-    path('logout/', views.logout_user, name="logout"),
+    path('logout/', views.LogoutUser.as_view(), name="logout"),
 ]

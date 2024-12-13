@@ -100,7 +100,7 @@
 }
 
 .profile-button:hover {
-    box-shadow: 0 0 7px rgba(0, 0, 0, .5);
+    box-shadow: 0 0 15px #cad2e4;
 }
 
 .link-to-messenger {
@@ -145,7 +145,7 @@
 }
 
 .input-profile-data:hover {
-    box-shadow: 0 0 7px rgba(0, 0, 0, .5);
+    box-shadow: 0 0 10px #cad2e4;
 }
 
 .profile-data-button {
@@ -159,5 +159,5 @@
 }
 
 .profile-data-button:hover {
-    box-shadow: 0 0 7px rgba(0, 0, 0, .5);
+    box-shadow: 0 0 10px #cad2e4;
 }

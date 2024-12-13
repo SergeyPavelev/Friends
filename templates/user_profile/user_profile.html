@@ -96,7 +96,7 @@
                 </div>
             {% endif %}
     
-            {% if user.birthday %}
+            <!-- {% if user.birthday %}
                 <div class="block-info-profile">
                     <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
                         {% csrf_token %}
@@ -109,7 +109,7 @@
                         {% endif %}
                     </form>
                 </div>
-            {% endif %}
+            {% endif %} -->
             
             <div class="block-info-profile">
                 {% if user == request.user %}
