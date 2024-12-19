@@ -25,34 +25,32 @@ class LoginUserForm(forms.Form):
 class RegisterUserForm(forms.Form):
     phone = forms.CharField(max_length=255, widget=forms.TextInput(attrs={
         'placeholder': 'Phone',
+        'id': 'phone-input',
         'type':'tel',
         'name': 'phone',
     }))
 
     username = forms.CharField(max_length=255, widget=forms.TextInput(attrs={
         'placeholder': 'Username',
+        'id': 'username-input',
         'type':'text',
         'name': 'username',
     }))
 
-    # birthday = forms.CharField(max_length=255, widget=forms.TextInput(attrs={
-    #     'placeholder': 'Birthday',
-    #     'type':'text',
-    #     'name': 'birthday',
-    # }))
-
-    password1 = forms.CharField(max_length=255, widget=forms.PasswordInput(attrs={
+    password = forms.CharField(max_length=255, widget=forms.PasswordInput(attrs={
         'placeholder': 'Password',
+        'id': 'password-input',
         'type':'password',
         'name': 'password1',
     }))
 
-    password2 = forms.CharField(max_length=255, widget=forms.PasswordInput(attrs={
+    password_repeat = forms.CharField(max_length=255, widget=forms.PasswordInput(attrs={
         'placeholder': 'Confirm password',
+        'id': 'password-repeat-input',
         'type':'password',
         'name': 'password2',
     }))
     
     class Meta:
         model = User
-        fields = ('phone', 'username', 'password1', 'password2',)
+        fields = ('phone', 'username', 'password', 'password_repeat',)

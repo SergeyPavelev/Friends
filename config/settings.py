@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'src.messenger',
     'src.posts',
     'src.user_profile',
+    'src.api',
 ]
 
 MIDDLEWARE = [

@@ -47,7 +47,7 @@
                 {% endif %}
             </div>
             <div class="block-button-header">
-                <button>
+                <button id="theme-toggle" data-user="{{ request.user }}">
                     {% if request.user.theme == 'Light' %}
                         <img src="{% static 'img/sunshine-black.png' %}" alt="Change-theme">
                     {% else %}
@@ -163,6 +163,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{% static 'js/messenger/base.js' %}"></script>
     <script src="{% static 'js/register/logout_user.js' %}"></script>
+    <script src="{% static 'js/messenger/theme-change.js' %}"></script>
     {% block java_script %}
     {% endblock %}
 </body>

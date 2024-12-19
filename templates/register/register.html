@@ -1,7 +1,7 @@
 {% extends 'register/base.html' %}
 
 {% block content %}
-    <form action="{% url 'auth:register' %}" method="post">
+    <form class="RegisterForm" method="post">
         {% csrf_token %}
         <h1>Register</h1>
         <div class="input-box">
@@ -20,12 +20,12 @@
         </div> -->
 
         <div class="input-box">
-            {{ form.password1 }}
+            {{ form.password }}
             <i class='bx bxs-lock-alt'></i>
         </div>
 
         <div class="input-box">
-            {{ form.password2 }}
+            {{ form.password_repeat }}
             <i class='bx bx-repeat'></i>
         </div>
 

@@ -1,17 +1,17 @@
 $(document).ready(function() {
     $('#LoginForm').submit(function(e) {
-        e.preventDefaul();
+        e.preventDefault();
 
         var formData = {
-            'username': $("#username-input"),
-            'password': $('#password-input'),
-            'csrfmiddlewaretoken': '{{ csrf_token }}'
-        };
+            'username': $("#username-input").val(),
+            'password': $('#password-input').val(),
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+        };        
 
         $.ajax({
             url: 'http://127.0.0.1:8000/auth/login/',
             type: 'POST',
-            data: formData,
+            data: JSON.stringify(formData),
             dataType: 'json',
             contentType: 'application/json',            
 
@@ -19,9 +19,10 @@ $(document).ready(function() {
                 window.location.href = "http://127.0.0.1:8000/messenger/im/";
             },
 
-            error: function(xhr, statuc, error) {
+            error: function(xhr, status, error) {
+                alert("Ошибка при входе в аккаунт: ", error)
                 console.log("Ошибка при входе в аккаунт: ", error);
             },
-        })
-    })
-})
+        });
+    });
+});
