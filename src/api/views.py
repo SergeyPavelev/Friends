@@ -18,10 +18,18 @@ class ThemeChange(APIView):
         if theme == 'Light':
             user.theme = 'Dark'
             user.save()
-            return Response({'success': 'Theme changed on dark'})
+            return Response({
+                'success': 'Theme changed on dark',
+                # 'user': user,
+                'theme': 'dark',
+            })
         elif theme == 'Dark':
             user.theme = 'Light'
             user.save()
-            return Response({'success': 'Theme changed on light'})
+            return Response({
+                'success': 'Theme changed on light',
+                # 'user': user,
+                'theme': 'light',
+            })
         else:
             return Response({'error': 'Invalid theme'})
