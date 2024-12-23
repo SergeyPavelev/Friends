@@ -8,7 +8,7 @@ class Message(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender', verbose_name='Отправитель')
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name='receiver', verbose_name='Получатель')
     room = models.CharField('Chat Room', max_length=10)
-    text_message = models.TextField('Текст сообщения')
+    text_message = models.TextField('Текст сообщения', max_length=500)
     date_created = models.DateTimeField('Дата отправки', auto_now_add=True)
     time_created = models.TimeField('Время отправки', auto_now_add=True)
     is_readed = models.BooleanField('Прочитано', default=False)

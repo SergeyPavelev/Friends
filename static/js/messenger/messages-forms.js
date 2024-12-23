@@ -70,6 +70,20 @@ $(document).ready(function() {
                                         </div>
                                     </li>
                                 </div>
+
+                                {% if message.sender.avatar %}
+                                    <div class="block-message-img">
+                                        <img src="{{ message.sender.avatar.url }}" alt="User-avatar">
+                                    </div>
+                                {% else %}
+                                    <div class="block-message-img">
+                                        {% if request.user.theme == 'Light' %}
+                                            <img src="{% static 'img/user-avatar-black.png' %}" alt="User-avatar">
+                                        {% else %}
+                                            <img src="{% static 'img/user-avatar-white.png' %}" alt="User-avatar">
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
                             </div>
                         `
                     } else {

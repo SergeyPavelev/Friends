@@ -27,6 +27,7 @@ $(document).ready(function() {
                     var title = data['success']['title'];
                     var text = data['success']['text'];
                     var date_created = data['success']['date_created'];
+                    var user_avatar = data['success']['user_avatar']
                     
     
                     var lists_posts = document.querySelector('.list-posts');
@@ -35,13 +36,13 @@ $(document).ready(function() {
                         var post = `
                             <div class="block-post">
                                 <a href="{% url 'user_profile:profile' user_id=post.author.id %}" class="author-profile-link">
-                                    {% if post.author.profile_photo %}
+                                    {% if post.author.avatar %}
                                         <div class="block-user-img">
-                                            <img src="{{ post.author.profile_photo.url }}" alt="User-avatar">
+                                            <img src="${user_avatar}" alt="User-avatar">
                                         </div>
                                     {% else %}
                                         <div class="block-user-img">
-                                            <img src="{% static 'img/user-profile.png' %}" alt="User-avatar">
+                                            <img src="/static/img/user-profile.png" alt="User-avatar">
                                         </div>
                                     {% endif %}
                                 </a>
@@ -61,14 +62,14 @@ $(document).ready(function() {
                                             <div class="block-post-button">
                                                 <form id="edit-post-form" action="{% url 'posts:edit_post' post_id=post.id %}" method="post">
                                                     <button class="button-post" id="button-edit-post" type="submit" title="Edit post">
-                                                        <img src="{% static './img/button-edit.png' %}" alt="Edit">
+                                                        <img src="/static/img/button-edit.png" alt="Edit">
                                                     </button>
                                                 </form>
                                             </div>
                                             <div class="block-post-button">
                                                 <form id="delete-post-form" action="{% url 'posts:delete_post' post_id=post.id %}" method="post">
                                                     <button class="button-post" id="button-delete-post" type="submit" title="Delete post">
-                                                        <img src="{% static './img/button-trash.png' %}" alt="Delete all">
+                                                        <img src="/static/img/button-trash.png}" alt="Delete all">
                                                     </button>
                                                 </form>
                                             </div>
@@ -83,13 +84,13 @@ $(document).ready(function() {
                         var post = `
                             <div class="block-post">
                                 <a href="{% url 'user_profile:profile' user_id=post.author.id %}" class="author-profile-link">
-                                    {% if post.author.profile_photo %}
+                                    {% if post.author.avatar %}
                                         <div class="block-user-img">
-                                            <img src="{{ post.author.profile_photo.url }}" alt="User-avatar">
+                                            <img src="${user_avatar}" alt="User-avatar">
                                         </div>
                                     {% else %}
                                         <div class="block-user-img">
-                                            <img src="{% static 'img/user-profile.png' %}" alt="User-avatar">
+                                            <img src="/static/img/user-profile.png" alt="User-avatar">
                                         </div>
                                     {% endif %}
                                 </a>

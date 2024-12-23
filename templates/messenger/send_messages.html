@@ -71,9 +71,9 @@
                                     </div>
                                 </li>
 
-                                {% if message.sender.profile_photo %}
+                                {% if message.sender.avatar %}
                                     <div class="block-message-img">
-                                        <img src="{{ message.sender.profile_photo.url }}" alt="User -avatar">
+                                        <img src="{{ message.sender.avatar.url }}" alt="User -avatar">
                                     </div>
                                 {% else %}
                                     <div class="block-message-img">
@@ -89,9 +89,9 @@
                     {% else %}
                         <div class="block-message-receiver">
                             <div class="block-info-message">
-                                {% if message.sender.profile_photo %}
+                                {% if message.sender.avatar %}
                                     <div class="block-message-img">
-                                        <img src="{{ message.sender.profile_photo.url }}" alt="User -avatar">
+                                        <img src="{{ message.sender.avatar.url }}" alt="User-avatar">
                                     </div>
                                 {% else %}
                                     <div class="block-message-img">

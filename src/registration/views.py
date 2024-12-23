@@ -6,7 +6,7 @@ from django.urls import reverse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .forms import LoginUserForm, RegisterUserForm
+from .forms import LoginUserForm, SignupUserForm
 
 
 User = auth.get_user_model()
@@ -19,14 +19,14 @@ class RegisterUser(APIView):
         if request.user.is_authenticated:
             return HttpResponseRedirect(reverse(f'messenger:messenger'))
         
-        form = RegisterUserForm()
+        form = SignupUserForm()
         
         data = {
             'title': "Register",
             'form' : form,
         }
         
-        return render(request, "register/register.html", context=data)
+        return render(request, "registration/signup.html", context=data)
     
     def post(self, request):
         if request.user.is_authenticated:
@@ -87,7 +87,7 @@ class LoginUser(APIView):
             'form' : form,
         }
         
-        return render(request, "register/login.html", context=data)
+        return render(request, "registration/login.html", context=data)
     
     def post(self, request):
         if request.user.is_authenticated:

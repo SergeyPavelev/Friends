@@ -11,14 +11,14 @@ $(document).ready(function() {
         };            
 
         $.ajax({
-            url: 'http://127.0.0.1:8000/auth/register/',
+            url: 'http://127.0.0.1:8000/auth/signup/',
             type: 'POST',
             data: JSON.stringify(formData),
             dataType: 'json',
             contentType: 'application/json',            
 
             success: function() {
-                window.location.href = "http://127.0.0.1:8000/messenger/im/";
+                window.location.href = "http://127.0.0.1:8000/messenger/im/?notification=Добро%20пожаловать%20в%20Friends";
             },
 
             error: function(xhr, status, error) {

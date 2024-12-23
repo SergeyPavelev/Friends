@@ -152,13 +152,27 @@ body {
     margin-right: 5px;
 }
 
-/* .block-nav-icon img {
-
-} */
-
 .main-block {
     padding: 10px;
     position: fixed;
     width: 80%;
     right: 0;
+}
+
+#block-notifications {
+    margin: 10px;
+    padding: 10px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+}
+
+.notification {
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+    color: #fff;
+    background-color: #3f62ff;
 }

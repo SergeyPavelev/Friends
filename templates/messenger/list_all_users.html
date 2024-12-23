@@ -19,9 +19,9 @@
             <ul class="list-users">
                 {% for user in users %}
                     <li class="list-item">
-                        {% if user.profile_photo %}
+                        {% if user.avatar %}
                             <div class="block-user-img">
-                                <img src="{{ user.profile_photo.url }}" alt="User-avatar">
+                                <img src="{{ user.avatar.url }}" alt="User-avatar">
                             </div>
                         {% else %}
                             <div class="block-user-img">

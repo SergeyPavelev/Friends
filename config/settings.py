@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'djoser',
 
     'src.main',
-    'src.register',
+    'src.registration',
     'src.messenger',
     'src.posts',
     'src.user_profile',
@@ -65,7 +65,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     )
 
-AUTH_USER_MODEL = "register.User"
+AUTH_USER_MODEL = "registration.User"
 
 ROOT_URLCONF = 'config.urls'
 

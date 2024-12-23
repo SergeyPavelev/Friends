@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.formats import date_format
+# from rest_framework.response import Response
 from .models import Post
 from .forms import PostForm
 
@@ -46,6 +47,7 @@ class View_Posts(View):
                 'title': new_post.title,
                 'text': new_post.text,
                 'date_created': date_format(timezone.localtime(new_post.date_created), format="d E Y H:i"),
+                'profile_photo': request.user.avatar.url,
             }
             
             return JsonResponse({

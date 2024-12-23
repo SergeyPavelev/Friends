@@ -16,9 +16,9 @@
             {% for my_friend, info_chat in chats_data.items %}
                 <div class="chat">
                     <a href="{% url 'messenger:send_message' receiver_id=my_friend.id %}" class="link-chat">
-                        {% if my_friend.profile_photo %}
+                        {% if my_friend.avatar %}
                             <div class="user-img">
-                                <img src="{{ my_friend.profile_photo.url }}" alt="User-avatar">
+                                <img src="{{ my_friend.avatar.url }}" alt="User-avatar">
                             </div>
                         {% else %}
                             <div class="user-img">

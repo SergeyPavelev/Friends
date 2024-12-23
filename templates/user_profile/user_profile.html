@@ -13,8 +13,8 @@
     <div class="container">
         <div class="block-header">
             <div class="block-load-photo">
-                {% if user.profile_photo %}
-                    <img src="{{ user.profile_photo.url }}" alt="Profile Picture" class="user-avatar">
+                {% if user.avatar %}
+                    <img src="{{ user.avatar.url }}" alt="Profile Picture" class="user-avatar">
                 {% else %}
                     <img src="{% static 'img/null-profile-photo.jpg' %}" alt="Profile Picture" class="user-avatar">
                 {% endif %}

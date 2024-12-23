@@ -22,7 +22,7 @@ class LoginUserForm(forms.Form):
         fields = ('username', 'password',)
 
 
-class RegisterUserForm(forms.Form):
+class SignupUserForm(forms.Form):
     phone = forms.CharField(max_length=255, widget=forms.TextInput(attrs={
         'placeholder': 'Phone',
         'id': 'phone-input',

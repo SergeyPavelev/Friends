@@ -1,9 +1,9 @@
-{% extends 'register/base.html' %}
+{% extends 'registration/base.html' %}
 
 {% block content %}
     <form class="RegisterForm" method="post">
         {% csrf_token %}
-        <h1>Register</h1>
+        <h1>Sign up</h1>
         <div class="input-box">
             {{ form.phone }}
             <i class='bx bxs-phone'></i>
@@ -29,10 +29,10 @@
             <i class='bx bx-repeat'></i>
         </div>
 
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" class="btn">Sign up</button>
 
         <div class="register-link">
-            <p>Do you have an account? <a href="{% url 'auth:login' %}">Login</a></p>
+            <p>Do you have an account? <a href="{% url 'auth:login' %}">Log in</a></p>
         </div>
     </form>
 {% endblock %}

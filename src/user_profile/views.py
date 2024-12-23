@@ -38,7 +38,7 @@ class User_Profile(View):
                 
             image = request.FILES['photo']
             
-            user.profile_photo = image
+            user.avatar = image
             user.save()
         
         elif 'Change username' in request.POST:

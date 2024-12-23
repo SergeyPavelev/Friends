@@ -67,8 +67,8 @@
 .block-message-img {
     margin: 2px 10px;
     display: flex;
-    max-width: 30px;
-    max-height: 30px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     overflow: hidden;
     align-items: center;
@@ -197,6 +197,20 @@
 
 .block-message-form textarea:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+}
+
+.block-message-form textarea::-webkit-scrollbar {
+    width: 7px;
+}
+
+.block-message-form textarea::-webkit-scrollbar-track {
+    background: #9EA6B8;
+    border-radius: 10px;
+}
+
+.block-message-form textarea::-webkit-scrollbar-thumb {
+    background-color: #292e38;
+    border-radius: 10px;
 }
 
 .submit-message {

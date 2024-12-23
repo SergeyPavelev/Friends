@@ -78,6 +78,7 @@
     max-height: calc(100vh - 300px);
     max-width: calc(100vh - 50px);
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .block-list-posts::-webkit-scrollbar {

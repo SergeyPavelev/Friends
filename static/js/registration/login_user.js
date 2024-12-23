@@ -16,7 +16,7 @@ $(document).ready(function() {
             contentType: 'application/json',            
 
             success: function() {
-                window.location.href = "http://127.0.0.1:8000/messenger/im/";
+                window.location.href = "http://127.0.0.1:8000/messenger/im/?notification=Добро%20пожаловать%20в%20Friends";
             },
 
             error: function(xhr, status, error) {
