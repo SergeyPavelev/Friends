@@ -60,7 +60,7 @@
                                 {% if request.user == post.author %}
                                     <div class="block-post-buttons">
                                         <div class="block-post-button">
-                                            <form id="edit-post-form" action="{% url 'posts:edit_post' post_id=post.id %}" method="post">
+                                            <form id="edit-post-form" method="post">
                                                 {% csrf_token %}
                                                 <button class="button-post" id="button-edit-post" type="submit" title="Edit post">
                                                     {% if request.user.theme == 'Light' %}
@@ -72,7 +72,7 @@
                                             </form>
                                         </div>
                                         <div class="block-post-button">
-                                            <form id="delete-post-form" action="{% url 'posts:delete_post' post_id=post.id %}" method="post">
+                                            <form id="delete-post-form" method="post">
                                                 {% csrf_token %}
                                                 <button class="button-post" id="button-delete-post" type="submit" title="Delete post">
                                                     {% if request.user.theme == 'Light' %}

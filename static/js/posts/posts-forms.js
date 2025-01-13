@@ -10,7 +10,7 @@ $(document).ready(function() {
         if (title != "" & textarea != "") {
             $.ajax({
                 type: "POST",
-                url: "http://127.0.0.1:8000/posts/",
+                url: "http://127.0.0.1:8000/api/create_post/",
                 dataType: 'json',
                 data: {
                     title: title,
@@ -115,6 +115,8 @@ $(document).ready(function() {
                     };
     
                     lists_posts.insertAdjacentHTML('afterbegin', post);
+
+                    window.location.href = 'http://127.0.0.1:8000/posts/';
                 },
     
                 error: function (data) {

@@ -9,21 +9,19 @@ $(document).ready(function() {
         };        
 
         $.ajax({
-            url: 'http://127.0.0.1:8000/auth/login/',
+            url: 'http://127.0.0.1:8000/api/login/',
             type: 'POST',
             data: JSON.stringify(formData),
             dataType: 'json',
             contentType: 'application/json',            
 
             success: function() {
-                console.log(formData['username']);
-                
                 window.location.href = `http://127.0.0.1:8000/messenger/im/?notification=${formData['username']}`;
             },
 
             error: function(xhr, status, error) {
                 alert("Ошибка при входе в аккаунт: ", error)
-                console.log("Ошибка при входе в аккаунт: ", error);
+                console.log("Ошибка при входе в аккаунт: ", xhr);
             },
         });
     });

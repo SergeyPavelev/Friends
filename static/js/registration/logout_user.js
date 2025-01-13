@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $('#logout-button').on('click', function() {
         $.ajax({
-            url: "http://127.0.0.1:8000/auth/logout/",
+            url: "http://127.0.0.1:8000/api/logout/",
             type: "POST",
             contentType: 'application/json',
             dataType: 'json',
