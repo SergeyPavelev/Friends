@@ -8,22 +8,25 @@ $(document).ready(function() {
             'password': $('#password-input').val(),
             'password_repeat': $('#password-repeat-input').val(),
             'csrfmiddlewaretoken': '{{ csrf_token }}',
-        };            
+        };
 
         $.ajax({
-            url: 'http://127.0.0.1:8000/api/signup/',
+            url: '/api/signup/',
             type: 'POST',
             data: JSON.stringify(formData),
             dataType: 'json',
             contentType: 'application/json',            
 
-            success: function() { 
-                window.location.href = `http://127.0.0.1:8000/messenger/im/?notification=${formData['username']}`;
+            success: function(response) {
+                localStorage.setItem('accessToken', response.data.access);
+                localStorage.setItem('refreshToken', response.data.refresh);
+                window.location.href = `/messenger/im/?notification=${formData['username']}`;
             },
 
             error: function(xhr, status, error) {
-                alert(error);
-                console.log("Ошибка при регистрации пользователя: ", error);
+                var errorMessage = (xhr.responseJSON && xhr.responseJSON.error) ? xhr.responseJSON.error : 'Неизвестная ошибка';
+                alert("Ошибка при регистрации пользователя: " + errorMessage);
+                console.log("Ошибка при регистрации пользователя: ", errorMessage);
             },
         });
     });

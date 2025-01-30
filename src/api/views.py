@@ -4,11 +4,13 @@ from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.hashers import make_password
 from django.utils import timezone
 from django.utils.formats import date_format
+from rest_framework import generics, status, viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.authtoken.models import Token
+from rest_framework_simplejwt.tokens import RefreshToken
 from ..posts.models import Post
+from .serializers import UserSerializer, PostSerializer
 
 
 User = get_user_model()
@@ -40,78 +42,96 @@ class ThemeChange(APIView):
 
 
 class LoginView(APIView):
-    def post(self, request):
-        username = request.data.get('username')
-        password = request.data.get('password')
+    def post(self, request, *args, **kwargs):
+        username = request.data.get('username', None)
+        password = request.data.get('password', None)
         
-        user = authenticate(request=request, username=username, password=password)
-                    
-        if user:
-            login(request, user)
-            # token, _ = Token.objects.get_or_create(user=user)
-            return Response(data={'token': 'token.key', 'success': 'Вход в аккаунт успешен'}, status=200)
-        else:
-            return Response(data={'error': 'Ошибка аутентификации'}, status=400)
+        if username is None or password is None:
+            return Response({'error': 'Нужен и логин, и пароль'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        user = authenticate(username=username, password=password)
 
+        if user is None:
+            return Response({'error': 'Неправильный логин или пароль'}, status=status.HTTP_401_UNAUTHORIZED)
+            
+        refresh = RefreshToken.for_user(user)
+        refresh.payload.update({
+            'user_id': user.id,
+            'username': user.username,
+        })
+        
+        return Response({
+            'success': 'Вы успешно вошли в аккаунт!',
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }, status=status.HTTP_200_OK)
+        
 
 class SignupView(APIView):
     def post(self, request):
-        phone = request.data.get('phone')
-        username = request.data.get('username')
-        password = request.data.get('password')
-        password_repeat = request.data.get('password_repeat')
+        serializer = UserSerializer(data=request.data)
         
-        if not self.is_unique(phone=phone, username=username):
-            return Response(data={'error': 'Данные уже используются'}, status=400)
-
-        if password != password_repeat:
-            return Response(data={'error': 'Пароли не совпадают'}, status=400)
-                    
-        user = User(phone=phone, username=username, password=make_password(password))
-        user.save()
-
-        login(request, user)
-        return Response(data={'success': 'Регистрация успешна'}, status=201)
-
-
-    @staticmethod
-    def is_unique(phone, username):
-        """Проверка уникальности телефона и имени пользователя"""
-        return not (User.objects.filter(phone=phone).exists() or User.objects.filter(username=username).exists())
+        if serializer.is_valid():
+            user = serializer.save()
+            refresh = RefreshToken.for_user(user)
+            refresh.payload.update({
+                'user_id': user.id,
+                'username': user.username,
+            })
+            
+            return Response(data={
+                'success': 'Вы успешно зарегистрировались!',
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }, status=status.HTTP_201_CREATED)
+            
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LogoutView(APIView):
-    permission_classes = [AllowAny]
-    
     def post(self, request):
-        logout(request)
+        refresh_token = request.data.get('refresh_token')
         
-        return Response(data={'success': 'Вы успешно вышли',}, status=200)
+        if not refresh_token:
+            return Response({'error': 'Необходим Refresh token'})
+        
+        try:
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+        except Exception as e:
+            return Response({'error': 'Неверный Refresh token'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response(data={'success': 'Выход успешен',}, status=status.HTTP_200_OK)
+    
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
     
     
-class CreatePostView(APIView):
-    permission_classes = [IsAuthenticated]
+# class CreatePostView(APIView):
+#     permission_classes = [IsAuthenticated]
     
-    def post(self, request):
-        title_post = request.POST.get('title', '').strip()
-        text_post = request.POST.get('textarea', '').strip()
+#     def post(self, request):
+#         title_post = request.POST.get('title', '').strip()
+#         text_post = request.POST.get('textarea', '').strip()
         
-        new_post = Post(title=title_post, text=text_post, author=request.user)
-        new_post.save()
+#         new_post = Post(title=title_post, text=text_post, author=request.user)
+#         new_post.save()
         
-        data = {
-            'user': request.user.username,
-            'author': new_post.author.username,
-            'title': new_post.title,
-            'text': new_post.text,
-            'date_created': date_format(timezone.localtime(new_post.date_created), format="d E Y H:i"),
-            'profile_photo': request.user.avatar.url,
-        }
+#         data = {
+#             'user': request.user.username,
+#             'author': new_post.author.username,
+#             'title': new_post.title,
+#             'text': new_post.text,
+#             'date_created': date_format(timezone.localtime(new_post.date_created), format="d E Y H:i"),
+#             'profile_photo': request.user.avatar.url,
+#         }
         
-        return Response({
-            'success': data,
-            'status': 'success',
-        })
+#         return Response({
+#             'success': data,
+#             'status': 'success',
+#         })
     
     # @staticmethod
     # def edit_post(request, post_id):        
@@ -148,17 +168,17 @@ class CreatePostView(APIView):
     #     return render(request, 'posts/list_posts.html', context=data)
 
 
-class DeletePostView(APIView):
-    def post(self, request, post_id):
-        post = Post.objects.get(pk=post_id)
-        post.visibility = 0
-        post.save()
+# class DeletePostView(APIView):
+#     def post(self, request, post_id):
+#         post = Post.objects.get(pk=post_id)
+#         post.visibility = 0
+#         post.save()
         
-        return Response(data={
-            'status': 'success',
-        }, status=200)
+#         return Response(data={
+#             'status': 'success',
+#         }, status=200)
 
 
-class EditPostView(APIView):
-    def post(self, request, post_id):
-        pass
+# class EditPostView(APIView):
+#     def post(self, request, post_id):
+#         pass

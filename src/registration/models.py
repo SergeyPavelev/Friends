@@ -10,6 +10,8 @@ class User(AbstractUser):
     avatar = models.ImageField(null=True, blank=True)
     friends = models.ManyToManyField('self', blank=True, default=None)
     theme = models.CharField(max_length=15, default='Light')
+    is_online = models.BooleanField(default=True)
+    last_active = models.DateTimeField(null=True)
     
     def __str__(self) -> str:
         return f'{self.username}'
