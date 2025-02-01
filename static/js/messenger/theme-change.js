@@ -2,18 +2,21 @@ $(document).ready(function() {
     $('#theme-toggle').click(function(e) {
         e.preventDefault();
 
-        var user = $(this).data('user');        
+        var user = $(this).data('user');   
 
         var data = {
             'user': user,
-            csrfmiddlewaretoken: '{{ csrf_token }}',
         };
 
         $.ajax({
-            url: 'http://127.0.0.1:8000/api/theme/',
+            url: '/api/theme/',
             type: 'POST',
             data: data,
             dataType: 'json',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            },
 
             success: function(response) {
                 var currentPath = window.location.pathname;
@@ -70,14 +73,18 @@ $(document).ready(function() {
                         $('link[href*="user-profile-light-theme.css"]').remove();
                         $('head').append('<link rel="stylesheet" href="/static/css/user_profile/user-profile-dark-theme.css">');
                     };
-                };                
-
+                };
+                
+                const token = response.token;
+                console.log(token);
+                
                 console.log('Тема обновлена на ', response.theme);
             },
 
             error: function(xhr, status, error) {
-                alert('Ошибка при смене темы: ' + error);
-                console.log('Ошибка при смене темы: ', error);
+                var errorMessage = (xhr.responseJSON && xhr.responseJSON.error) ? xhr.responseJSON.error : 'Неизвестная ошибка';
+                alert("Ошибка при изменении темы: " + errorMessage);
+                console.log("Ошибка при изменении темы: ", errorMessage);
             },
         });
     });

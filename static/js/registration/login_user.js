@@ -16,8 +16,8 @@ $(document).ready(function() {
             contentType: 'application/json',            
 
             success: function(response) {
-                // localStorage.setItem('accessToken', response.data.access);
-                // localStorage.setItem('refreshToken', response.data.refresh);
+                localStorage.setItem('accessToken', response['access']);
+                localStorage.setItem('refreshToken', response['refresh']);
                 window.location.href = `http://127.0.0.1:8000/messenger/im/?notification=${formData['username']}`;
             },
 

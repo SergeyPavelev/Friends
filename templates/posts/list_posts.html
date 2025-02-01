@@ -28,7 +28,7 @@
         
             <div class="block-list-posts">
                 <ul class="list-posts">
-                    {% for post in posts %}
+                    <!-- {% for post in posts %}
                         <div class="block-post">
                             <a href="{% url 'user_profile:profile' user_id=post.author.id %}" class="author-profile-link">
                                 {% if post.author.avatar %}
@@ -90,7 +90,7 @@
                                 </div>
                             </div>
                         </div>
-                    {% endfor %}
+                    {% endfor %} -->
                 </ul>
             </div>
         </div>
@@ -98,5 +98,5 @@
 {% endblock %}
 
 {% block java_script %}
-    <script src="{% static 'js/posts/posts-forms.js' %}"></script>
+    <script src="{% static 'js/posts/posts.js' %}"></script>
 {% endblock %}

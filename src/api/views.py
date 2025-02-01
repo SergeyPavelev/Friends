@@ -1,13 +1,11 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
-from django.contrib.auth import authenticate, logout, login
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate
 from django.utils import timezone
 from django.utils.formats import date_format
-from rest_framework import generics, status, viewsets
+from rest_framework import generics, status, viewsets, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from ..posts.models import Post
 from .serializers import UserSerializer, PostSerializer
@@ -16,7 +14,7 @@ from .serializers import UserSerializer, PostSerializer
 User = get_user_model()
 
 class ThemeChange(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [permissions.AllowAny]
     
     def post(self, request):
         user = request.data.get('user')
@@ -36,12 +34,14 @@ class ThemeChange(APIView):
             return Response({
                 'success': 'Theme changed on light',
                 'theme': 'light',
-            })
+            }, status=status.HTTP_200_OK)
         else:
-            return Response({'error': 'Invalid theme'})
+            return Response({'error': 'Invalid theme'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LoginView(APIView):
+    permission_classes = [permissions.AllowAny]
+
     def post(self, request, *args, **kwargs):
         username = request.data.get('username', None)
         password = request.data.get('password', None)
@@ -68,6 +68,8 @@ class LoginView(APIView):
         
 
 class SignupView(APIView):
+    permission_classes = [permissions.AllowAny]
+
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         
@@ -89,6 +91,8 @@ class SignupView(APIView):
 
 
 class LogoutView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    
     def post(self, request):
         refresh_token = request.data.get('refresh_token')
         
@@ -105,12 +109,13 @@ class LogoutView(APIView):
     
 
 class PostViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     
     
 # class CreatePostView(APIView):
-#     permission_classes = [IsAuthenticated]
+#     permission_classes = [permissions.IsAuthenticated]
     
 #     def post(self, request):
 #         title_post = request.POST.get('title', '').strip()
