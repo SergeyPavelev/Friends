@@ -13,10 +13,11 @@ from .serializers import UserSerializer, PostSerializer
 
 User = get_user_model()
 
+
 class ThemeChange(APIView):
     permission_classes = [permissions.AllowAny]
     
-    def post(self, request):
+    def get(self, request):
         user = request.data.get('user')
         user = User.objects.get(username=user)
         theme = user.theme
@@ -92,21 +93,15 @@ class SignupView(APIView):
 
 class LogoutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
-    
-    def post(self, request):
-        refresh_token = request.data.get('refresh_token')
-        
-        if not refresh_token:
-            return Response({'error': 'Необходим Refresh token'})
-        
+
+    def get(self, request, user_id):
         try:
-            token = RefreshToken(refresh_token)
-            token.blacklist()
-        except Exception as e:
-            return Response({'error': 'Неверный Refresh token'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        return Response(data={'success': 'Выход успешен',}, status=status.HTTP_200_OK)
-    
+            user = User.objects.get(id=user_id)
+            serializer = UserSerializer(user)
+            return Response(serializer.data)
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
 
 class PostViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
@@ -187,3 +182,4 @@ class PostViewSet(viewsets.ModelViewSet):
 # class EditPostView(APIView):
 #     def post(self, request, post_id):
 #         pass
+        

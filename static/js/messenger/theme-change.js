@@ -10,12 +10,12 @@ $(document).ready(function() {
 
         $.ajax({
             url: '/api/theme/',
-            type: 'POST',
+            type: 'GET',
             data: data,
             dataType: 'json',
             headers: {
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
             },
 
             success: function(response) {
