@@ -11,7 +11,7 @@ $(document).ready(function() {
         $.ajax({
             url: '/api/theme/',
             type: 'GET',
-            data: data,
+            data: JSON.stringify(data),
             dataType: 'json',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,

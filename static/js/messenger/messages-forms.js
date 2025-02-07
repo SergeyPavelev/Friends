@@ -14,9 +14,13 @@ $(document).ready(function() {
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
-                data: {
+                data: JSON.stringify({
                     textarea: textarea,
                     csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
                 },
     
                 success: function(data) {

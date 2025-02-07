@@ -5,20 +5,23 @@ $(document).ready(function() {
         var formData = {
             'username': $("#username-input").val(),
             'password': $('#password-input').val(),
-            // 'csrfmiddlewaretoken': '{{ csrf_token }}',
+            'csrfmiddlewaretoken': $("input[name='csrfmiddlewaretoken']").val(),
         };        
-
+        
         $.ajax({
-            url: 'http://127.0.0.1:8000/api/login/',
-            type: 'POST',
+            type: 'post',
+            url: '/api/login/',
             data: JSON.stringify(formData),
             dataType: 'json',
-            contentType: 'application/json',            
+            headers: {
+                'Content-Type': 'application/json',
+            },          
 
             success: function(response) {
                 localStorage.setItem('accessToken', response['access']);
                 localStorage.setItem('refreshToken', response['refresh']);
-                window.location.href = `http://127.0.0.1:8000/messenger/im/?notification=${formData['username']}`;
+                
+                window.location.href = `/messenger/im/?notification=${formData['username']}`;
             },
 
             error: function(xhr, status, error) {

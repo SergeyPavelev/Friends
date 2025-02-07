@@ -1,18 +1,21 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.views.generic import View, ListView
 from django.urls import reverse
 from django.utils import timezone
 from django.middleware.csrf import get_token
+from rest_framework import status, permissions
 from .models import Message, Room
 from .forms import MessageForm
+import jwt
 
 
 User = get_user_model()
 
 class Index_Messages_View(View):
     def get(self, request):
+        permission_classes = [permissions.AllowAny]
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('auth:login'))
         

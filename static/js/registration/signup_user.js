@@ -7,15 +7,18 @@ $(document).ready(function() {
             'username': $("#username-input").val(),
             'password': $('#password-input').val(),
             'password_repeat': $('#password-repeat-input').val(),
-            'csrfmiddlewaretoken': '{{ csrf_token }}',
+            'csrfmiddlewaretoken': $("input[name='csrfmiddlewaretoken']").val(),
         };
 
         $.ajax({
-            url: '/api/signup/',
             type: 'POST',
+            url: '/api/signup/',
             data: JSON.stringify(formData),
             dataType: 'json',
-            contentType: 'application/json',            
+            headers: {
+                'Content-Type': 'application/json',
+
+            },           
 
             success: function(response) {
                 localStorage.setItem('accessToken', response.data.access);

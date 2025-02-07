@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
@@ -44,8 +45,8 @@ class LoginView(APIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
-        username = request.data.get('username', None)
-        password = request.data.get('password', None)
+        username = request.data.get('username')
+        password = request.data.get('password')
         
         if username is None or password is None:
             return Response({'error': 'Нужен и логин, и пароль'}, status=status.HTTP_400_BAD_REQUEST)
@@ -94,13 +95,18 @@ class SignupView(APIView):
 class LogoutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request, user_id):
+    def post(self, request):
+        refresh_token = request.data.get('refresh_token') # С клиента нужно отправить refresh token
+        if not refresh_token:
+            return Response({'error': 'Необходим Refresh token'},
+                            status=status.HTTP_400_BAD_REQUEST)
         try:
-            user = User.objects.get(id=user_id)
-            serializer = UserSerializer(user)
-            return Response(serializer.data)
-        except User.DoesNotExist:
-            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+        except Exception as e:
+            return Response({'error': 'Неверный Refresh token'},
+                            status=status.HTTP_400_BAD_REQUEST)
+        return Response({'success': 'Выход успешен'}, status=status.HTTP_200_OK)
 
 
 class PostViewSet(viewsets.ModelViewSet):

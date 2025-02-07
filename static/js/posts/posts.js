@@ -104,6 +104,11 @@ $(document).ready(function() {
                 var errorMessage = (xhr.responseJSON && xhr.responseJSON.error) ? xhr.responseJSON.error : 'Неизвестная ошибка';
                 alert("Ошибка при создании поста: " + errorMessage);
                 console.log("Ошибка при создании поста: ", errorMessage);
+                if (xhr.status == 401) {
+                    updateTokens();
+                    console.log('Tokens update');
+                    
+                };
             },
         });
     });    

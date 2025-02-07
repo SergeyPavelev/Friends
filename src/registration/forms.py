@@ -8,6 +8,8 @@ class LoginUserForm(forms.Form):
         'id': 'username-input',
         'type':'text',
         'name': 'username',
+        'maxlength': '255',
+        'required': 'True',
         }))
     
     password = forms.CharField(max_length=255, widget=forms.PasswordInput(attrs={
@@ -15,6 +17,8 @@ class LoginUserForm(forms.Form):
         'id': 'password-input',
         'type':'password',
         'name': 'password',
+        'maxlength': '255',
+        'required': 'True',
         }))
     
     class Meta:
@@ -28,6 +32,7 @@ class SignupUserForm(forms.Form):
         'id': 'phone-input',
         'type':'tel',
         'name': 'phone',
+        'required': 'True',
     }))
 
     username = forms.CharField(max_length=255, widget=forms.TextInput(attrs={
@@ -35,6 +40,7 @@ class SignupUserForm(forms.Form):
         'id': 'username-input',
         'type':'text',
         'name': 'username',
+        'required': 'True',
     }))
 
     password = forms.CharField(max_length=255, widget=forms.PasswordInput(attrs={
@@ -42,6 +48,7 @@ class SignupUserForm(forms.Form):
         'id': 'password-input',
         'type':'password',
         'name': 'password1',
+        'required': 'True',
     }))
 
     password_repeat = forms.CharField(max_length=255, widget=forms.PasswordInput(attrs={
@@ -49,6 +56,7 @@ class SignupUserForm(forms.Form):
         'id': 'password-repeat-input',
         'type':'password',
         'name': 'password2',
+        'required': 'True',
     }))
     
     class Meta:
