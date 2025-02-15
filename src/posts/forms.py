@@ -13,7 +13,7 @@ class PostForm(forms.ModelForm):
     
     textarea = forms.CharField(widget=forms.Textarea(attrs={
         'id': 'textarea-input',
-        'name': 'textarea',
+        'name': 'text',
         'placeholder': 'Your post here...',
         'spellcheck': 'True',
         'required': 'True',

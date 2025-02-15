@@ -5,27 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/messenger/restart.css' %}">
-    {% if request.user.theme == 'Light' %}
-        <link rel="stylesheet" href="{% static 'css/messenger/base-light-theme.css' %}">
-    {% else %}
-        <link rel="stylesheet" href="{% static 'css/messenger/base-dark-theme.css' %}">
-    {% endif %}
+    <link id="linkCSS" rel="stylesheet" href="{% static 'css/messenger/base.css' %}"> 
     {% block  css %}
     {% endblock %}
     <title>{{ title }}</title>
 </head>
-<body>
+<body class="light-theme">
     <section class="header">
         <div class="header-left-position">
-            <div class="block-img-site">
-                {% if request.user.theme == 'Light' %}
-                    <img src="{% static 'img/friends-black.png' %}" alt="Ikon Friends.com">
-                {% else %}
-                    <img src="{% static 'img/friends-white.png' %}" alt="Ikon Friends.com">
-                {% endif %}
-            </div>
             <div class="block-name-site">
-                <h1>Friends.com</h1>
+                <h1>Friends</h1>
             </div>
         </div>
         <div class="header-right-position">
@@ -36,23 +25,13 @@
                 </form>
             </div>
             <div class="block-button-header">
-                {% if request.user.theme == 'Light' %}
-                    <button>
-                        <img src="{% static 'img/notification-black.png' %}" alt="Notification-img">
-                    </button>
-                {% else %}
-                    <button>
-                        <img src="{% static 'img/notification-white.png' %}" alt="Notification-img">
-                    </button>
-                {% endif %}
+                <button>
+                    <img id="notificationButton" src="" alt="Notification ikon">
+                </button>
             </div>
             <div class="block-button-header">
-                <button id="theme-toggle" data-user="{{ request.user }}">
-                    {% if request.user.theme == 'Light' %}
-                        <img src="{% static 'img/sunshine-black.png' %}" alt="Change-theme">
-                    {% else %}
-                        <img src="{% static 'img/moon-white.png' %}" alt="Change-theme">
-                    {% endif %}
+                <button id="theme-toggle">
+                    <img id="themeButton" src="" alt="Ikon theme">
                 </button>
             </div>
             <div class="block-button-header">
@@ -61,21 +40,9 @@
                 </button>
             </div>
             <div class="block-my-account">
-                {% if request.user.profile_photo %}
-                    <a href="{% url 'user_profile:profile' user_id=request.user.id %}">
-                        <img src="{{ request.user.profile_photo.url }}" alt="User-avatar">
-                    </a>
-                {% else %}
-                    {% if request.user.theme == 'Light' %}
-                        <a href="{% url 'user_profile:profile' user_id=request.user.id %}">
-                            <img src="{% static 'img/user-avatar-black.png' %}" alt="User-avatar">
-                        </a>
-                    {% else %}
-                        <a href="{% url 'user_profile:profile' user_id=request.user.id %}">
-                            <img src="{% static 'img/user-avatar-white.png' %}" alt="User-avatar">
-                        </a>
-                    {% endif %}
-                {% endif %}
+                <a id="userAvatarHref" href="">
+                    <img id="userAvatar" src="" alt="User avatar">
+                </a>
             </div>
         </div>
     </section>
@@ -84,74 +51,31 @@
         <div class="block-nav-buttons">
             <a href="{% url 'messenger:messenger' %}" class="nav-link">
                 <div class="block-nav-icon">
-                    {% if request.user.theme == 'Light' %}
-                        <img src="{% static 'img/messenger-black.png' %}" alt="Messenger">
-                    {% else %}
-                        <img src="{% static 'img/messenger-white.png' %}" alt="Messenger">
-                    {% endif %}
+                    <img id="messengerIkon" src="" alt="Messenger">
                 </div>
                 <span>Messenger</span>
             </a>
             <a href="{% url 'posts:posts' %}" class="nav-link">
                 <div class="block-nav-icon">
-                    {% if request.user.theme == 'Light' %}
-                        <img src="{% static 'img/posts-black.png' %}" alt="Posts">
-                    {% else %}
-                        <img src="{% static 'img/posts-white.png' %}" alt="Posts">
-                    {% endif %}
+                    <img id="postsIkon" src="" alt="Posts">
                 </div>
                 <span>Posts</span>
             </a>
             <a href="{% url 'messenger:my_friends' %}" class="nav-link">
                 <div class="block-nav-icon">
-                    {% if request.user.theme == 'Light' %}
-                        <img src="{% static 'img/list-users-black.png' %}" alt="List-users">
-                    {% else %}
-                        <img src="{% static 'img/list-users-white.png' %}" alt="List-users">
-                    {% endif %}
+                    <img id="listFriendsIkon" src="" alt="List friends">
                 </div>
                 <span>My friends</span>
             </a>
             <a href="{% url 'messenger:all_users' %}" class="nav-link">
                 <div class="block-nav-icon">
-                    {% if request.user.theme == 'Light' %}
-                        <img src="{% static 'img/list-users-black.png' %}" alt="List-users">
-                    {% else %}
-                        <img src="{% static 'img/list-users-white.png' %}" alt="List-users">
-                    {% endif %}
+                    <img id="listUsersIkon" src="" alt="List users">
                 </div>
                 <span>All users</span>
             </a>
-            {% if request.user.is_superuser %}
-                <a href="/admin/" class="nav-link">
-                    <div class="block-nav-icon">
-                        {% if request.user.theme == 'Light' %}
-                            <img src="{% static 'img/user-avatar-black.png' %}" alt="User-avatar">
-                        {% else %}
-                            <img src="{% static 'img/user-avatar-white.png' %}" alt="User-avatar">
-                        {% endif %}
-                    </div>
-                    <span>Admin-page</span>
-                </a>
-            {% endif %}
+            <br>
         </div>
         <div class="block-nav-buttons">
-            {% for my_friend in my_friends %}
-                <a href="{% url 'messenger:send_message' receiver_id=my_friend.id %}" class="nav-link">
-                    <div class="block-nav-icon">
-                        {% if request.user.profile_photo %}
-                            <img src="{{ request.user.profile_photo.url }}" alt="User-avatar">
-                        {% else %}
-                            {% if request.user.theme == 'Light' %}
-                                <img src="{% static 'img/user-avatar-black.png' %}" alt="User-avatar">
-                            {% else %}
-                                <img src="{% static 'img/user-avatar-white.png' %}" alt="User-avatar">
-                            {% endif %}
-                        {% endif %}
-                    </div>
-                    <span class="link-name">{{ my_friend }}</span>
-                </a>
-            {% endfor %}
         </div>
     </section>
 

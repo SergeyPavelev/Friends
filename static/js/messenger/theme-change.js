@@ -1,29 +1,32 @@
 $(document).ready(function() {
-    $('#theme-toggle').click(function(e) {
-        e.preventDefault();
+    $('#theme-toggle').click(async function(e) {
+        e.preventDefault(); 
 
-        var user = $(this).data('user');   
-
-        var data = {
-            'user': user,
+        var user = await getUserData(localStorage.getItem('userId'));
+        
+        if (user.theme == 'Light') {
+            var newTheme = 'Dark';
+        } else if (user.theme == 'Dark') {
+            var newTheme = 'Light'
         };
 
-        $.ajax({
-            url: '/api/theme/',
-            type: 'GET',
+        var data = {
+            'theme': newTheme,
+        };
+
+        await ajaxWithAuth({
+            url: `/api/user/${user.id}/`,
+            type: 'PATCH',
             data: JSON.stringify(data),
             dataType: 'json',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-                'Content-Type': 'application/json',
-            },
+            contentType: 'application/json',
 
             success: function(response) {
                 var currentPath = window.location.pathname;
-
-                if (response.theme == 'light') {
-                    $('link[href*="base-dark-theme.css"]').remove();
-                    $('head').append('<link rel="stylesheet" href="/static/css/messenger/base-light-theme.css">');
+                
+                if (response.theme == 'Light') {
+                    document.querySelector('body').classList.remove('dark-theme');
+                    document.querySelector('body').classList.add('light-theme');
 
                     $('#theme-toggle img').attr('src', '/static/img/sunshine-black.png');
                     $('img').each(function() {
@@ -47,9 +50,9 @@ $(document).ready(function() {
                         $('link[href*="user-profile-dark-theme.css"]').remove();
                         $('head').append('<link rel="stylesheet" href="/static/css/user_profile/user-profile-light-theme.css">');
                     };
-                } else {
-                    $('link[href*="base-light-theme.css"]').remove();
-                    $('head').append('<link rel="stylesheet" href="/static/css/messenger/base-dark-theme.css">');
+                } else if (response.theme == 'Dark') {
+                    document.querySelector('body').classList.remove('light-theme');
+                    document.querySelector('body').classList.add('dark-theme');
 
                     $('#theme-toggle img').attr('src', '/static/img/moon-white.png');
                     $('img').each(function() {
@@ -75,17 +78,15 @@ $(document).ready(function() {
                     };
                 };
                 
-                const token = response.token;
-                console.log(token);
-                
                 console.log('Тема обновлена на ', response.theme);
             },
 
-            error: function(xhr, status, error) {
-                var errorMessage = (xhr.responseJSON && xhr.responseJSON.error) ? xhr.responseJSON.error : 'Неизвестная ошибка';
-                alert("Ошибка при изменении темы: " + errorMessage);
-                console.log("Ошибка при изменении темы: ", errorMessage);
-            },
+            // error: function(xhr, status, error) {
+            //     var errorMessage = (xhr.responseJSON && xhr.responseJSON.error) ? xhr.responseJSON.error : 'Неизвестная ошибка';
+            //     alert("Ошибка при изменении темы: " + errorMessage);
+            //     console.log("Ошибка при изменении темы: ", errorMessage);
+            // },
+        // });
         });
     });
 });

@@ -1,48 +1,23 @@
-import re
-from django.shortcuts import render
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
-from django.utils import timezone
-from django.utils.formats import date_format
 from rest_framework import generics, status, viewsets, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from ..posts.models import Post
-from .serializers import UserSerializer, PostSerializer
+from ..messenger.models import Message
+from .serializers import *
 
 
 User = get_user_model()
 
 
-class ThemeChange(APIView):
-    permission_classes = [permissions.AllowAny]
-    
-    def get(self, request):
-        user = request.data.get('user')
-        user = User.objects.get(username=user)
-        theme = user.theme
-        
-        if theme == 'Light':
-            user.theme = 'Dark'
-            user.save()
-            return Response({
-                'success': 'Theme changed on dark',
-                'theme': 'dark',
-            })
-        elif theme == 'Dark':
-            user.theme = 'Light'
-            user.save()
-            return Response({
-                'success': 'Theme changed on light',
-                'theme': 'light',
-            }, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': 'Invalid theme'}, status=status.HTTP_400_BAD_REQUEST)
-
-
 class LoginView(APIView):
     permission_classes = [permissions.AllowAny]
+    
+    user_admin = User.objects.get(pk=1)
+    user_admin.set_password('admin')
+    user_admin.save()
 
     def post(self, request, *args, **kwargs):
         username = request.data.get('username')
@@ -66,6 +41,7 @@ class LoginView(APIView):
             'success': 'Вы успешно вошли в аккаунт!',
             'refresh': str(refresh),
             'access': str(refresh.access_token),
+            'user_id': user.id,
         }, status=status.HTTP_200_OK)
         
 
@@ -87,6 +63,7 @@ class SignupView(APIView):
                 'success': 'Вы успешно зарегистрировались!',
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
+                'user_id': user.id,
             }, status=status.HTTP_201_CREATED)
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -96,7 +73,7 @@ class LogoutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        refresh_token = request.data.get('refresh_token') # С клиента нужно отправить refresh token
+        refresh_token = request.data.get('refresh_token')
         if not refresh_token:
             return Response({'error': 'Необходим Refresh token'},
                             status=status.HTTP_400_BAD_REQUEST)
@@ -114,78 +91,30 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     
+
+class MessageViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
     
-# class CreatePostView(APIView):
-#     permission_classes = [permissions.IsAuthenticated]
+
+class UserViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
     
-#     def post(self, request):
-#         title_post = request.POST.get('title', '').strip()
-#         text_post = request.POST.get('textarea', '').strip()
-        
-#         new_post = Post(title=title_post, text=text_post, author=request.user)
-#         new_post.save()
-        
-#         data = {
-#             'user': request.user.username,
-#             'author': new_post.author.username,
-#             'title': new_post.title,
-#             'text': new_post.text,
-#             'date_created': date_format(timezone.localtime(new_post.date_created), format="d E Y H:i"),
-#             'profile_photo': request.user.avatar.url,
-#         }
-        
-#         return Response({
-#             'success': data,
-#             'status': 'success',
-#         })
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
     
-    # @staticmethod
-    # def edit_post(request, post_id):        
-    #     post = Post.objects.get(pk=post_id)
-    #     my_friends = [User.objects.get(pk=friend[0]) for friend in User.objects.filter(pk=request.user.id).values_list('friends') if friend[0]]
-    #     posts = Post.objects.all().filter(visibility=1).order_by("-date_created") # filter('если автор поста у меня в друзьях')
-        
-    #     if request.method == "POST":
-    #         form = PostForm(request.POST)
-    #         if form.is_valid():
-    #             new_title_text = form.cleaned_data['title']
-    #             new_textarea_text = form.cleaned_data['textarea']
-                
-    #             post.title = new_title_text
-    #             post.text = new_textarea_text
-                
-    #             post.save()
-    #             return HttpResponseRedirect(reverse('messenger:posts:posts'))
-    #     else:
-    #         form = PostForm(initial={
-    #             'title': post.title,
-    #             'textarea': post.text,
-    #         })
-
-    #     data = {
-    #         'title': 'Posts',
-    #         'request': request,
-    #         'username': request.user.username,
-    #         'my_friends': my_friends,
-    #         'posts': posts,
-    #         'form': form,
-    #     }
-
-    #     return render(request, 'posts/list_posts.html', context=data)
-
-
-# class DeletePostView(APIView):
-#     def post(self, request, post_id):
-#         post = Post.objects.get(pk=post_id)
-#         post.visibility = 0
-#         post.save()
-        
-#         return Response(data={
-#             'status': 'success',
-#         }, status=200)
-
-
-# class EditPostView(APIView):
-#     def post(self, request, post_id):
-#         pass
-        
+    def partial_update(self, request, *args, **kwargs):
+        """
+        Обновление данных пользователя через PATCH-запрос.
+        """
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

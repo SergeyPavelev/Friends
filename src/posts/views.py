@@ -11,7 +11,7 @@ from .forms import PostForm
 
 User = get_user_model()
 
-class View_Posts(View):
+class PostsView(View):
     def get(self, request):
         if not self.request.user.is_authenticated:
             return HttpResponseRedirect(reverse('auth:login'))

@@ -155,7 +155,6 @@
             <form id="SendMessageForm" class="block-message-form" method="post">
                 {% csrf_token %}
                 {{ form.textarea }}
-                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                 <input class="submit-message" id="input-message-form" type="submit" name="SubmitMessage" placeholder="Send" value="Send">
             </form>
         {% endif %}
@@ -164,5 +163,5 @@
 
 {% block java_script %}
     <script src="{% static 'js/messenger/activate-message-buttons.js' %}"></script>
-    <script src="{% static 'js/messenger/messages-forms.js' %}"></script>
+    <script src="{% static 'js/messenger/messages.js' %}"></script>
 {% endblock %}

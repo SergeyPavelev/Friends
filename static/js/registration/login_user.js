@@ -20,8 +20,9 @@ $(document).ready(function() {
             success: function(response) {
                 localStorage.setItem('accessToken', response['access']);
                 localStorage.setItem('refreshToken', response['refresh']);
-                
-                window.location.href = `/messenger/im/?notification=${formData['username']}`;
+                localStorage.setItem('userId', response['user_id']);
+
+                window.location.href = `/messenger/im/`;
             },
 
             error: function(xhr, status, error) {

@@ -17,12 +17,15 @@ $(document).ready(function() {
             dataType: 'json',
             headers: {
                 'Content-Type': 'application/json',
-
-            },           
+            },  
 
             success: function(response) {
-                localStorage.setItem('accessToken', response.data.access);
-                localStorage.setItem('refreshToken', response.data.refresh);
+                if (response.status != 201) return;
+
+                localStorage.setItem('accessToken', response['access']);
+                localStorage.setItem('refreshToken', response['refresh']);
+                localStorage.setItem('userId', response['user_id']);
+                localStorage.setItem('tokenExpiration', Date.now() + 3600 * 1000);
                 window.location.href = `/messenger/im/?notification=${formData['username']}`;
             },
 

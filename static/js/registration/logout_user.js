@@ -13,9 +13,13 @@ $(document).ready(function() {
                 'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
             },
             
-            success: function() {
+            success: function(response) {
+                if (response.status != 200) return;
+
                 localStorage.removeItem('accessToken');
                 localStorage.removeItem('refreshToken');
+                localStorage.removeItem('userId');
+                localStorage.removeItem('tokenExpiration');
                 window.location.href = "/auth/login/";
             },
 
