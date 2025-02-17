@@ -39,6 +39,11 @@ body.light-theme .block-name-site {
     margin: auto 20px;
 }
 
+body.light-theme .block-name-site a {
+    color: #000;
+    text-decoration: none;
+}
+
 body.light-theme .block-form-search {
     margin: 5px 30px;
     display: flex;
@@ -220,6 +225,11 @@ body.dark-theme .header-right-position {
 
 body.dark-theme .block-name-site {
     margin: auto 20px;
+}
+
+body.dark-theme .block-name-site a {
+    color: #fff;
+    text-decoration: none;
 }
 
 body.dark-theme .block-form-search {

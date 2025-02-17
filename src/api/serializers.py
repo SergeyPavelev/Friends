@@ -1,7 +1,8 @@
+from django.dispatch import receiver
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from ..posts.models import Post
-from ..messenger.models import Message
+from ..messenger.models import Message, Room
 
 
 User = get_user_model()
@@ -54,6 +55,16 @@ class PostSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'text', 'author', 'visibility']
 
 class MessageSerializer(serializers.ModelSerializer):
+    sender = UserSerializer()
+    receiver = UserSerializer()
+    
     class Meta:
         model = Message
-        fields = ['id', 'sender', 'receiver', 'room', 'text_message',]
+        fields = ['id', 'sender', 'receiver', 'room', 'text_message', 'date_created']
+        
+class RoomSerializer(serializers.ModelSerializer):
+    users = UserSerializer(many=True)
+    
+    class Meta:
+        model = Room
+        fields = ['id', 'users']        

@@ -7,7 +7,8 @@ from .views import *
 router = DefaultRouter()
 router.register(r'posts', PostViewSet)
 router.register(r'messages', MessageViewSet)
-router.register(r'user', UserViewSet)
+router.register(r'users', UserViewSet)
+router.register(r'rooms', RoomViewSet)
 
 app_name = 'api'
 

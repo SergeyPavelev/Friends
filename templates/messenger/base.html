@@ -14,7 +14,9 @@
     <section class="header">
         <div class="header-left-position">
             <div class="block-name-site">
-                <h1>Friends</h1>
+                <a href="{% url 'home' %}">
+                    <h1>Friends</h1>
+                </a>
             </div>
         </div>
         <div class="header-right-position">
@@ -88,8 +90,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{% static 'js/messenger/base.js' %}"></script>
-    <script src="{% static 'js/registration/logout_user.js' %}"></script>
-    <script src="{% static 'js/messenger/theme-change.js' %}"></script>
+    <script src="{% static 'js/registration/logoutUser.js' %}"></script>
+    <script src="{% static 'js/messenger/themeChange.js' %}"></script>
     <script src="{% static 'js/messenger/notifications.js' %}"></script>
     <script src="{% static 'js/messenger/updateTokens.js' %}"></script>
     {% block java_script %}

@@ -2,11 +2,7 @@
 {% load static %}
 
 {% block css %}
-    {% if request.user.theme == 'Light' %}
-        <link rel="stylesheet" href="{% static 'css/messenger/send-messages-light-theme.css' %}">
-    {% else %}
-        <link rel="stylesheet" href="{% static 'css/messenger/send-messages-dark-theme.css' %}">
-    {% endif %}
+    <link rel="stylesheet" href="{% static 'css/messenger/send-messages.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -162,6 +158,6 @@
 {% endblock %}
 
 {% block java_script %}
-    <script src="{% static 'js/messenger/activate-message-buttons.js' %}"></script>
+    <script src="{% static 'js/messenger/activateMessageButtons.js' %}"></script>
     <script src="{% static 'js/messenger/messages.js' %}"></script>
 {% endblock %}

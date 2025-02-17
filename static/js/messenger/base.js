@@ -7,15 +7,15 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-function getUserData(userId) {
-    return ajaxWithAuth({
-        url: `/api/user/${userId}/`,
+async function getUserData(userId) {
+    return await ajaxWithAuth({
+        url: `/api/users/${userId}/`,
         type: 'GET',
         dataType: 'json',
 
-        // error: function (xhr, status, error) {
-        //     console.log('Не удалось получить пользователя');
-        // },
+        error: function (xhr, status, error) {
+            console.log('Не удалось получить пользователя');
+        },
     });
 };
 
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     const userId = localStorage.getItem('userId');
     
     if (userId) {
-         var user = await getUserData(userId);             
+         var user = await getUserData(userId);
     } else {
         console.error('userId отсутствует в localStorage');
     };
@@ -65,43 +65,30 @@ document.addEventListener("DOMContentLoaded", async function() {
         listFriendsIkon.src = '/static/img/list-users-black.png';
         listUsersIkon.src = '/static/img/list-users-black.png';
     };
-    
-    var listFriends = await ajaxWithAuth({
-        url: '/api/user/',
-        type: 'GET',
-
-        // error: function (xhr, status, error) {
-        //     console.log('Не удалось получить список друзей');
-        // }
-    });
 
     navigationBlock = document.querySelector('.block-nav-buttons');
 
-    listFriends.forEach(friend => {
-        if (friend.id == localStorage.getItem('userId')) {
-            friend.friends.forEach(async friendId => {
-                var friendData = await getUserData(friendId);
+    user.friends.forEach(async friendId => {
+        var friendData = await getUserData(friendId);
 
-                if (friendData.avatar) {
-                    var friendAvatar = `/static/img/${friendData.avatar}`;
-                } else {
-                    if (user.theme == 'Dark') {
-                        var friendAvatar = '/static/img/user-avatar-white.png';
-                    } else {                        
-                        var friendAvatar = '/static/img/user-avatar-black.png';
-                    };
-                };
-
-                var friendLink = `
-                    <a class='nav-link' href='/messenger/im/${friendData.id}/'>
-                        <div class='block-nav-icon'>
-                            <img src="${friendAvatar}" alt="User-avatar">
-                        </div>
-                        <span class="link-name">${friendData.username}</span>
-                    </a>
-                `;
-                navigationBlock.innerHTML += friendLink                
-            });
+        if (friendData.avatar) {
+            var friendAvatar = `/static/img/${friendData.avatar}`;
+        } else {
+            if (user.theme == 'Dark') {
+                var friendAvatar = '/static/img/user-avatar-white.png';
+            } else {                        
+                var friendAvatar = '/static/img/user-avatar-black.png';
+            };
         };
+
+        var friendLink = `
+            <a class='nav-link' href='/messenger/im/${friendData.id}/'>
+                <div class='block-nav-icon'>
+                    <img src="${friendAvatar}" alt="User-avatar">
+                </div>
+                <span class="link-name">${friendData.username}</span>
+            </a>
+        `;
+        navigationBlock.innerHTML += friendLink                
     });
 });
