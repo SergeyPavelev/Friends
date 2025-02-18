@@ -42,10 +42,7 @@ $(document).ready(function() {
                         $('head').append('<link rel="stylesheet" href="/static/css/posts/posts-light-theme.css">');
                     } else if (currentPath.includes('/all_users/') || currentPath.includes('/my_friends/')) {
                         $('link[href*="list-users-dark-theme.css"]').remove();
-                        $('head').append('<link rel="stylesheet" href="/static/css/messenger/list-users-light-theme.css">');
-                    } else if (currentPath.includes('/messenger/im/')) {
-                        $('link[href*="list-chats-dark-theme.css"]').remove();
-                        $('head').append('<link rel="stylesheet" href="/static/css/messenger/list-chats-light-theme.css">');  
+                        $('head').append('<link rel="stylesheet" href="/static/css/messenger/list-users-light-theme.css">'); 
                     } else if (currentPath.includes('/profile/')) {
                         $('link[href*="user-profile-dark-theme.css"]').remove();
                         $('head').append('<link rel="stylesheet" href="/static/css/user_profile/user-profile-light-theme.css">');
@@ -69,9 +66,6 @@ $(document).ready(function() {
                     } else if (currentPath.includes('/all_users/') || currentPath.includes('/my_friends/')) {
                         $('link[href*="list-users-light-theme.css"]').remove();
                         $('head').append('<link rel="stylesheet" href="/static/css/messenger/list-users-dark-theme.css">');
-                    } else if (currentPath.includes('/messenger/im/')) {
-                        $('link[href*="list-chats-light-theme.css"]').remove();
-                        $('head').append('<link rel="stylesheet" href="/static/css/messenger/list-chats-dark-theme.css">');
                     } else if (currentPath.includes('/profile/')) {
                         $('link[href*="user-profile-light-theme.css"]').remove();
                         $('head').append('<link rel="stylesheet" href="/static/css/user_profile/user-profile-dark-theme.css">');

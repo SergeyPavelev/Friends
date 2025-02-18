@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         body.classList.remove('light-theme');
         body.classList.add('dark-theme');
         if (user.avatar) {
-            userAvatar.src = `/static/img/${user.avatar}`;
+            userAvatar.src = `${user.avatar}`;
         } else {
             userAvatar.src = '/static/img/user-avatar-white.png';
         };
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 
     } else if (user.theme == 'Light') {
         if (user.avatar) {
-            userAvatar.src = `/static/img/${user.avatar}`;
+            userAvatar.src = `${user.avatar}`;
         } else {
             userAvatar.src = '/static/img/user-avatar-black.png';
         };

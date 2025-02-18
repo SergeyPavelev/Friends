@@ -6,7 +6,7 @@ $(document).ready(function() {
             contentType: 'application/json',
             dataType: 'json',
             data: JSON.stringify({
-                'refresh_token': localStorage.getItem('refreshToken'),
+                'refreshToken': localStorage.getItem('refreshToken'),
             }),
             headers: {
                 'Content-Type': 'application/json',
@@ -19,7 +19,6 @@ $(document).ready(function() {
                 localStorage.removeItem('accessToken');
                 localStorage.removeItem('refreshToken');
                 localStorage.removeItem('userId');
-                localStorage.removeItem('tokenExpiration');
                 window.location.href = "/auth/login/";
             },
 

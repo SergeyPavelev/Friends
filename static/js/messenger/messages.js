@@ -1,4 +1,44 @@
+async function displayMessages() {
+    const userId = localStorage.getItem('userId');
+
+    if (userId) {
+        var user = await getUserData(userId);             
+    } else {
+        console.error('userId отсутствует в localStorage');
+    };
+
+    const receiverId = window.location.pathname.split('/').reverse()[1];
+
+    if (receiverId) {
+        var receiver = await getUserData(receiverId);             
+    } else {
+        console.error('receiverId отсутствует');
+    };
+
+    document.getElementById('receiverName').textContent = receiver.username;
+    document.getElementById('receiverLink').setAttribute('href', `/profile/${receiver.id}/`);
+
+    var rooms = await ajaxWithAuth({
+        url: '/api/rooms/',
+        type: 'GET',
+        dataType: 'json',
+    });
+
+    var messages = await ajaxWithAuth({
+        url: '/api/messages/',
+        type: 'GET',
+        dataType: 'json',
+    });
+
+    console.log(rooms);
+    console.log(messages);
+    
+}
+
+
 $(document).ready(function() {
+    displayMessages();
+
     $('#input-message-form').click(function(e) {
         e.preventDefault();
         e.stopPropagation();

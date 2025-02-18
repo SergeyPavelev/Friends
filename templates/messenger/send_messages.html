@@ -8,13 +8,13 @@
 {% block content %}
     <div class="container">
         <div id="receiver-name">
-            <a href="{% url 'user_profile:profile' user_id=receiver.id %}">
-                <h2>{{ receiver }}</h2>
+            <a id="receiverLink" href="">
+                <h2 id="receiverName"></h2>
             </a>
         </div>
         <div class="block-messages">
             <ul class="lists-messages">
-                {% for message in messages_in_room %}
+                <!-- {% for message in messages_in_room %}
                     {% if message.sender == request.user %}
                         <div class="block-message-me"> 
                             <div class="block-message-buttons">
@@ -136,24 +136,15 @@
                             </div>
                         </div>
                     {% endif %}
-                {% endfor %}
+                {% endfor %} -->
             </ul>
         </div>
         
-        {% if 'edit_message' in request.path %}
-            <form id="EditMessageForm" class="block-message-form" action="{% url 'messenger:edit_message' receiver_id=receiver_id message_id=message.id %}" method="post">
-                {% csrf_token %}
-                {{ form.textarea }}
-                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                <input class="submit-message" id="input-edit-message-form" type="submit" name="SubmitMessage" placeholder="Send">
-            </form>
-        {% else %}
-            <form id="SendMessageForm" class="block-message-form" method="post">
-                {% csrf_token %}
-                {{ form.textarea }}
-                <input class="submit-message" id="input-message-form" type="submit" name="SubmitMessage" placeholder="Send" value="Send">
-            </form>
-        {% endif %}
+        <form id="SendMessageForm" class="block-message-form" method="post">
+            {% csrf_token %}
+            {{ form.textarea }}
+            <input class="submit-message" id="input-message-form" type="submit" name="SubmitMessage" placeholder="Send" value="Send">
+        </form>
     </div>
 {% endblock %}
 

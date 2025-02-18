@@ -13,7 +13,7 @@ from .forms import MessageForm
 
 User = get_user_model()
 
-class Index_Messages_View(View):
+class IndexMessagesView(View):
     def get(self, request):       
         data = {'title': "Messenger",}
         return render(request, "messenger/list_chats.html", context=data)
@@ -21,34 +21,29 @@ class Index_Messages_View(View):
 
 class Send_Messages_View(View):
     def get(self, request, receiver_id):
-        if not request.user.is_authenticated:
-            return HttpResponseRedirect(reverse('auth:login'))
-        elif request.user.id == receiver_id:
-            return HttpResponseRedirect(reverse('messenger:messenger'))
-        
         form = MessageForm()
         
-        my_friends = [User.objects.get(pk=friend[0]) for friend in User.objects.filter(pk=request.user.id).values_list('friends')]
-        room = Room.create_or_get_room(user1=request.user, user2=User.objects.get(pk=receiver_id))
+        # my_friends = [User.objects.get(pk=friend[0]) for friend in User.objects.filter(pk=request.user.id).values_list('friends')]
+        # room = Room.create_or_get_room(user1=request.user, user2=User.objects.get(pk=receiver_id))
         receiver = User.objects.get(pk=receiver_id)
-        messages_in_room = Message.objects.filter(room=str(room.pk))
+        # messages_in_room = Message.objects.filter(room=str(room.pk))
         
-        messages_to_show = []
-        for message in messages_in_room:
-            if message.sender == request.user and message.sender_visibility == 1:
-                messages_to_show.append(message)
-            elif message.receiver == request.user and message.receiver_visibility == 1:
-                messages_to_show.append(message)
+        # messages_to_show = []
+        # for message in messages_in_room:
+        #     if message.sender == request.user and message.sender_visibility == 1:
+        #         messages_to_show.append(message)
+        #     elif message.receiver == request.user and message.receiver_visibility == 1:
+        #         messages_to_show.append(message)
         
         data = {
             'title': f"Messenger with {receiver}",
-            'request': request,
-            'username': request.user.username,
-            'room_id': room,
-            'receiver': receiver,
-            'receiver_id': receiver_id,
-            'my_friends': my_friends,
-            'messages_in_room': messages_to_show,
+            # 'request': request,
+            # 'username': request.user.username,
+            # 'room_id': room,
+            # 'receiver': receiver,
+            # 'receiver_id': receiver_id,
+            # 'my_friends': my_friends,
+            # 'messages_in_room': messages_to_show,
             'form': form,
         }
         

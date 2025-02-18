@@ -49,7 +49,7 @@ async function listUserChats () {
         url: '/api/messages/',
         type: 'GET',
         dataType: 'json',
-    });    
+    });
 
     var myRooms = [];
     var myRoomsDict = {};
@@ -64,7 +64,7 @@ async function listUserChats () {
     });
     
     var messagesMyRooms = messages
-        .filter(message => myRooms.includes(parseInt(message.room, 10)))
+        .filter(message => myRooms.includes(message.room))
         .sort((a, b) => new Date(b.date_created) - new Date(a.date_created));
     
 
@@ -81,7 +81,7 @@ async function listUserChats () {
     myRooms.forEach(async (room) => {
         let userAvatar;
         if (user.avatar) {
-            userAvatar = `/static/img/${user.avatar}`;
+            userAvatar = `${user.avatar}`;
         } else {
             if (user.theme == 'Light') {
                 userAvatar = '/static/img/user-avatar-black.png';

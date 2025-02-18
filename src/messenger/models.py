@@ -4,29 +4,6 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-class Message(models.Model):
-    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender', verbose_name='Отправитель')
-    receiver = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name='receiver', verbose_name='Получатель')
-    room = models.CharField('Chat Room', max_length=10)
-    text_message = models.TextField('Текст сообщения', max_length=500)
-    date_created = models.DateTimeField('Дата отправки', auto_now_add=True)
-    time_created = models.TimeField('Время отправки', auto_now_add=True)
-    is_readed = models.BooleanField('Прочитано', default=False)
-    sender_visibility = models.BooleanField('Отображение у отправителя', default=True)
-    receiver_visibility = models.BooleanField('Отображение у получателя', default=True)
-    
-    objects = models.Manager() # менеджер по-умолчанию, для работы с объектами модели
-        
-    def __str__(self):
-        return  f'{self.sender} - {self.receiver}: {self.text_message} [{self.date_created}]'
-
-    
-    class Meta:
-        ordering = ['date_created']
-        
-        verbose_name = 'Message'
-        verbose_name_plural = 'Messages'
-
 
 class Room(models.Model):
     users = models.ManyToManyField(User, blank=True)
@@ -63,3 +40,27 @@ class Room(models.Model):
             new_room = Room.objects.create()
             new_room.users.add(user1, user2)
             return new_room
+
+
+class Message(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender', verbose_name='Отправитель')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name='receiver', verbose_name='Получатель')
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='room', verbose_name='Комната')
+    text_message = models.TextField('Текст сообщения', max_length=500)
+    date_created = models.DateTimeField('Дата отправки', auto_now_add=True)
+    time_created = models.TimeField('Время отправки', auto_now_add=True)
+    is_readed = models.BooleanField('Прочитано', default=False)
+    sender_visibility = models.BooleanField('Отображение у отправителя', default=True)
+    receiver_visibility = models.BooleanField('Отображение у получателя', default=True)
+    
+    objects = models.Manager() # менеджер по-умолчанию, для работы с объектами модели
+        
+    def __str__(self):
+        return  f'{self.sender} - {self.receiver}: {self.text_message} [{self.date_created}]'
+
+    
+    class Meta:
+        ordering = ['date_created']
+        
+        verbose_name = 'Message'
+        verbose_name_plural = 'Messages'
