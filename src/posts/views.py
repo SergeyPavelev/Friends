@@ -12,19 +12,9 @@ from .forms import PostForm
 User = get_user_model()
 
 class PostsView(View):
-    def get(self, request):
-        if not self.request.user.is_authenticated:
-            return HttpResponseRedirect(reverse('auth:login'))
-        
-        my_friends = [User.objects.get(pk=friend[0]) for friend in User.objects.filter(pk=self.request.user.id).values_list('friends') if friend[0]]
-        posts = Post.objects.all().filter(Q(author__in=my_friends) | Q(author=request.user), visibility=1).order_by("-date_created")
-        
+    def get(self, request):        
         data = {
             'title': 'Posts',
-            'request': request,
-            'username': self.request.user.username,
-            'my_friends': my_friends,
-            'posts': posts,
             'form': PostForm(),
         }
         

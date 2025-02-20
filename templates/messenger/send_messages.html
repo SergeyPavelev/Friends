@@ -12,133 +12,7 @@
                 <h2 id="receiverName"></h2>
             </a>
         </div>
-        <div class="block-messages">
-            <ul class="lists-messages">
-                <!-- {% for message in messages_in_room %}
-                    {% if message.sender == request.user %}
-                        <div class="block-message-me"> 
-                            <div class="block-message-buttons">
-                                <div class="block-message-button">
-                                    <form action="{% url 'messenger:edit_message' receiver_id=receiver_id message_id=message.id %}">
-                                        {% csrf_token %}
-                                        <button type="submit" title="Edit">
-                                            {% if request.user.theme == 'Light' %}
-                                                <img src="{% static 'img/edit-black.png' %}" alt="Edit">
-                                            {% else %}
-                                                <img src="{% static 'img/edit-white.png' %}" alt="Edit">
-                                            {% endif %}
-                                        </button>
-                                    </form>
-                                </div>
-        
-                                <div class="block-message-button">
-                                    <form action="{% url 'messenger:delete_message_from_everyone' message_id=message.id %}" method="post">
-                                        {% csrf_token %}
-                                        <button type="submit" title="Delete all">
-                                            {% if request.user.theme == 'Light' %}
-                                                <img src="{% static 'img/trash-black.png' %}" alt="Delete all">
-                                            {% else %}
-                                                <img src="{% static 'img/trash-white.png' %}" alt="Delete all">
-                                            {% endif %}
-                                        </button>
-                                    </form>
-                                </div>
-        
-                                <div class="block-message-button">
-                                    <form action="{% url 'messenger:delete_message_from_me' message_id=message.id %}" method="post">
-                                        {% csrf_token %}
-                                        <button type="submit" title="Delete me">
-                                            {% if request.user.theme == 'Light' %}
-                                                <img src="{% static 'img/trash-black.png' %}" alt="Delete me">
-                                            {% else %}
-                                                <img src="{% static 'img/trash-white.png' %}" alt="Delete me">
-                                            {% endif %}
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-
-                            <div class="block-info-message">
-                                <li class="block-message-text">
-                                    <span class="message-sender">{{ message.sender }}</span>
-                                    <div class="message-text">
-                                        <p>{{ message.text_message }}</p>
-                                        <span class="message-time-created">{{ message.time_created }}</span>
-                                    </div>
-                                </li>
-
-                                {% if message.sender.avatar %}
-                                    <div class="block-message-img">
-                                        <img src="{{ message.sender.avatar.url }}" alt="User -avatar">
-                                    </div>
-                                {% else %}
-                                    <div class="block-message-img">
-                                        {% if request.user.theme == 'Light' %}
-                                            <img src="{% static 'img/user-avatar-black.png' %}" alt="User-avatar">
-                                        {% else %}
-                                            <img src="{% static 'img/user-avatar-white.png' %}" alt="User-avatar">
-                                        {% endif %}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
-                    {% else %}
-                        <div class="block-message-receiver">
-                            <div class="block-info-message">
-                                {% if message.sender.avatar %}
-                                    <div class="block-message-img">
-                                        <img src="{{ message.sender.avatar.url }}" alt="User-avatar">
-                                    </div>
-                                {% else %}
-                                    <div class="block-message-img">
-                                        {% if request.user.theme == 'Light' %}
-                                            <img src="{% static 'img/user-avatar-black.png' %}" alt="User-avatar">
-                                        {% else %}
-                                            <img src="{% static 'img/user-avatar-white.png' %}" alt="User-avatar">
-                                        {% endif %}
-                                    </div>
-                                {% endif %}
-                                <li class="block-message-text">
-                                    <span class="message-sender">{{ message.sender }}</span>
-                                    <div class="message-text">
-                                        <p>{{ message.text_message }}</p>
-                                        <span class="message-time-created">{{ message.time_created }}</span>
-                                    </div>
-                                </li>
-                            </div>
-        
-                            <div class="block-message-buttons">
-                                <div class="block-message-button">
-                                    <form action="{% url 'messenger:delete_message_from_everyone' message_id=message.id %}" method="post">
-                                        {% csrf_token %}
-                                        <button type="submit" title="Delete all">
-                                            {% if request.user.theme == 'Light' %}
-                                                <img src="{% static 'img/trash-black.png' %}" alt="Delete all">
-                                            {% else %}
-                                                <img src="{% static 'img/trash-white.png' %}" alt="Delete all">
-                                            {% endif %}
-                                        </button>
-                                    </form>
-                                </div>
-        
-                                <div class="block-message-button">
-                                    <form action="{% url 'messenger:delete_message_from_me' message_id=message.id %}" method="post">
-                                        {% csrf_token %}
-                                        <button type="submit" title="Delete me">
-                                            {% if request.user.theme == 'Light' %}
-                                                <img src="{% static 'img/trash-black.png' %}" alt="Delete me">
-                                            {% else %}
-                                                <img src="{% static 'img/trash-white.png' %}" alt="Delete me">
-                                            {% endif %}
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %} -->
-            </ul>
-        </div>
+        <div id="listMessages" class="block-messages"></div>
         
         <form id="SendMessageForm" class="block-message-form" method="post">
             {% csrf_token %}
@@ -149,6 +23,6 @@
 {% endblock %}
 
 {% block java_script %}
-    <script src="{% static 'js/messenger/activateMessageButtons.js' %}"></script>
     <script src="{% static 'js/messenger/messages.js' %}"></script>
+    <script src="{% static 'js/messenger/activateMessageButtons.js' %}"></script>
 {% endblock %}

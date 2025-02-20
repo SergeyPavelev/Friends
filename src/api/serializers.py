@@ -50,17 +50,64 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
+    author = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    
     class Meta:
         model = Post
-        fields = ['id', 'title', 'text', 'author', 'visibility']
+        fields = ['id', 'title', 'text', 'author', 'visibility', 'date_created']
+    
+    def to_representation(self, instance):
+        """
+        Переопределяем метод для возврата полной информации о пользователе при GET-запросе.
+        """
+        representation = super().to_representation(instance)
+        representation['author'] = UserSerializer(instance.author).data
+        return representation
+
+    def to_internal_value(self, data):
+        """
+        Переопределяем метод для обработки только ID пользователя при POST-запросе.
+        """
+        internal_value = super().to_internal_value(data)
+        # Проверяем, что sender и receiver переданы как ID
+        if not isinstance(data.get('author'), int):
+            raise serializers.ValidationError({'sender': 'Sender must be an integer ID.'})
+        return internal_value
+
 
 class MessageSerializer(serializers.ModelSerializer):
-    sender = UserSerializer()
-    receiver = UserSerializer()
+    sender = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    receiver = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     
     class Meta:
         model = Message
-        fields = ['id', 'sender', 'receiver', 'room', 'text_message', 'date_created']
+        fields = ['id', 'sender', 'receiver', 'room', 'text_message', 'date_created', 'time_created', 'sender_visibility', 'receiver_visibility']
+        extra_kwargs = {
+            'date_created': {'required': False},
+            'time_created': {'required': False},
+        }
+
+    
+    def to_representation(self, instance):
+        """
+        Переопределяем метод для возврата полной информации о пользователях при GET-запросе.
+        """
+        representation = super().to_representation(instance)
+        representation['sender'] = UserSerializer(instance.sender).data
+        representation['receiver'] = UserSerializer(instance.receiver).data
+        return representation
+
+    def to_internal_value(self, data):
+        """
+        Переопределяем метод для обработки только ID пользователей при POST-запросе.
+        """
+        internal_value = super().to_internal_value(data)
+        # Проверяем, что sender и receiver переданы как ID
+        if not isinstance(data.get('sender'), int):
+            raise serializers.ValidationError({'sender': 'Sender must be an integer ID.'})
+        if not isinstance(data.get('receiver'), int):
+            raise serializers.ValidationError({'receiver': 'Receiver must be an integer ID.'})
+        return internal_value
         
 class RoomSerializer(serializers.ModelSerializer):
     users = UserSerializer(many=True)

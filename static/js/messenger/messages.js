@@ -1,3 +1,134 @@
+async function getRoom(rooms, userId, receiverId) {
+    return rooms.find(room =>
+        (room.users[0].id == userId && room.users[1].id == receiverId) || 
+        (room.users[0].id == receiverId && room.users[1].id == userId)
+    );
+}
+
+async function getMessagesRoom(roomId, messages) {
+    return messages.filter(message => message.room == roomId);
+}
+
+function formatTime(inputTime) {
+    // Разделяем строку по символу ":"
+    const [hours, minutes] = inputTime.split(':');
+    // Возвращаем только часы и минуты
+    return `${hours}:${minutes}`;
+}
+
+function createMessageBlock (user, message) {
+    var senderMessage = message.sender;
+    var textMessage = message.text_message;
+    var timeSendMessage = formatTime(message.time_created);
+    
+    if (senderMessage.avatar) {
+        var avatarSender = senderMessage.avatar;
+    } else {
+        if (user.theme == 'Light') {
+            var avatarSender = '/static/img/user-avatar-black.png';
+        } else if (user.theme == 'Dark') {
+            var avatarSender = '/static/img/user-avatar-white.png';
+        }
+    }
+
+    if (user.theme == 'Light') {
+        var editIkon = '/static/img/edit-black.png';
+        var trashIkon = '/static/img/trash-black.png';
+    } else if (user.theme == 'Dark') {
+        var editIkon = '/static/img/edit-white.png';
+        var trashIkon = '/static/img/trash-white.png';
+    }
+
+    if (senderMessage.id == user.id) {
+        messageBlock = `
+            <div class="block-message-me">
+                <div class="block-message-buttons">
+                    <div class="block-message-button">
+                        <form method="POST">
+                            
+                            <button type="submit" title="Edit">
+                                <img src="${editIkon}" alt="Edit">
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="block-message-button">
+                        <form method="POST">
+                            
+                            <button type="submit" title="Delete all">
+                                <img src="${trashIkon}" alt="Delete all">
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="block-message-button">
+                        <form method="POST">
+                            
+                            <button type="submit" title="Delete me">
+                                <img src="${trashIkon}" alt="Delete me">
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="block-info-message">
+                    <div class="block-message-text">
+                        <span class="message-sender">${senderMessage.username}</span>
+                        <div class="message-text">
+                            <p>${textMessage}</p>
+                            <span class="message-time-created">${timeSendMessage}</span>
+                        </div>
+                    </div>
+
+                    <div class="block-message-img">
+                        <img src="${avatarSender}">
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        var messageBlock = `
+            <div class="block-message-receiver">
+                <div class="block-info-message">
+                    <div class="block-message-img">
+                        <img src="${avatarSender}">
+                    </div>
+
+                    <div class="block-message-text">
+                        <span class="message-sender">${senderMessage.username}</span>
+                        <div class="message-text">
+                            <p>${textMessage}</p>
+                            <span class="message-time-created">${timeSendMessage}</span>
+                        </div>
+                    </в>
+                </div>
+
+                <div class="block-message-buttons">
+                    <div class="block-message-button">
+                        <form method="POST">
+                            
+                            <button type="submit" title="Delete all">
+                                <img src="${trashIkon}" alt="Delete all">
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="block-message-button">
+                        <form method="POST">
+                            
+                            <button type="submit" title="Delete me">
+                                <img src="${trashIkon}" alt="Delete me">
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        `;
+    };
+
+    return messageBlock;
+};
+
 async function displayMessages() {
     const userId = localStorage.getItem('userId');
 
@@ -30,158 +161,73 @@ async function displayMessages() {
         dataType: 'json',
     });
 
-    console.log(rooms);
-    console.log(messages);
+    var room = await getRoom(rooms, userId, receiverId);
+    var messagesRoom = await getMessagesRoom(room.id, messages);
+    messagesRoom.sort((a, b) => new Date(a.date_created) - new Date(b.date_created));
+    var blockMessages = document.querySelector('#listMessages');
     
-}
+    messagesRoom.forEach(message => {
+        if ((message.sender.id == userId && message.sender_visibility) || (message.receiver.id == userId && message.receiver_visibility)) {
+            var messageBlock = createMessageBlock(user, message);
+            blockMessages.insertAdjacentHTML('afterbegin', messageBlock);
+        };
+    });
+
+    blockMessages.scrollTop = blockMessages.scrollHeight;
+};
+
+async function sendMessage() {
+    var user = await getUserData(localStorage.getItem('userId'));
+    var receiver = await getUserData(window.location.pathname.split('/').reverse()[1]);
+    var rooms = await ajaxWithAuth({
+        url: '/api/rooms/',
+        type: 'GET',
+    });
+    var room = await getRoom(rooms, user.id, receiver.id);
+    if (!room) {
+        console.error('Комната не найдена');
+        return;
+    }
+    var textMessage = $('#message-input').val();
+
+    var formData = {
+        'text_message': textMessage,
+        'sender': user.id,
+        'receiver': receiver.id,
+        'room': room.id,
+    };    
+
+    if(!formData.text_message) return;
+    
+    try {
+        var message = await ajaxWithAuth({
+            url: '/api/messages/',
+            type: 'POST',
+            data: JSON.stringify(formData),
+            dataType: 'json',
+            contentType: 'application/json',
+        });
+    } catch (error) {
+        console.error('Ошибка при создании сообщения:', error);
+        return;
+    };    
+
+    $('#message-input').val('');
+    var blockMessages = document.getElementById('listMessages');
+    var messageBlock = createMessageBlock(user, message);
+    
+    blockMessages.insertAdjacentHTML('afterbegin', messageBlock);
+    blockMessages.scrollTop = blockMessages.scrollHeight;
+};
 
 
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
     displayMessages();
 
-    $('#input-message-form').click(function(e) {
+    $('#input-message-form').click(async function(e) {
         e.preventDefault();
         e.stopPropagation();
 
-        var formData = {
-            'textarea': $('#message-input'),
-            'sender': localStorage.getItem('userId'),
-            'receiver': window.location.pathname.split('/').slice(-1)[0],
-        };
-
-        if(!formData.textarea) {
-            return;
-        };
-                    
-        if (textarea != "") {
-            $.ajax({
-                type: 'POST',
-                url: '/api/messages/',
-                dataType: 'json',
-                data: JSON.stringify(formData),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-                },
-    
-                success: function(data) {
-                    $('#SendMessageForm textarea').val('');
-                    
-                    user = data['success']['user'];
-                    sender_message = data['success']['sender_message'];
-                    text_message = data['success']['textarea'];
-                    time_created_message = data['success']['time_created'];
-
-                    var list_messages = document.querySelector('.lists-messages');
-                    
-                    if (user == sender_message) {
-                        var message = `
-                            <div class="block-message-me">
-                                <div class="block-message-buttons">
-                                    <div class="block-message-button">
-                                        <form action="{% url 'messenger:edit_message' receiver_id=receiver_id message_id=message.id %}">
-                                            {% csrf_token %}
-                                            <button type="submit">
-                                                <i class='bx bxs-edit'></i>
-                                            </button>
-                                        </form>
-                                    </div>
-            
-                                    <div class="block-message-button">
-                                        <form action="{% url 'messenger:delete_message_from_everyone' message_id=message.id %}" method="post">
-                                            {% csrf_token %}
-                                            <button type="submit">
-                                                <i class='bx bx-trash'></i>
-                                            </button>
-                                        </form>
-                                    </div>
-            
-                                    <div class="block-message-button">
-                                        <form action="{% url 'messenger:delete_message_from_me' message_id=message.id %}" method="post">
-                                            {% csrf_token %}
-                                            <button type="submit">
-                                                <i class='bx bx-trash'></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-
-                                <div class="block-text-message">
-                                    <li class="message-info">
-                                        <span class="message-sender">${sender_message}</span>
-                                        <div class="message-text">
-                                            <p>${text_message}</p>
-                                            <span class="message-time-created">${time_created_message}</span>
-                                        </div>
-                                    </li>
-                                </div>
-
-                                {% if message.sender.avatar %}
-                                    <div class="block-message-img">
-                                        <img src="{{ message.sender.avatar.url }}" alt="User-avatar">
-                                    </div>
-                                {% else %}
-                                    <div class="block-message-img">
-                                        {% if request.user.theme == 'Light' %}
-                                            <img src="{% static 'img/user-avatar-black.png' %}" alt="User-avatar">
-                                        {% else %}
-                                            <img src="{% static 'img/user-avatar-white.png' %}" alt="User-avatar">
-                                        {% endif %}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        `
-                    } else {
-                        var message = `
-                            <div class="block-message-receiver">
-                                <div class="block-text-message">
-                                    <li class="message-info">
-                                        <span class="message-sender">${sender_message}</span>
-                                        <div class="message-text">
-                                            <p>${text_message}</p>
-                                            <span class="message-time-created">${time_created_message}</span>
-                                        </div>
-                                    </li>
-                                </div>
-            
-                                <div class="block-message-buttons">
-                                    <div class="block-edit-buttons">
-                                        <div class="block-message-button">
-                                            <form action="{% url 'messenger:delete_message_from_everyone' message_id=message.id %}" method="post">
-                                                {% csrf_token %}
-                                                <button type="submit">
-                                                    <i class='bx bx-trash'></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                
-                                        <div class="block-message-button">
-                                            <form action="{% url 'messenger:delete_message_from_me' message_id=message.id %}" method="post">
-                                                {% csrf_token %}
-                                                <button type="submit">
-                                                    <i class='bx bx-trash'></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        `
-                    };
-                    
-                    list_messages.insertAdjacentHTML('beforeend', message);
-                },
-    
-                error: function(xhr, status, error) {
-                    var errorMessage = (xhr.responseJSON && xhr.responseJSON.error) ? xhr.responseJSON.error : 'Неизвестная ошибка';
-                    alert("Ошибка при отправки сообщения: " + errorMessage);
-                    console.log("Ошибка при отправки сообщения: ", errorMessage);
-                    if (xhr.status == 401) {
-                        updateTokens();
-                        console.log('Tokens update');
-                    };
-                },
-            });
-        };
+        await sendMessage();        
     });
 });

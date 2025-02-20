@@ -149,7 +149,7 @@ async function listUserChats () {
         
 };
 
-document.addEventListener('DOMContentLoaded', async function () {
+document.addEventListener('DOMContentLoaded', function () {
     if (window.location.pathname === '/messenger/im/') {
         listUserChats();
     };

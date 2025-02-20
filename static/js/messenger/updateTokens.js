@@ -30,7 +30,7 @@ function refreshAccessToken() {
 
         error: function(xhr, status, error) {
             console.error('Не удалось обновить токен. Возможно, refresh токен недействителен.');
-            // window.location.href = '/auth/login/';
+            window.location.href = '/auth/login/';
         }, 
     });
 };

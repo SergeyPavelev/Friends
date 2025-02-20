@@ -60,7 +60,7 @@ class Message(models.Model):
 
     
     class Meta:
-        ordering = ['date_created']
+        ordering = ['-date_created']
         
         verbose_name = 'Message'
         verbose_name_plural = 'Messages'
