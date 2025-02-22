@@ -70,8 +70,9 @@ class PostSerializer(serializers.ModelSerializer):
         """
         internal_value = super().to_internal_value(data)
         # Проверяем, что sender и receiver переданы как ID
-        if not isinstance(data.get('author'), int):
-            raise serializers.ValidationError({'sender': 'Sender must be an integer ID.'})
+        if data.get('author'):
+            if not isinstance(data.get('author'), int):
+                raise serializers.ValidationError({'sender': 'Sender must be an integer ID.'})
         return internal_value
 
 
@@ -83,6 +84,8 @@ class MessageSerializer(serializers.ModelSerializer):
         model = Message
         fields = ['id', 'sender', 'receiver', 'room', 'text_message', 'date_created', 'time_created', 'sender_visibility', 'receiver_visibility']
         extra_kwargs = {
+            'sender': {'required': False},
+            'receiver': {'required': False},
             'date_created': {'required': False},
             'time_created': {'required': False},
         }
@@ -103,10 +106,11 @@ class MessageSerializer(serializers.ModelSerializer):
         """
         internal_value = super().to_internal_value(data)
         # Проверяем, что sender и receiver переданы как ID
-        if not isinstance(data.get('sender'), int):
-            raise serializers.ValidationError({'sender': 'Sender must be an integer ID.'})
-        if not isinstance(data.get('receiver'), int):
-            raise serializers.ValidationError({'receiver': 'Receiver must be an integer ID.'})
+        if data.get('sender') or data.get('receiver'):
+            if not isinstance(data.get('sender'), int):
+                raise serializers.ValidationError({'sender': 'Sender must be an integer ID.'})
+            if not isinstance(data.get('receiver'), int):
+                raise serializers.ValidationError({'receiver': 'Receiver must be an integer ID.'})
         return internal_value
         
 class RoomSerializer(serializers.ModelSerializer):

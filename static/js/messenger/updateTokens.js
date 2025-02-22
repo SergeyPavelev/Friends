@@ -30,7 +30,6 @@ function refreshAccessToken() {
 
         error: function(xhr, status, error) {
             console.error('Не удалось обновить токен. Возможно, refresh токен недействителен.');
-            window.location.href = '/auth/login/';
         }, 
     });
 };
@@ -41,7 +40,8 @@ async function ajaxWithAuth(options) {
     options.headers = options.headers || {};
     options.headers.Authorization = `Bearer ${accessToken}`;
 
-    try {return await $.ajax(options);
+    try {
+        return await $.ajax(options);
     } catch (jqXHR) {
         if (jqXHR.status === 401) {
             try {

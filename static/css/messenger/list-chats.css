@@ -67,17 +67,20 @@ body.light-theme .user-name {
     padding: 2px;
     font-size: 24px;
     color: #000;
+    font-size: 1.5vw;
 }
 
 body.light-theme .last-message {
     margin: 2px;
     padding: 2px;
     color: #292e38;
+    font-size: 1vw;
 }
 
 body.light-theme .time-submit {
     margin-left: auto;
     color: #292e38;
+    font-size: 1vw;
 }
 
 
@@ -163,7 +166,7 @@ body.dark-theme .info-chat {
 body.dark-theme .user-name {
     margin: 2px;
     padding: 2px;
-    font-size: 24px;
+    font-size: 1.5vw;
     color: #fff;
 }
 
@@ -171,9 +174,11 @@ body.dark-theme .last-message {
     margin: 2px;
     padding: 2px;
     color: #9EA6B8;
+    font-size: 1vw;
 }
 
 body.dark-theme .time-submit {
     margin-left: auto;
     color: #9EA6B8;
+    font-size: 1vw;
 }

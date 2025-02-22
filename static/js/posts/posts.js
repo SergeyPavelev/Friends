@@ -42,6 +42,7 @@ async function displayPosts() {
 
     posts.forEach(post => {
         if ((post.author.id == userId || friendsIncludesPostAuthor(user, post.author)) && post.visibility) {
+            
             var postBlock = createPostBlock(user, post);
             blockPosts.insertAdjacentHTML('afterbegin', postBlock);
         };
@@ -113,7 +114,7 @@ function createPostBlock(user, post) {
 
     if (user.id == authorPost.id) {
         var post = `
-            <div class="block-post">
+            <div id="postId${post.id}" class="block-post">
                 <a href="/profile/${authorPost.id}" class="author-profile-link">
                     <div class="block-user-img">
                         <img src="${avatarAuthor}" alt="User-avatar">
@@ -133,18 +134,14 @@ function createPostBlock(user, post) {
                 <div class="additional-interaction-post">
                         <div class="block-post-buttons">
                             <div class="block-post-button">
-                                <form id="edit-post-form" method="post">
-                                    <button class="button-post" id="button-edit-post" type="submit" title="Edit post">
-                                        <img src="${editIkon}" alt="Edit">
-                                    </button>
-                                </form>
+                                <button class="editPostButton" type="submit" title="Edit post" value="${post.id}">
+                                    <img src="${editIkon}" alt="Edit">
+                                </button>
                             </div>
                             <div class="block-post-button">
-                                <form id="delete-post-form" method="post">
-                                    <button class="button-post" id="button-delete-post" type="submit" title="Delete post">
-                                        <img src="${trashIkon}" alt="Delete all">
-                                    </button>
-                                </form>
+                                <button class="deletePostButton" type="submit" title="Delete post" value="${post.id}">
+                                    <img src="${trashIkon}" alt="Delete all">
+                                </button>
                             </div>
                         </div>
                     <div class="block-post-date-created">
@@ -155,7 +152,7 @@ function createPostBlock(user, post) {
         `;
     } else {
         var post = `
-            <div class="block-post">
+            <div id="postId${post.id}" class="block-post">
                 <a href="/profile/${authorPost.id}" class="author-profile-link">
                     <div class="block-user-img">
                         <img src="${avatarAuthor}" alt="User-avatar">

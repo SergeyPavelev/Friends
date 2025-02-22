@@ -1,0 +1,168 @@
+body.light-theme .container {
+    padding: 20px 50px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    flex-grow: 1;
+    color: #000;
+}
+
+body.light-theme .block-header {
+    margin: 5px 50px;
+    padding: 5px;
+    font-size: 28px;
+}
+
+body.light-theme .block-list-users {
+    margin: 5px;
+    overflow-y: auto;
+}
+
+body.light-theme .block-list-users::-webkit-scrollbar {
+    width: 7px;
+}
+
+body.light-theme .block-list-users::-webkit-scrollbar-track {
+    background-color: #cad2e4;
+    border-radius: 10px;
+}
+
+body.light-theme .block-list-users::-webkit-scrollbar-thumb {
+    background-color: #292e38;
+    border-radius: 10px;
+}
+
+body.light-theme .list-item {
+    margin: 5px 5px 30px 10px;
+    padding: 5px;
+    display: flex;
+}
+
+body.light-theme .block-user-img {
+    display: flex;
+    margin-right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+body.light-theme .block-user-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+body.light-theme .link-user-profile {
+    margin: 10px;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+    font-size: 21px;
+}
+
+body.light-theme .button-user {
+    margin: 5px;
+    padding: 5px;
+    border: none;
+    border-radius: 10px;
+    background: none;
+    transition: .1s;
+}
+
+body.light-theme .button-user:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, .5);;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body.dark-theme .container {
+    padding: 20px 50px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    flex-grow: 1;
+    color: #fff;
+}
+
+body.dark-theme .block-header {
+    margin: 5px 50px;
+    padding: 5px;
+    font-size: 28px;
+}
+
+body.dark-theme .block-list-users {
+    margin: 5px;
+    overflow-y: auto;
+}
+
+body.dark-theme .block-list-users::-webkit-scrollbar {
+    width: 7px;
+}
+
+body.dark-theme .block-list-users::-webkit-scrollbar-track {
+    background-color: #9EA6B8;
+    border-radius: 10px;
+}
+
+body.dark-theme .block-list-users::-webkit-scrollbar-thumb {
+    background-color: #292e38;
+    border-radius: 10px;
+}
+
+body.dark-theme .list-item {
+    margin: 5px 5px 30px 10px;
+    padding: 5px;
+    display: flex;
+}
+
+body.dark-theme .block-user-img {
+    display: flex;
+    margin-right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+body.dark-theme .block-user-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+body.dark-theme .link-user-profile {
+    margin: 10px;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    font-size: 21px;
+}
+
+body.dark-theme .button-user {
+    margin: 5px;
+    padding: 5px;
+    border: none;
+    border-radius: 10px;
+    background: none;
+    transition: .1s;
+}
+
+body.dark-theme .button-user:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, .5);;
+}

@@ -74,7 +74,7 @@ body.light-theme #save-post:hover {
 
 
 body.light-theme .block-list-posts {
-    margin: 0 20px 0 100px;
+    margin-left: 75px;
     display: flex;
     max-height: calc(100vh - 300px);
     max-width: calc(100vh - 50px);
@@ -99,11 +99,10 @@ body.light-theme .block-list-posts::-webkit-scrollbar-thumb {
 }
 
 body.light-theme .block-post {
-    margin: 5px 5px 30px 10px;
+    margin: 5px 15px 30px 10px;
     padding: 10px;
     display: flex;
     position: relative;
-    overflow: hidden;
     width: 45vw;
     border-radius: 10px;
     border: 1px solid #cad2e4;
@@ -140,7 +139,7 @@ body.light-theme .block-user-img img {
 body.light-theme .info-post {
     display: block;
     flex-grow: 2;
-    max-width: 70%;
+    max-width: 50%;
 }
 
 body.light-theme .block-post-author {
@@ -159,7 +158,7 @@ body.light-theme .block-post-text {
     display: flex;
     flex-wrap: wrap;
     font-size: 20px;
-    color: #9EA6B8;
+    color: #292e38;
     width: 100%;
 }
 
@@ -173,7 +172,7 @@ body.light-theme .additional-interaction-post {
     flex-grow: 1;
     flex-direction: column;
     height: 100%;
-    width: 20%;
+    width: 30%;
 }
 
 body.light-theme .block-post-date-created {
@@ -213,6 +212,9 @@ body.light-theme .block-post-button img {
     height: 20px;
     min-width: 20px;
 }
+
+
+
 
 
 
@@ -303,8 +305,10 @@ body.dark-theme #save-post:hover {
 
 
 
+
+
 body.dark-theme .block-list-posts {
-    margin: 0 20px 0 100px;
+    margin-left: 75px;
     max-height: calc(100vh - 300px);
     max-width: calc(100vh - 50px);
     overflow-y: auto;
@@ -326,11 +330,10 @@ body.dark-theme .block-list-posts::-webkit-scrollbar-thumb {
 }
 
 body.dark-theme .block-post {
-    margin: 5px 5px 30px 10px;
+    margin: 5px 15px 30px 10px;
     padding: 10px;
     display: flex;
     position: relative;
-    overflow: hidden;
     width: 45vw;
     border-radius: 10px;
     border: 1px solid #292e38;
@@ -367,7 +370,7 @@ body.dark-theme .block-user-img img {
 body.dark-theme .info-post {
     display: block;
     flex-grow: 2;
-    max-width: 70%;
+    max-width: 50%;
 }
 
 body.dark-theme .block-post-author {
@@ -400,7 +403,7 @@ body.dark-theme .additional-interaction-post {
     flex-grow: 1;
     flex-direction: column;
     height: 100%;
-    width: 20%;
+    width: 30%;
 }
 
 body.dark-theme .block-post-date-created {

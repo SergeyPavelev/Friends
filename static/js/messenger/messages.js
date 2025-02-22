@@ -1,8 +1,14 @@
 async function getRoom(rooms, userId, receiverId) {
-    return rooms.find(room =>
+    var room = rooms.find(room =>
         (room.users[0].id == userId && room.users[1].id == receiverId) || 
         (room.users[0].id == receiverId && room.users[1].id == userId)
     );
+
+    if (room) {
+        return room;
+    } else {
+        console.log('Чата с такими пользователями не существует');
+    };
 }
 
 async function getMessagesRoom(roomId, messages) {
@@ -41,33 +47,24 @@ function createMessageBlock (user, message) {
 
     if (senderMessage.id == user.id) {
         messageBlock = `
-            <div class="block-message-me">
+            <div id="messageId${message.id}" class="block-message-me">
                 <div class="block-message-buttons">
                     <div class="block-message-button">
-                        <form method="POST">
-                            
-                            <button type="submit" title="Edit">
-                                <img src="${editIkon}" alt="Edit">
-                            </button>
-                        </form>
+                        <button class="editButton" type="submit" title="Edit" value=${message.id}>
+                            <img src="${editIkon}" alt="Edit">
+                        </button>
                     </div>
 
                     <div class="block-message-button">
-                        <form method="POST">
-                            
-                            <button type="submit" title="Delete all">
-                                <img src="${trashIkon}" alt="Delete all">
-                            </button>
-                        </form>
+                        <button class="deleteButtonAll" type="submit" title="Delete all" value=${message.id}>
+                            <img src="${trashIkon}" alt="Delete all">
+                        </button>
                     </div>
 
                     <div class="block-message-button">
-                        <form method="POST">
-                            
-                            <button type="submit" title="Delete me">
-                                <img src="${trashIkon}" alt="Delete me">
-                            </button>
-                        </form>
+                        <button class="DeleteButtonMe" type="submit" title="Delete me" value=${message.id}>
+                            <img src="${trashIkon}" alt="Delete me">
+                        </button>
                     </div>
                 </div>
 
@@ -88,7 +85,7 @@ function createMessageBlock (user, message) {
         `;
     } else {
         var messageBlock = `
-            <div class="block-message-receiver">
+            <div id="messageId${message.id}" class="block-message-receiver">
                 <div class="block-info-message">
                     <div class="block-message-img">
                         <img src="${avatarSender}">
@@ -105,21 +102,15 @@ function createMessageBlock (user, message) {
 
                 <div class="block-message-buttons">
                     <div class="block-message-button">
-                        <form method="POST">
-                            
-                            <button type="submit" title="Delete all">
-                                <img src="${trashIkon}" alt="Delete all">
-                            </button>
-                        </form>
+                        <buttonclass="deleteButtonAll" type="submit" title="Delete all" value=${message.id}>
+                            <img src="${trashIkon}" alt="Delete all">
+                        </buttonclass=>
                     </div>
 
                     <div class="block-message-button">
-                        <form method="POST">
-                            
-                            <button type="submit" title="Delete me">
-                                <img src="${trashIkon}" alt="Delete me">
-                            </button>
-                        </form>
+                        <button class="DeleteButtonMe" type="submit" title="Delete me" value=${message.id}>
+                            <img src="${trashIkon}" alt="Delete me">
+                        </button>
                     </div>
                 </div>
             </div>
@@ -220,7 +211,6 @@ async function sendMessage() {
     blockMessages.scrollTop = blockMessages.scrollHeight;
 };
 
-
 document.addEventListener('DOMContentLoaded', function() {
     displayMessages();
 
@@ -231,3 +221,6 @@ document.addEventListener('DOMContentLoaded', function() {
         await sendMessage();        
     });
 });
+
+
+

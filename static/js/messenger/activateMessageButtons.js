@@ -1,4 +1,4 @@
-const observer = new MutationObserver(() => {
+const observerActivateMessageButtons = new MutationObserver(() => {
     const blockMessageButtons = document.querySelectorAll('.block-message-buttons');
     const blockMessage = document.querySelectorAll('.message-text');
 
@@ -9,4 +9,4 @@ const observer = new MutationObserver(() => {
     });
 });
 
-observer.observe(document.body, { childList: true, subtree: true });
+observerActivateMessageButtons.observe(document.body, { childList: true, subtree: true });

@@ -80,10 +80,10 @@ class LogoutView(APIView):
         try:
             token = RefreshToken(refresh_token)
             token.blacklist()
+            return Response({'success': 'Выход успешен', 'status': 200}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': 'Неверный Refresh token'},
                             status=status.HTTP_400_BAD_REQUEST)
-        return Response({'success': 'Выход успешен'}, status=status.HTTP_200_OK)
 
 
 class PostViewSet(viewsets.ModelViewSet):

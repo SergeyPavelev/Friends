@@ -189,10 +189,12 @@ body.light-theme .block-message-form textarea {
     flex: 1;
     flex-grow: 1;
     transition: .1s;
+    height: 6vh;
 }
 
 body.light-theme .block-message-form textarea::placeholder {
     color: #292e38;
+    font-size: 1vw;
 }
 
 body.light-theme .block-message-form textarea:hover {
@@ -226,6 +228,7 @@ body.light-theme .submit-message {
     align-items: center;
     justify-content: center;
     color: #fff;
+    font-size: 1vw;
 }
 
 
@@ -285,7 +288,7 @@ body.dark-theme .block-messages::-webkit-scrollbar {
 }
 
 body.dark-theme .block-messages::-webkit-scrollbar-track {
-    background: #9EA6B8;
+    background-color: #9EA6B8;
     border-radius: 10px;
 }
 
@@ -347,7 +350,7 @@ body.dark-theme .block-message-receiver .message-sender {
 body.dark-theme .message-text p {
     margin: 2px;
     margin-bottom: 5px;
-    font-size: 20px;
+    font-size: 1.2vw;
 }
 
 body.dark-theme .block-message-me .message-text {
@@ -436,6 +439,7 @@ body.dark-theme .block-message-form textarea {
     color: #fff;
     resize: none;
     max-height: 100%;
+    height: 6vh;
     flex: 1;
     flex-grow: 1;
     transition: .1s;
@@ -443,6 +447,7 @@ body.dark-theme .block-message-form textarea {
 
 body.dark-theme .block-message-form textarea::placeholder {
     color: #9EA6B8;
+    font-size: 1vw;
 }
 
 body.dark-theme .block-message-form textarea:hover {
@@ -476,4 +481,5 @@ body.dark-theme .submit-message {
     align-items: center;
     justify-content: center;
     color: #fff;
+    font-size: 1vw;
 }

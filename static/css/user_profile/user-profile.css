@@ -1,0 +1,350 @@
+body.light-theme .container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    color: #000;
+}
+
+body.light-theme .block-header {
+    padding: 20px;
+    display: flex;
+    position: relative;
+    left: -10%;
+    flex-direction: column;
+    align-items: center;
+}
+
+body.light-theme .block-load-photo {
+    position: relative;
+}
+
+body.light-theme .block-load-photo .user-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+body.light-theme .upload-form {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    background-color: #cad2e4c9;
+    opacity: 0;
+    transition: opacity .3s ease;
+    cursor: pointer;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+body.light-theme .upload-form:hover {
+    opacity: 1;
+}
+
+body.light-theme .upload-label {
+    margin-bottom: 10px;
+    color: #292e38;
+    font-size: 16px;
+}
+
+body.light-theme .upload-label:hover {
+    color: #9EA6B8;
+}
+
+body.light-theme .upload-button {
+    margin-bottom: 10px;
+    color: #000;
+    font-size: 16px;
+    background: none;
+    border: none;
+}
+
+body.light-theme .upload-button:hover {
+    color: #9EA6B8;
+}
+
+body.light-theme .upload-input {
+    display: none;
+}
+
+body.light-theme .block-username {
+    margin: 20px;
+    padding: 5px;
+    font-size: 24px;
+}
+
+body.light-theme .block-profile-buttons {
+    margin: 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+body.light-theme .profile-button {
+    margin: 5px;
+    padding: 5px 10px;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    background-color: #292e38;
+    transition: .1s;
+    
+}
+
+body.light-theme .profile-button:hover {
+    box-shadow: 0 0 15px #cad2e4;
+}
+
+body.light-theme .link-to-messenger {
+    text-decoration: none;
+}
+
+body.light-theme .block-data-user {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+body.light-theme .block-info-profile {
+    margin: 15px 5px;
+    padding: 5px;
+}
+
+body.light-theme .user-data {
+    position: relative;
+}
+
+body.light-theme .profile-data-span {
+    position: absolute;
+    top: -20px;
+    font-size: 14px;
+    color: #cad2e4;
+}
+
+body.light-theme .input-profile-data {
+    margin-right: 5px;
+    padding: 7px 12px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    background: #cad2e4;
+    color: #292e38;
+}
+
+body.light-theme .input-profile-data:focus {
+    border: none;
+    outline: none;
+}
+
+body.light-theme .input-profile-data:hover {
+    box-shadow: 0 0 10px #cad2e4;
+}
+
+body.light-theme .profile-data-button {
+    padding: 7px 12px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    background: #cad2e4;
+    color: #292e38;
+    transition: .1s;
+}
+
+body.light-theme .profile-data-button:hover {
+    box-shadow: 0 0 10px #cad2e4;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body.dark-theme .container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    color: #fff;
+}
+
+body.dark-theme .block-header {
+    padding: 20px;
+    display: flex;
+    position: relative;
+    left: -10%;
+    flex-direction: column;
+    align-items: center;
+}
+
+body.dark-theme .block-load-photo {
+    position: relative;
+}
+
+body.dark-theme .block-load-photo .user-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+body.dark-theme .upload-form {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    background-color: #292e38cc;
+    opacity: 0;
+    transition: opacity .3s ease;
+    cursor: pointer;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+body.dark-theme .upload-form:hover {
+    opacity: 1;
+}
+
+body.dark-theme .upload-label {
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 16px;
+}
+
+body.dark-theme .upload-label:hover {
+    color: #9EA6B8;
+}
+
+body.dark-theme .upload-button {
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 16px;
+    background: none;
+    border: none;
+}
+
+body.dark-theme .upload-button:hover {
+    color: #9EA6B8;
+}
+
+body.dark-theme .upload-input {
+    display: none;
+}
+
+body.dark-theme .block-username {
+    margin: 20px;
+    padding: 5px;
+    font-size: 24px;
+}
+
+body.dark-theme .block-profile-buttons {
+    margin: 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+body.dark-theme .profile-button {
+    margin: 5px;
+    padding: 5px 10px;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    background-color: #292e38;
+    transition: .1s;
+    
+}
+
+body.dark-theme .profile-button:hover {
+    box-shadow: 0 0 7px rgba(0, 0, 0, .5);
+}
+
+body.dark-theme .link-to-messenger {
+    text-decoration: none;
+}
+
+body.dark-theme .block-data-user {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+body.dark-theme .block-info-profile {
+    margin: 15px 5px;
+    padding: 5px;
+}
+
+body.dark-theme .user-data {
+    position: relative;
+}
+
+body.dark-theme .profile-data-span {
+    position: absolute;
+    top: -20px;
+    font-size: 14px;
+    color: #9EA6B8;
+}
+
+body.dark-theme .input-profile-data {
+    margin-right: 5px;
+    padding: 7px 12px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    background: #292e38;
+    color: #9EA6B8;
+}
+
+body.dark-theme .input-profile-data:focus {
+    border: none;
+    outline: none;
+}
+
+body.dark-theme .input-profile-data:hover {
+    box-shadow: 0 0 7px rgba(0, 0, 0, .5);
+}
+
+body.dark-theme .profile-data-button {
+    padding: 7px 12px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    background: #292e38;
+    color: #9EA6B8;
+    transition: .1s;
+}
+
+body.dark-theme .profile-data-button:hover {
+    box-shadow: 0 0 7px rgba(0, 0, 0, .5);
+}
