@@ -29,7 +29,7 @@ function refreshAccessToken() {
         },
 
         error: function(xhr, status, error) {
-            console.error('Не удалось обновить токен. Возможно, refresh токен недействителен.');
+            console.error('Не удалось обновить токен. Возможно, refresh токен недействителен.' + xhr);
         }, 
     });
 };
@@ -43,14 +43,14 @@ async function ajaxWithAuth(options) {
     try {
         return await $.ajax(options);
     } catch (jqXHR) {
-        if (jqXHR.status === 401) {
+        if (jqXHR.status == 401) {
             try {
                 await refreshAccessToken();
                 console.log('Token updated');
                 options.headers.Authorization = `Bearer ${getAccessToken()}`;
                 return await $.ajax(options);
             } catch (error) {
-                console.error('Ошибка при повторном запросе после обновления токена.');
+                console.error('Ошибка при повторном запросе после обновления токена.' + xhr);
                 throw new Error('Ошибка авторизации');
             };
         } else {

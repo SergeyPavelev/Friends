@@ -1,9 +1,10 @@
-from django.contrib.auth import get_user_model
-from django.contrib.auth import authenticate
-from rest_framework import generics, status, viewsets, permissions
+from operator import truediv
+from django.contrib.auth import get_user_model, authenticate
+from rest_framework import status, viewsets, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.decorators import action
 from ..posts.models import Post
 from ..messenger.models import *
 from .serializers import *
@@ -118,6 +119,36 @@ class UserViewSet(viewsets.ModelViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    @action(detail=True, methods=['post'])
+    def add_friend(self, request, pk):
+        user = self.get_object()
+        current_user = request.user
+
+        if user == current_user:
+            return Response({'error': 'Вы не можете добавить себя в друзья', 'status': '400'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if current_user.id in user.friends.all():
+            return Response({'error': 'Этот пользователь уже является вашим другом', 'status': '400'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user.friends.add(current_user)
+        current_user.friends.add(user)
+        return Response({'success': 'Пользователь успешно добавлен в друзья', 'status': '200'}, status=status.HTTP_200_OK)
+    
+    @action(detail=True, methods=['post'])
+    def delete_friend(self, request, pk):
+        user = self.get_object()
+        current_user = request.user
+
+        if user == current_user:
+            return Response({'error': 'Вы не можете удалить себя из друзей', 'status': '400'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if current_user not in user.friends.all():
+            return Response({'error': 'Этот пользователь не является вашим другом', 'status': '400'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user.friends.remove(current_user)
+        current_user.friends.remove(user)
+        return Response({'success': 'Пользователь успешно удален из друзей', 'status': '200'}, status=status.HTTP_200_OK)
 
 
 class RoomViewSet(viewsets.ModelViewSet):

@@ -2,11 +2,7 @@
 {% load static %}
 
 {% block css %}
-    {% if request.user.theme == 'Light' %}
-        <link rel="stylesheet" href="{% static 'css/messenger/list-users-light-theme.css' %}">
-    {% else %}
-        <link rel="stylesheet" href="{% static 'css/messenger/list-users-dark-theme.css' %}">
-    {% endif %}
+    <link rel="stylesheet" href="{% static 'css/messenger/list-users.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -16,40 +12,10 @@
         </div>
     
         <div class="block-list-users">
-            <ul class="list-users">
-                {% for friend in my_friends %}
-                    <li class="list-item">
-                        {% if friend.avatar %}
-                            <div class="block-user-img">
-                                <img src="{{ friend.avatar.url }}" alt="User-avatar">
-                            </div>
-                        {% else %}
-                            <div class="block-user-img">
-                                {% if request.user.theme == 'Light' %}
-                                    <img src="{% static 'img/user-avatar-black.png' %}" alt="User-avatar">
-                                {% else %}
-                                    <img src="{% static 'img/user-avatar-white.png' %}" alt="User-avatar">
-                                {% endif %}
-                            </div>
-                        {% endif %}
-
-                        <a class="link-user-profile" href="{% url 'user_profile:profile' user_id=friend.id %}">
-                            <span class="link-name">{{ friend.username }}</span>
-                        </a>
-
-                        <form action="{% url 'messenger:delete_from_friends' friend_id=friend.id %}" method="post">
-                            {% csrf_token %}
-                            <button class="button-user" type="submit">
-                                {% if request.user.theme == 'Light' %}
-                                    <img src="{% static 'img/delete-from-friends-black.png' %}" alt="Edit">
-                                {% else %}
-                                    <img src="{% static 'img/delete-from-friends-white.png' %}" alt="Edit">
-                                {% endif %}
-                            </button>
-                        </form>
-                    </li>
-                {% endfor %}
-            </ul>
+            <div id="listUsers" class="list-users"></div>
         </div>
     </div>
+
+    <script src="{% static 'js/messenger/listMyFriends.js' %}"></script>
+    <script src="{% static 'js/messenger/addDeleteFriends.js' %}"></script>
 {% endblock %}

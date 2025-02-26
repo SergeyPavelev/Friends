@@ -1,8 +1,8 @@
 body.light-theme .container {
-    padding: 20px 50px;
+    padding: 10px 50px 50px 50px;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 90vh;
     flex-grow: 1;
     color: #000;
 }
@@ -10,11 +10,16 @@ body.light-theme .container {
 body.light-theme .block-header {
     margin: 5px 50px;
     padding: 5px;
-    font-size: 28px;
+    font-size: 1.8vw;
+}
+
+body.light-theme .block-header h2 {
+    margin: 5px;
 }
 
 body.light-theme .block-list-users {
     margin: 5px;
+    padding: 5px 50px;
     overflow-y: auto;
 }
 
@@ -34,8 +39,16 @@ body.light-theme .block-list-users::-webkit-scrollbar-thumb {
 
 body.light-theme .list-item {
     margin: 5px 5px 30px 10px;
-    padding: 5px;
+    padding: 20px 30px;
     display: flex;
+    justify-content: space-between;
+    width: 60vw;
+    transition: .1s;
+    border-radius: 10px;
+}
+
+body.light-theme .list-item:hover {
+    background: #cad2e4;
 }
 
 body.light-theme .block-user-img {
@@ -60,7 +73,11 @@ body.light-theme .link-user-profile {
     align-items: center;
     text-decoration: none;
     color: #000;
-    font-size: 21px;
+    font-size: 1.5vw;
+}
+
+body.light-theme .form-button-user {
+    margin-left: auto;
 }
 
 body.light-theme .button-user {
@@ -73,7 +90,7 @@ body.light-theme .button-user {
 }
 
 body.light-theme .button-user:hover {
-    box-shadow: 0 0 5px rgba(0, 0, 0, .5);;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .5);
 }
 
 
@@ -90,10 +107,10 @@ body.light-theme .button-user:hover {
 
 
 body.dark-theme .container {
-    padding: 20px 50px;
+    padding: 10px 50px 50px 50px;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 90vh;
     flex-grow: 1;
     color: #fff;
 }
@@ -101,11 +118,16 @@ body.dark-theme .container {
 body.dark-theme .block-header {
     margin: 5px 50px;
     padding: 5px;
-    font-size: 28px;
+    font-size: 1.8vw;
+}
+
+body.dark-theme .block-header h2 {
+    margin: 5px;
 }
 
 body.dark-theme .block-list-users {
     margin: 5px;
+    padding: 5px 50px;
     overflow-y: auto;
 }
 
@@ -125,8 +147,16 @@ body.dark-theme .block-list-users::-webkit-scrollbar-thumb {
 
 body.dark-theme .list-item {
     margin: 5px 5px 30px 10px;
-    padding: 5px;
+    padding: 20px 30px;
     display: flex;
+    justify-content: space-between;
+    width: 60vw;
+    transition: .1s;
+    border-radius: 10px;
+}
+
+body.dark-theme .list-item:hover {
+    background-color: #292e38;
 }
 
 body.dark-theme .block-user-img {
@@ -151,7 +181,11 @@ body.dark-theme .link-user-profile {
     align-items: center;
     text-decoration: none;
     color: #fff;
-    font-size: 21px;
+    font-size: 1.5vw;
+}
+
+body.dark-theme .form-button-user {
+    margin-left: auto;
 }
 
 body.dark-theme .button-user {
@@ -164,5 +198,5 @@ body.dark-theme .button-user {
 }
 
 body.dark-theme .button-user:hover {
-    box-shadow: 0 0 5px rgba(0, 0, 0, .5);;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .5);
 }

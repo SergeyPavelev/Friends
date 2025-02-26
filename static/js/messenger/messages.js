@@ -34,8 +34,8 @@ function createMessageBlock (user, message) {
             var avatarSender = '/static/img/user-avatar-black.png';
         } else if (user.theme == 'Dark') {
             var avatarSender = '/static/img/user-avatar-white.png';
-        }
-    }
+        };
+    };
 
     if (user.theme == 'Light') {
         var editIkon = '/static/img/edit-black.png';
@@ -43,7 +43,7 @@ function createMessageBlock (user, message) {
     } else if (user.theme == 'Dark') {
         var editIkon = '/static/img/edit-white.png';
         var trashIkon = '/static/img/trash-white.png';
-    }
+    };
 
     if (senderMessage.id == user.id) {
         messageBlock = `
@@ -211,8 +211,8 @@ async function sendMessage() {
     blockMessages.scrollTop = blockMessages.scrollHeight;
 };
 
-document.addEventListener('DOMContentLoaded', function() {
-    displayMessages();
+document.addEventListener('DOMContentLoaded', async function() {
+    await displayMessages();
 
     $('#input-message-form').click(async function(e) {
         e.preventDefault();

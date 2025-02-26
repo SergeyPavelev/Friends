@@ -134,4 +134,4 @@ const observerMessageButtons = new MutationObserver(async () => {
     });
 });
 
-observerMessageButtons.observe(document.body, { childList: true, subtree: true });
+observerMessageButtons.observe(document.getElementById('listMessages'), { childList: true, subtree: true });

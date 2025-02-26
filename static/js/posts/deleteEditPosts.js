@@ -61,9 +61,7 @@ const observerPostButtons = new MutationObserver(async () => {
             var postId = parseInt(button.value, 10);
             var posts = await getPosts();
             var post = posts.find(post => post.id === postId);
-            var blockMessage = document.getElementById(`postId${postId}`);
-            console.log(post);
-            
+            var blockMessage = document.getElementById(`postId${postId}`);            
 
             await deletePost(post);
             blockMessage.remove();
@@ -100,4 +98,4 @@ const observerPostButtons = new MutationObserver(async () => {
     });
 });
 
-observerPostButtons.observe(document.body, { childList: true, subtree: true });
+observerPostButtons.observe(document.getElementById('blockListPosts'), { childList: true, subtree: true });

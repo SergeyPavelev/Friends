@@ -8,9 +8,13 @@ body.light-theme .container {
 }
 
 body.light-theme .title-page {
-    padding-left: 10px;
-    margin-bottom: 20px;
+    padding: 5px 10px;
+    margin: 5px 5px 20px 5px;
     font-size: 28px;
+}
+
+body.light-theme .title-page h2 {
+    margin: 5px;
 }
 
 body.light-theme .post-layout {
@@ -240,9 +244,13 @@ body.dark-theme .container {
 }
 
 body.dark-theme .title-page {
-    padding-left: 10px;
-    margin-bottom: 20px;
+    padding: 5px 10px;
+    margin: 5px 5px 20px 5px;
     font-size: 28px;
+}
+
+body.dark-theme .title-page h2 {
+    margin: 5px;
 }
 
 body.dark-theme .post-layout {

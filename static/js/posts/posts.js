@@ -74,10 +74,7 @@ async function sendPost() {
     } catch (error) {
         console.error('Ошибка при создании поста:', error);
         return;
-    };
-
-    console.log(post);
-    
+    };    
 
     $('#title-input').val('');
     $('#textarea-input').val('');
