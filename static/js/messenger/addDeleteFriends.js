@@ -1,33 +1,41 @@
 async function addToFriends(user, friend) {
+    try {
         var response = await ajaxWithAuth({
             url: `/api/users/${friend.id}/add_friend/`,
             type: 'POST',
         });
+    } catch(error) {
+        addNotification(error.responseJSON.text, true);
+    };
 
-        if (response.status == '200') {
-            console.log('Пользователь добавлен в друзья');                    
-            var button = document.getElementById(`buttonUser${friend.id}`);
-            button.setAttribute('class', 'button-user delete');
+    if (response.status == '200') {
+        console.log('Пользователь добавлен в друзья');                    
+        var button = document.getElementById(`buttonUser${friend.id}`);
+        button.setAttribute('class', 'button-user delete');
 
-            if (user.theme == 'Light') {
-                document.querySelector(`#buttonUser${friend.id} img`).setAttribute('src', '/static/img/delete-from-friends-black.png');
-            } else if (user.theme == 'Dark') {
-                document.querySelector(`#buttonUser${friend.id} img`).setAttribute('src', '/static/img/delete-from-friends-white.png');
-            };
-
-            var navigationBlock = document.getElementById('blockNavButtons');
-            var blockNavigationButton = createBlockNavigationButton(user, friend);
-            navigationBlock.insertAdjacentHTML('beforeend', blockNavigationButton);
-        } else {
-            console.log('Ошибка при добавлении пользователя в друзья');
+        if (user.theme == 'Light') {
+            document.querySelector(`#buttonUser${friend.id} img`).setAttribute('src', '/static/img/delete-from-friends-black.png');
+        } else if (user.theme == 'Dark') {
+            document.querySelector(`#buttonUser${friend.id} img`).setAttribute('src', '/static/img/delete-from-friends-white.png');
         };
+
+        var navigationBlock = document.getElementById('blockNavButtons');
+        var blockNavigationButton = createBlockNavigationButton(user, friend);
+        navigationBlock.insertAdjacentHTML('beforeend', blockNavigationButton);
+    } else {
+        console.log('Ошибка при добавлении пользователя в друзья');
+    };
 };
 
 async function deleteFromFriends(user, friend) {
-    var response = await ajaxWithAuth({
-        url: `/api/users/${friend.id}/delete_friend/`,
-        type: 'POST',
-    });
+    try {
+        var response = await ajaxWithAuth({
+            url: `/api/users/${friend.id}/delete_friend/`,
+            type: 'POST',
+        });
+    } catch (error) {
+        addNotification(error.responseJSON.text, true);
+    };
     
     if (response.status == '200') {
         console.log('Пользователь удален из друзей');                   

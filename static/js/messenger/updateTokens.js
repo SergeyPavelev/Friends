@@ -30,6 +30,7 @@ function refreshAccessToken() {
 
         error: function(xhr, status, error) {
             console.error('Не удалось обновить токен. Возможно, refresh токен недействителен.' + xhr);
+            addNotification(error.responseJSON.text, true);
         }, 
     });
 };
@@ -51,6 +52,7 @@ async function ajaxWithAuth(options) {
                 return await $.ajax(options);
             } catch (error) {
                 console.error('Ошибка при повторном запросе после обновления токена.' + xhr);
+                // window.location.href = '/auth/login/';
                 throw new Error('Ошибка авторизации');
             };
         } else {

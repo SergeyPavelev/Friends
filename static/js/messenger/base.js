@@ -1,12 +1,3 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const buttons = document.querySelectorAll(".nav-link");
-    buttons.forEach(button => {
-        if (button.href == window.location.href || window.location.href.includes(button.href)) {
-            button.classList.add("active");
-        };
-    });
-});
-
 async function getUserData(userId) {
     return await ajaxWithAuth({
         url: `/api/users/${userId}/`,
@@ -15,6 +6,7 @@ async function getUserData(userId) {
 
         error: function (xhr, status, error) {
             console.log('Не удалось получить пользователя');
+            addNotification(error.responseJSON.text, true);
         },
     });
 };
@@ -30,6 +22,8 @@ document.addEventListener("DOMContentLoaded", async function() {
     
     var body = document.querySelector('body');
     var userAvatar = document.getElementById('userAvatar');
+    var userAvatarHref = document.getElementById('userAvatarHref');
+    userAvatarHref.setAttribute('href', `/profile/${user.id}/`)
     var themeButton = document.getElementById('themeButton');
     var notificationButton = document.getElementById('notificationButton');
     var messengerIkon = document.getElementById('messengerIkon');
@@ -92,3 +86,14 @@ document.addEventListener("DOMContentLoaded", async function() {
         navigationBlock.innerHTML += friendLink                
     });
 });
+
+const observerNavButtons = new MutationObserver(async () => {
+    const buttons = document.querySelectorAll(".nav-link");
+    buttons.forEach(button => {        
+        if (button.href == window.location.href) {
+            button.classList.add("active");
+        };
+    });
+});
+
+observerNavButtons.observe(document.getElementById('blockNavButtons'), { childList: true, subtree: true });

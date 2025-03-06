@@ -3,16 +3,25 @@ async function getRoom(rooms, userId, receiverId) {
         (room.users[0].id == userId && room.users[1].id == receiverId) || 
         (room.users[0].id == receiverId && room.users[1].id == userId)
     );
-
-    if (room) {
-        return room;
-    } else {
-        console.log('Чата с такими пользователями не существует');
+    
+    if (!room) {
+        var room = await ajaxWithAuth({
+            url: '/api/rooms/',
+            type: 'POST',
+            data: JSON.stringify({
+                'users': [userId, receiverId],
+            }),
+            dataType: 'json',
+            contentType: 'application/json',
+        });
+        console.log('Чат создан!');
     };
+    
+    return room;
 }
 
 async function getMessagesRoom(roomId, messages) {
-    return messages.filter(message => message.room == roomId);
+    return messages.filter(message => message.room == roomId.id);
 }
 
 function formatTime(inputTime) {
@@ -122,44 +131,40 @@ function createMessageBlock (user, message) {
 
 async function displayMessages() {
     const userId = localStorage.getItem('userId');
-
-    if (userId) {
-        var user = await getUserData(userId);             
-    } else {
-        console.error('userId отсутствует в localStorage');
-    };
-
     const receiverId = window.location.pathname.split('/').reverse()[1];
 
-    if (receiverId) {
+    if (userId && receiverId) {
+        var user = await getUserData(userId);             
         var receiver = await getUserData(receiverId);             
     } else {
-        console.error('receiverId отсутствует');
+        console.error('UserId и receiverId не найдены');
     };
 
     document.getElementById('receiverName').textContent = receiver.username;
     document.getElementById('receiverLink').setAttribute('href', `/profile/${receiver.id}/`);
 
-    var rooms = await ajaxWithAuth({
-        url: '/api/rooms/',
-        type: 'GET',
-        dataType: 'json',
-    });
+    try {
+        var rooms = await ajaxWithAuth({
+            url: '/api/rooms/',
+            type: 'GET',
+        });
+    
+        var messages = await ajaxWithAuth({
+            url: '/api/messages/',
+            type: 'GET',
+        });
+    } catch (error) {
+        addNotification(error.responseJSON.text, true);
+    };
 
-    var messages = await ajaxWithAuth({
-        url: '/api/messages/',
-        type: 'GET',
-        dataType: 'json',
-    });
-
-    var room = await getRoom(rooms, userId, receiverId);
-    var messagesRoom = await getMessagesRoom(room.id, messages);
+    var room = await getRoom(rooms, parseInt(userId, 10), parseInt(receiverId, 10));
+    var messagesRoom = await getMessagesRoom(room, messages); // !!!!!!!!!!!!!!
     messagesRoom.sort((a, b) => new Date(a.date_created) - new Date(b.date_created));
-    var blockMessages = document.querySelector('#listMessages');
+    var blockMessages = document.getElementById('listMessages');
     
     messagesRoom.forEach(message => {
         if ((message.sender.id == userId && message.sender_visibility) || (message.receiver.id == userId && message.receiver_visibility)) {
-            var messageBlock = createMessageBlock(user, message);
+            var messageBlock = createMessageBlock(user, message);            
             blockMessages.insertAdjacentHTML('afterbegin', messageBlock);
         };
     });
@@ -175,10 +180,6 @@ async function sendMessage() {
         type: 'GET',
     });
     var room = await getRoom(rooms, user.id, receiver.id);
-    if (!room) {
-        console.error('Комната не найдена');
-        return;
-    }
     var textMessage = $('#message-input').val();
 
     var formData = {
@@ -188,7 +189,10 @@ async function sendMessage() {
         'room': room.id,
     };    
 
-    if(!formData.text_message) return;
+    if(!formData.text_message) {
+        addNotification('Поле должно быть заполнено', true);
+        return;
+    };
     
     try {
         var message = await ajaxWithAuth({
@@ -199,7 +203,8 @@ async function sendMessage() {
             contentType: 'application/json',
         });
     } catch (error) {
-        console.error('Ошибка при создании сообщения:', error);
+        console.error('Ошибка при отправки сообщения:', error);
+        addNotification(error.responseJSON.text, true);
         return;
     };    
 

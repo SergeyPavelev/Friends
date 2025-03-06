@@ -7,6 +7,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import action
 from ..posts.models import Post
 from ..messenger.models import *
+from ..user_profile.models import UserProfile
 from .serializers import *
 
 
@@ -155,3 +156,9 @@ class RoomViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
+    
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer

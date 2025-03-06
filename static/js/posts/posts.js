@@ -17,10 +17,9 @@ function formatDate(dateString) {
     // Получаем компоненты времени
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
   
     // Форматируем дату и время
-    return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
+    return `${day}.${month}.${year} ${hours}:${minutes}`;
   }
 
 async function displayPosts() {
@@ -71,8 +70,12 @@ async function sendPost() {
             data: JSON.stringify(formData),
             contentType: 'application/json',
         });
+
+        addNotification('Post created', false);
+        
     } catch (error) {
         console.error('Ошибка при создании поста:', error);
+        addNotification(error.responseJSON.text, true);
         return;
     };    
 
@@ -178,13 +181,13 @@ function createPostBlock(user, post) {
     return post;
 };
 
-document.addEventListener('DOMContentLoaded', function() {
-    displayPosts();
+document.addEventListener('DOMContentLoaded', async function() {
+    await displayPosts();
 
-    $('#save-post').click(function(e){
+    $('#save-post').click(async function(e){
         e.preventDefault();
         e.stopPropagation();
 
-        sendPost();
+        await sendPost();
     });    
 });

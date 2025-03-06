@@ -2,6 +2,10 @@ async function getPosts() {
     return await ajaxWithAuth({
         url: '/api/posts/',
         type: 'GET',
+
+        error: function(xhr, status, error) {
+            addNotification(error.responseJSON.text, true);
+        }
     });
 };
 
@@ -22,8 +26,7 @@ async function deletePost(post) {
         },
 
         error: function(xhr, status, error) {
-            console.log('Не удалось удалить пост');
-            
+            addNotification(error.responseJSON.text, true);
         }
     });
 };
@@ -46,8 +49,7 @@ async function editPost(post, newTitle, newText) {
         },
 
         error: function(xhr, status, error) {
-            console.log('Не удалось отредактировать пост');
-            
+            addNotification(error.responseJSON.text, true);
         }
     });
 };
@@ -63,7 +65,11 @@ const observerPostButtons = new MutationObserver(async () => {
             var post = posts.find(post => post.id === postId);
             var blockMessage = document.getElementById(`postId${postId}`);            
 
-            await deletePost(post);
+            try {
+                await deletePost(post);
+            } catch (error) {
+                addNotification(error.responseJSON.text, true);
+            };
             blockMessage.remove();
         });
     });
@@ -89,7 +95,11 @@ const observerPostButtons = new MutationObserver(async () => {
                 $('#title-input').val('');
                 $('#textarea-input').val('');
         
-                await editPost(post, newTitle, newText);
+                try {
+                    await editPost(post, newTitle, newText);
+                } catch (error) {
+                    addNotification(error.responseJSON.text, true);
+                };
                 var blockPost = document.getElementById(`postId${post.id}`);
                 blockPost.querySelector('.post-title').textContent = newTitle;
                 blockPost.querySelector('.post-text').textContent = newText;

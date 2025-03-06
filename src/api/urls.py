@@ -9,6 +9,7 @@ router.register(r'posts', PostViewSet)
 router.register(r'messages', MessageViewSet)
 router.register(r'users', UserViewSet)
 router.register(r'rooms', RoomViewSet)
+router.register(r'profiles', UserProfileViewSet)
 
 app_name = 'api'
 

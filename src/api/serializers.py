@@ -3,6 +3,7 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from ..posts.models import Post
 from ..messenger.models import Message, Room
+from ..user_profile.models import UserProfile
 
 
 User = get_user_model()
@@ -12,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ['id', 'phone', 'username', 'email', 'password', 'password_repeat', 'theme', 'avatar', 'friends']
+        fields = '__all__'
         extra_kwargs = {
             'password': {'write_only': True},
             'phone': {'required': False},
@@ -69,7 +70,6 @@ class PostSerializer(serializers.ModelSerializer):
         Переопределяем метод для обработки только ID пользователя при POST-запросе.
         """
         internal_value = super().to_internal_value(data)
-        # Проверяем, что sender и receiver переданы как ID
         if data.get('author'):
             if not isinstance(data.get('author'), int):
                 raise serializers.ValidationError({'sender': 'Sender must be an integer ID.'})
@@ -112,10 +112,24 @@ class MessageSerializer(serializers.ModelSerializer):
             if not isinstance(data.get('receiver'), int):
                 raise serializers.ValidationError({'receiver': 'Receiver must be an integer ID.'})
         return internal_value
-        
-class RoomSerializer(serializers.ModelSerializer):
-    users = UserSerializer(many=True)
     
+        
+class RoomSerializer(serializers.ModelSerializer):    
     class Meta:
         model = Room
-        fields = ['id', 'users']        
+        fields = ['id', 'users']
+    
+    
+    def to_representation(self, instance):
+        """
+        Overriding the method to return full information about users on GET requests.
+        """
+        representation = super().to_representation(instance)
+        representation['users'] = UserSerializer(instance.users.all(), many=True).data
+        return representation
+        
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = '__all__'

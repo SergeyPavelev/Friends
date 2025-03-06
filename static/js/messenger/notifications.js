@@ -14,12 +14,10 @@ function getGreeting(username) {
     return greetings[randomIndex].replace("[Имя]", username);
 };
 
-function addNotification(username) {
-    var text = getGreeting(username);
-
+function addNotification(text, isError) {
     const notificationsBlock = document.getElementById('block-notifications');
     const notification = document.createElement('div');
-    notification.className = 'notification';
+    notification.className = isError ? 'notification error' : 'notification success'
     notification.textContent = text;
     notificationsBlock.append(notification);
     
@@ -29,13 +27,18 @@ function addNotification(username) {
         setTimeout(() => {
             notification.remove();
         }, 500);
-    }, 10000);
+    }, 5000);
+};
+
+function greetingUser(username) {
+    var text = getGreeting(username);
+    addNotification(text, false);
 };
 
 $(document).ready(function() {
     const urlParams = new URLSearchParams(window.location.search);
     const username = urlParams.get('notification');
     if (username) {
-        addNotification(username);
+        greetingUser(username);
     }
 });

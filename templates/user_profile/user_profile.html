@@ -2,125 +2,124 @@
 {% load static %}
 
 {% block css %}
-    {% if request.user.theme == 'Light' %}
-        <link rel="stylesheet" href="{% static 'css/user_profile/user-profile-light-theme.css' %}">
-    {% else %}
-        <link rel="stylesheet" href="{% static 'css/user_profile/user-profile-dark-theme.css' %}">
-    {% endif %}
+    <link rel="stylesheet" href="{% static 'css/user_profile/user-profile.css' %}">
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="block-header">
-            <div class="block-load-photo">
-                {% if user.avatar %}
-                    <img src="{{ user.avatar.url }}" alt="Profile Picture" class="user-avatar">
-                {% else %}
-                    <img src="{% static 'img/null-profile-photo.jpg' %}" alt="Profile Picture" class="user-avatar">
-                {% endif %}
+            <div id="blockLoadPhoto" class="block-load-photo">
+                <img src="" alt="Profile Picture" class="user-avatar">
     
-                {% if user == request.user %}
-                    <form class="upload-form" action="{% url 'user_profile:profile' user_id=user.id %}" enctype="multipart/form-data" method="post">
+                <!-- {% if user == request.user %}
+                    <form class="upload-form" enctype="multipart/form-data" method="post">
                         {% csrf_token %}
                         <label for="upload" class="upload-label">Выбрать фото</label>
                         {{ form_image.photo }}
                         <button type="submit" class="upload-button" name="Upload profile photo">Загрузить фотографию</button>
                     </form>
-                {% endif %}
+                {% endif %} -->
             </div>
             
             <div class="block-username">
-                <h2 class="username">{{ user }}</h2>
+                <h2 id="username" class="username"></h2>
             </div>
     
-            <div class="block-profile-buttons">
-                {% if user != request.user %}
-                    {% if user in my_friends %}
-                        <form action="{% url 'messenger:delete_from_friends' friend_id=user.id %}" method="post">
-                            {% csrf_token %}
-                            <button class="profile-button" type="submit" name="Delete from friends">Delete from friends</button>
-                        </form>
-    
-                        <div class="block-to-messenger-button">
-                            <a class="link-to-messenger" href="{% url 'messenger:send_message' receiver_id=user.id %}">
-                                <button class="profile-button">Message</button>
-                            </a>
-                        </div>
-                    {% else %}
-                        <form action="{% url 'messenger:add_to_friends' friend_id=user.id %}" method="post">
-                            {% csrf_token %}
-                            <button class="profile-button" type="submit" name="Add to friends">Add to friends</button>
-                        </form>
-                    {% endif %}
-                {% endif %}
-            </div>
+            <div id="blockProfileButtons" class="block-profile-buttons"></div>
         </div>
     
-        <div class="block-data-user">
+        <div id="blockDataUser" class="block-data-user">
             <div class="block-info-profile">
-                {% if user == request.user %}
-                    <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
-                        {% csrf_token %}
-                        <span class="profile-data-span" for="username">Username</span>
-                        <input type="text" placeholder="Username" class="input-profile-data" name="username" value="{{ user.username }}">
-                        <button type="submit" class="profile-data-button" name="Change username">Change</button>
-                    </form>
-                {% endif %}
-            </div>
-    
-            <div class="block-info-profile">
-                <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
+                <form id="formUsername" class="user-data" method="post">
                     {% csrf_token %}
-                    <span class="profile-data-span" for="phone">Phone</span>
-                    {% if user == request.user %}
-                        <input type="tel" placeholder="Phone" class="input-profile-data" name="phone" value="{{ user.phone }}">
-                        <button type="submit" class="profile-data-button" name="Change phone">Change</button>
-                    {% else %}
-                        <input type="tel" placeholder="Phone" class="input-profile-data" name="phone" value="{{ user.phone }}" disabled>
-                    {% endif %}
+                    <span class="profile-data-span" for="username">Username</span>
+                    {{ form_data.username }}
                 </form>
             </div>
     
-            {% if user.email %}
-                <div class="block-info-profile">
-                    <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
-                        {% csrf_token %}
-                        <span class="profile-data-span" for="email">Email</span>
-                        {% if user == request.user %}
-                            <input type="email" placeholder="Email" class="input-profile-data" name="email" value="{{ user.email }}">
-                            <button type="submit" class="profile-data-button" name="Change email">Change</button>
-                        {% else %}
-                            <input type="email" placeholder="Email" class="input-profile-data" name="email" value="{{ user.email }}" disabled>
-                        {% endif %}
-                    </form>
-                </div>
-            {% endif %}
-    
-            <!-- {% if user.birthday %}
-                <div class="block-info-profile">
-                    <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
-                        {% csrf_token %}
-                        <span class="profile-data-span" for="birthday">Birthday</span>
-                        {% if user == request.user %}
-                            <input type="text" placeholder="Birthday" class="input-profile-data" name="birthday" value="{{ user.birthday }}">
-                            <button type="submit" class="profile-data-button" name="Change birthday">Change</button>
-                        {% else %}
-                            <input type="text" placeholder="Birthday" class="input-profile-data" name="birthday" value="{{ user.birthday }}" disabled>
-                        {% endif %}
-                    </form>
-                </div>
-            {% endif %} -->
-            
             <div class="block-info-profile">
-                {% if user == request.user %}
-                    <form action="{% url 'user_profile:profile' user_id=user.id %}" class="user-data" method="post">
-                        {% csrf_token %}
-                        <span class="profile-data-span" for="password">Password</span>
-                        <input type="password" placeholder="Password" class="input-profile-data" name="password" value="******">
-                        <button type="submit" class="profile-data-button" name="Change password">Change</button>
-                    </form>
-                {% endif %}
+                <form id="formPhone" class="user-data" method="post">
+                    {% csrf_token %}
+                    <span class="profile-data-span" for="phone">Phone</span>
+                    {{ form_data.phone }}
+                </form>
+            </div>
+    
+            <div class="block-info-profile">
+                <form id="formEmail" class="user-data" method="post">
+                    {% csrf_token %}
+                    <span class="profile-data-span" for="email">Email</span>
+                    {{ form_data.email }}
+                </form>
+            </div>
+    
+            <div id="formPassword" class="block-info-profile">
+                <form id="formPassword" class="user-data" method="post">
+                    {% csrf_token %}
+                    <span class="profile-data-span" for="password">Password</span>
+                    {{ form_data.password }}
+                </form>
+            </div>
+    
+            <div class="block-info-profile">
+                <form id="formFirstname" class="user-data" method="post">
+                    {% csrf_token %}
+                    <span class="profile-data-span" for="firstname">First name</span>
+                    {{ form_data.firstname }}
+                </form>
+            </div>
+    
+            <div class="block-info-profile">
+                <form id="formMiddlename" class="user-data" method="post">
+                    {% csrf_token %}
+                    <span class="profile-data-span" for="middlename">Middle name</span>
+                    {{ form_data.middlename }}
+                </form>
+            </div>
+    
+            <div class="block-info-profile">
+                <form id="formLastname" class="user-data" method="post">
+                    {% csrf_token %}
+                    <span class="profile-data-span" for="lastname">Last name</span>
+                    {{ form_data.lastname }}
+                </form>
+            </div>
+    
+            <div class="block-info-profile">
+                <form id="formBirthday" class="user-data" method="post">
+                    {% csrf_token %}
+                    <span class="profile-data-span" for="birthday">Birthday</span>
+                    {{ form_data.birthday }}
+                </form>
+            </div>
+    
+            <div class="block-info-profile">
+                <form id="formBio" class="user-data" method="post">
+                    {% csrf_token %}
+                    <span class="profile-data-span" for="biography">Biography</span>
+                    {{ form_data.biography }}
+                </form>
+            </div>
+
+            <!-- <div class="block-info-profile">
+                <form id="formSex" class="user-data" method="post">
+                    {% csrf_token %}
+                    <span class="profile-data-span" for="sex">Sex</span>
+                    {{ form_data.sex }}
+                </form>
+            </div> -->
+
+            <div class="block-info-profile">
+                <form id="formSex" class="user-data" method="post">
+                    {% csrf_token %}
+                    <span class="profile-data-span" for="sex">Sex</span>
+                    <select id="inputSex" class="input-profile-data" name="gender"></select>
+                </form>
             </div>
         </div>
     </div>
+
+    <script src="{% static 'js/user_profile/userProfile.js' %}"></script>
+    <script src="{% static 'js/user_profile/changeUserData.js' %}"></script>
+    <script src="{% static 'js/user_profile/addDeleteFriendsFromProfile.js' %}"></script>
 {% endblock %}

@@ -78,7 +78,7 @@ async function listUserChats () {
         return acc
     }, {});
     
-    blockChats = document.querySelector('.block-chats');
+    blockChats = document.getElementById('blockChats');
     
     myRooms.forEach(async (room) => {
         let userAvatar;
@@ -146,13 +146,13 @@ async function listUserChats () {
             `;
         };
 
-        blockChats.innerHTML += chatBlock
+        blockChats.insertAdjacentHTML('afterbegin', chatBlock);
     });
         
 };
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
     if (window.location.pathname === '/messenger/im/') {
-        listUserChats();
+        await listUserChats();
     };
 });

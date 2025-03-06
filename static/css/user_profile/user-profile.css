@@ -1,4 +1,5 @@
 body.light-theme .container {
+    padding-left: 50px;
     position: relative;
     height: 100%;
     width: 100%;
@@ -9,8 +10,7 @@ body.light-theme .block-header {
     padding: 20px;
     display: flex;
     position: relative;
-    left: -10%;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
 }
 
@@ -19,8 +19,8 @@ body.light-theme .block-load-photo {
 }
 
 body.light-theme .block-load-photo .user-avatar {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -33,8 +33,8 @@ body.light-theme .upload-form {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     background-color: #cad2e4c9;
     opacity: 0;
     transition: opacity .3s ease;
@@ -50,7 +50,7 @@ body.light-theme .upload-form:hover {
 body.light-theme .upload-label {
     margin-bottom: 10px;
     color: #292e38;
-    font-size: 16px;
+    font-size: 1vw;
 }
 
 body.light-theme .upload-label:hover {
@@ -60,7 +60,7 @@ body.light-theme .upload-label:hover {
 body.light-theme .upload-button {
     margin-bottom: 10px;
     color: #000;
-    font-size: 16px;
+    font-size: 1vw;
     background: none;
     border: none;
 }
@@ -74,16 +74,15 @@ body.light-theme .upload-input {
 }
 
 body.light-theme .block-username {
-    margin: 20px;
+    margin: 20px 100px;
     padding: 5px;
-    font-size: 24px;
+    font-size: 1.5vw;
 }
 
 body.light-theme .block-profile-buttons {
     margin: 5px;
     padding: 5px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -91,16 +90,23 @@ body.light-theme .block-profile-buttons {
 body.light-theme .profile-button {
     margin: 5px;
     padding: 5px 10px;
-    color: #fff;
+    color: #000;
     border: none;
     border-radius: 10px;
-    background-color: #292e38;
+    background-color: #cad2e4;
     transition: .1s;
     
 }
 
 body.light-theme .profile-button:hover {
     box-shadow: 0 0 15px #cad2e4;
+}
+
+body.light-theme .profile-button img {
+    width: 25px;
+    height: 25px;
+    min-width: 20px;
+    min-height: 20px;
 }
 
 body.light-theme .link-to-messenger {
@@ -111,11 +117,16 @@ body.light-theme .block-data-user {
     padding: 20px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    height: 60vh;
+    overflow-y: auto;
 }
 
 body.light-theme .block-info-profile {
     margin: 15px 5px;
     padding: 5px;
+    box-sizing: border-box;
 }
 
 body.light-theme .user-data {
@@ -125,18 +136,19 @@ body.light-theme .user-data {
 body.light-theme .profile-data-span {
     position: absolute;
     top: -20px;
-    font-size: 14px;
-    color: #cad2e4;
+    font-size: 1vw;
+    color: #9EA6B8;
 }
 
 body.light-theme .input-profile-data {
     margin-right: 5px;
     padding: 7px 12px;
-    font-size: 18px;
+    font-size: 1vw;
     border-radius: 10px;
     border: none;
     background: #cad2e4;
     color: #292e38;
+    height: 4.5vh;
 }
 
 body.light-theme .input-profile-data:focus {
@@ -150,12 +162,13 @@ body.light-theme .input-profile-data:hover {
 
 body.light-theme .profile-data-button {
     padding: 7px 12px;
-    font-size: 18px;
+    font-size: 1vw;
     border-radius: 10px;
     border: none;
     background: #cad2e4;
     color: #292e38;
     transition: .1s;
+    height: 4.5vh;
 }
 
 body.light-theme .profile-data-button:hover {
@@ -186,6 +199,7 @@ body.light-theme .profile-data-button:hover {
 
 
 body.dark-theme .container {
+    padding-left: 50px;
     position: relative;
     height: 100%;
     width: 100%;
@@ -196,8 +210,7 @@ body.dark-theme .block-header {
     padding: 20px;
     display: flex;
     position: relative;
-    left: -10%;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
 }
 
@@ -206,8 +219,8 @@ body.dark-theme .block-load-photo {
 }
 
 body.dark-theme .block-load-photo .user-avatar {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -220,8 +233,8 @@ body.dark-theme .upload-form {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     background-color: #292e38cc;
     opacity: 0;
     transition: opacity .3s ease;
@@ -237,7 +250,7 @@ body.dark-theme .upload-form:hover {
 body.dark-theme .upload-label {
     margin-bottom: 10px;
     color: #fff;
-    font-size: 16px;
+    font-size: 1vw;
 }
 
 body.dark-theme .upload-label:hover {
@@ -247,7 +260,7 @@ body.dark-theme .upload-label:hover {
 body.dark-theme .upload-button {
     margin-bottom: 10px;
     color: #fff;
-    font-size: 16px;
+    font-size: 1vw;
     background: none;
     border: none;
 }
@@ -261,16 +274,15 @@ body.dark-theme .upload-input {
 }
 
 body.dark-theme .block-username {
-    margin: 20px;
+    margin: 20px 100px;
     padding: 5px;
-    font-size: 24px;
+    font-size: 1.5vw;
 }
 
 body.dark-theme .block-profile-buttons {
     margin: 5px;
     padding: 5px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -290,6 +302,13 @@ body.dark-theme .profile-button:hover {
     box-shadow: 0 0 7px rgba(0, 0, 0, .5);
 }
 
+body.dark-theme .profile-button img {
+    width: 25px;
+    height: 25px;
+    min-width: 20px;
+    min-height: 20px;
+}
+
 body.dark-theme .link-to-messenger {
     text-decoration: none;
 }
@@ -298,11 +317,16 @@ body.dark-theme .block-data-user {
     padding: 20px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    height: 60vh;
+    overflow-y: auto;
 }
 
 body.dark-theme .block-info-profile {
     margin: 15px 5px;
     padding: 5px;
+    box-sizing: border-box;
 }
 
 body.dark-theme .user-data {
@@ -312,18 +336,19 @@ body.dark-theme .user-data {
 body.dark-theme .profile-data-span {
     position: absolute;
     top: -20px;
-    font-size: 14px;
+    font-size: 1vw;
     color: #9EA6B8;
 }
 
 body.dark-theme .input-profile-data {
     margin-right: 5px;
     padding: 7px 12px;
-    font-size: 18px;
+    font-size: 1vw;
     border-radius: 10px;
     border: none;
     background: #292e38;
     color: #9EA6B8;
+    height: 4.5vh;
 }
 
 body.dark-theme .input-profile-data:focus {
@@ -337,12 +362,13 @@ body.dark-theme .input-profile-data:hover {
 
 body.dark-theme .profile-data-button {
     padding: 7px 12px;
-    font-size: 18px;
+    font-size: 1vw;
     border-radius: 10px;
     border: none;
     background: #292e38;
     color: #9EA6B8;
     transition: .1s;
+    height: 4.5vh;
 }
 
 body.dark-theme .profile-data-button:hover {

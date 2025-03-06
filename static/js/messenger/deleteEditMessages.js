@@ -11,22 +11,26 @@ async function deleteMessageAll(message, user) {
         'receiver_visibility': false,
     };
 
-    return await ajaxWithAuth({
-        url: `/api/messages/${message.id}/`,
-        type: 'PATCH',
-        data: JSON.stringify(data),
-        dataType: 'json',
-        contentType: 'application/json',
-
-        success: function(response) {
-            console.log('Сообщение удалено');
-        },
-
-        error: function(xhr, status, error) {
-            console.log('Не удалось удалить сообщение');
-            
-        }
-    });
+    try {
+        return await ajaxWithAuth({
+            url: `/api/messages/${message.id}/`,
+            type: 'PATCH',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: 'application/json',
+    
+            success: function(response) {
+                console.log('Сообщение удалено');
+            },
+    
+            error: function(xhr, status, error) {
+                console.log('Не удалось удалить сообщение');
+                
+            }
+        });
+    } catch (error) {
+        addNotification(error.responseJSON.text, true);
+    };
 };
 
 async function deleteMessageMe(message, user) {
@@ -40,22 +44,26 @@ async function deleteMessageMe(message, user) {
         };
     };
 
-    return await ajaxWithAuth({
-        url: `/api/messages/${message.id}/`,
-        type: 'PATCH',
-        data: JSON.stringify(data),
-        dataType: 'json',
-        contentType: 'application/json',
-
-        success: function(response) {
-            console.log('Сообщение удалено');
-        },
-
-        error: function(xhr, status, error) {
-            console.log('Не удалось удалить сообщение');
-            
-        }
-    });
+    try {
+        return await ajaxWithAuth({
+            url: `/api/messages/${message.id}/`,
+            type: 'PATCH',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: 'application/json',
+    
+            success: function(response) {
+                console.log('Сообщение удалено');
+            },
+    
+            error: function(xhr, status, error) {
+                console.log('Не удалось удалить сообщение');
+                
+            }
+        });
+    } catch (error) {
+        addNotification(error.responseJSON.text, true);
+    };
 };
 
 async function editMessage(message, newText) {
@@ -63,21 +71,25 @@ async function editMessage(message, newText) {
         'text_message': newText,
     };
 
-    return await ajaxWithAuth({
-        url: `/api/messages/${message.id}/`,
-        type: 'PATCH',
-        data: JSON.stringify(formData),
-        dataType: 'json',
-        contentType: 'application/json',
-
-        success: function(response) {
-            console.log('Текс сообщения изменен');
-        },
-
-        error: function(xhr, status, error) {
-            console.log('Ошибка при редактировании текста сообщения');
-        },
-    });
+    try {
+        return await ajaxWithAuth({
+            url: `/api/messages/${message.id}/`,
+            type: 'PATCH',
+            data: JSON.stringify(formData),
+            dataType: 'json',
+            contentType: 'application/json',
+    
+            success: function(response) {
+                console.log('Текс сообщения изменен');
+            },
+    
+            error: function(xhr, status, error) {
+                console.log('Ошибка при редактировании текста сообщения');
+            },
+        });
+    } catch (error) {
+        addNotification(error.responseJSON.text, true);
+    };
 }
 
 const observerMessageButtons = new MutationObserver(async () => {
