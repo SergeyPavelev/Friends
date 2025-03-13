@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-p(1h_h!%9r(p3rrbrh7_9b$n7^-w*9q3mphq!g*u&5n1vjx7hp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 LOGIN_REDIRECT_URL = '/auth/login/'
 LOGOUT_REDIRECT_URL = '/'
@@ -93,28 +93,13 @@ TEMPLATES = [
 # WSGI_APPLICATION = 'config.wsgi.application'
 ASGI_APPLICATION = 'config.asgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-# DATABASES = {
-#     "default": {
-#         "ENGINE": os.environ.get("POSTGRES_ENGINE", "django.db.backends.postgresql"),
-#         "NAME": os.environ.get("POSTGRES_DATABASE", os.path.join(BASE_DIR, "db.postgresql")),
-#         "USER": os.environ.get("POSTGRES_USER", "user"),
-#         "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "password"),
-#         "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
-#         "PORT": os.environ.get("POSTGRES_PORT", "5434"),
-#     }
-# }
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "friends",
         "USER": "postgres",
         "PASSWORD": "Sergey24012008",
-        "HOST": "localhost",
+        "HOST": "db",
         "PORT": "5432",
     }
 }
@@ -143,6 +128,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'ru'
+LANGUAGES = [
+         ('ru', 'Русский'),
+         ('en', 'English'),
+     ]
 
 TIME_ZONE = 'Europe/Moscow'
 USE_TZ = True

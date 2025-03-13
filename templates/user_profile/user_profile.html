@@ -9,16 +9,14 @@
     <div class="container">
         <div class="block-header">
             <div id="blockLoadPhoto" class="block-load-photo">
-                <img src="" alt="Profile Picture" class="user-avatar">
+                <img id="profileAvatar" src="" alt="Profile Picture" class="user-avatar">
     
-                <!-- {% if user == request.user %}
-                    <form class="upload-form" enctype="multipart/form-data" method="post">
-                        {% csrf_token %}
-                        <label for="upload" class="upload-label">Выбрать фото</label>
-                        {{ form_image.photo }}
-                        <button type="submit" class="upload-button" name="Upload profile photo">Загрузить фотографию</button>
-                    </form>
-                {% endif %} -->
+                <form id="formUploadAvatar" class="upload-form" enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+                    <label for="upload" class="upload-label">Выбрать фото</label>
+                    {{ form_image.avatar }}
+                    <button type="submit" class="upload-button" name="Upload profile photo">Загрузить фотографию</button>
+                </form>
             </div>
             
             <div class="block-username">
@@ -100,15 +98,7 @@
                     {{ form_data.biography }}
                 </form>
             </div>
-
-            <!-- <div class="block-info-profile">
-                <form id="formSex" class="user-data" method="post">
-                    {% csrf_token %}
-                    <span class="profile-data-span" for="sex">Sex</span>
-                    {{ form_data.sex }}
-                </form>
-            </div> -->
-
+            
             <div class="block-info-profile">
                 <form id="formSex" class="user-data" method="post">
                     {% csrf_token %}

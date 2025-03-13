@@ -9,7 +9,7 @@ $(document).ready(function() {
         };        
         
         $.ajax({
-            type: 'post',
+            type: 'POST',
             url: '/api/login/',
             data: JSON.stringify(formData),
             dataType: 'json',

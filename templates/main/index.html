@@ -14,7 +14,7 @@
         <a href="#" class="logo">Friends.com</a>
 
         <div class="social-media">
-            <a href="https://t.me/new_social_net">
+            <a href="https://t.me/social_net_friends">
                 <i class="bx bxl-telegram"></i>
             </a>
             <a href="https://vk.com/club226890161">
@@ -46,11 +46,7 @@
                             удобную и безопасную платформу для общения и обмена информацией. Она предлагает множество функций,
                             которые делают ее привлекательной для пользователей, и стремится стать лидером среди социальных сетей.
                         </p>
-                        {% if request.user.is_authenticated %}
-                            <a href="{% url 'messenger:messenger' %}" class="btn">Messager</a>
-                        {% else %}
-                            <a href="{% url 'auth:login' %}" class="btn">Messager</a>
-                        {% endif %}
+                        <a href="{% url 'auth:login' %}" class="btn">Messenger</a>
                     </div>
                 </div>
                 <div class="right-info">

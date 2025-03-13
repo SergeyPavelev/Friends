@@ -73,6 +73,8 @@ async function displayProfile() {
             `;
         });
     } else {
+        document.getElementById('formUploadAvatar').remove();
+
         document.getElementById('inputUsername').setAttribute('value', userProfile.username);
         document.getElementById('inputPhone').setAttribute('value', userProfile.phone);
         document.getElementById('inputEmail').setAttribute('value', userProfile.email);

@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     userAvatarHref.setAttribute('href', `/profile/${user.id}/`)
     var themeButton = document.getElementById('themeButton');
     var notificationButton = document.getElementById('notificationButton');
+    var buttonMenu = document.querySelector('#buttonActivateMenu img');
     var messengerIkon = document.getElementById('messengerIkon');
     var postsIkon = document.getElementById('postsIkon');
     var listFriendsIkon = document.getElementById('listFriendsIkon');
@@ -41,6 +42,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         };
         themeButton.src = '/static/img/moon-white.png';
         notificationButton.src = '/static/img/notification-white.png';
+        buttonMenu.src = '/static/img/menu-white.png';
         messengerIkon.src = '/static/img/messenger-white.png';
         postsIkon.src = '/static/img/posts-white.png';
         listFriendsIkon.src = '/static/img/list-users-white.png';
@@ -54,6 +56,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         };
         themeButton.src = '/static/img/sunshine-black.png';
         notificationButton.src = '/static/img/notification-black.png';
+        buttonMenu.src = '/static/img/menu-black.png';
         messengerIkon.src = '/static/img/messenger-black.png';
         postsIkon.src = '/static/img/posts-black.png';
         listFriendsIkon.src = '/static/img/list-users-black.png';
@@ -65,15 +68,15 @@ document.addEventListener("DOMContentLoaded", async function() {
     user.friends.forEach(async friendId => {
         var friendData = await getUserData(friendId);
 
-        if (friendData.avatar) {
-            var friendAvatar = `/static/img/${friendData.avatar}`;
-        } else {
-            if (user.theme == 'Dark') {
-                var friendAvatar = '/static/img/user-avatar-white.png';
-            } else {                        
-                var friendAvatar = '/static/img/user-avatar-black.png';
-            };
+        // if (friendData.avatar) {
+        //     var friendAvatar = `${friendData.avatar}`;
+        // } else {
+        if (user.theme == 'Dark') {
+            var friendAvatar = '/static/img/user-avatar-white.png';
+        } else {                        
+            var friendAvatar = '/static/img/user-avatar-black.png';
         };
+        // };
 
         var friendLink = `
             <a id="navLinkUser${friendData.id}" class='nav-link' href='/messenger/im/${friendData.id}/'>
@@ -89,10 +92,17 @@ document.addEventListener("DOMContentLoaded", async function() {
 
 const observerNavButtons = new MutationObserver(async () => {
     const buttons = document.querySelectorAll(".nav-link");
+    const buttonActivateMenu = document.getElementById('buttonActivateMenu');
+    const menu = document.querySelector('.hidden-menu');
+
     buttons.forEach(button => {        
         if (button.href == window.location.href) {
             button.classList.add("active");
         };
+    });
+
+    buttonActivateMenu.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
     });
 });
 

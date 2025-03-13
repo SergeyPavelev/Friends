@@ -10,7 +10,7 @@ body.light-theme .container {
 body.light-theme .title-page {
     padding: 5px 10px;
     margin: 5px 5px 20px 5px;
-    font-size: 28px;
+    font-size: 1.5vw;
 }
 
 body.light-theme .title-page h2 {
@@ -20,6 +20,7 @@ body.light-theme .title-page h2 {
 body.light-theme .post-layout {
     display: flex;
     width: 100%;
+    height: auto;
     align-items: flex-start;
 }
 
@@ -27,6 +28,7 @@ body.light-theme .block-post-form {
     margin-bottom: calc(100vh - 1000px);
     padding-right: 20px;
     width: 30%;
+    font-size: 1vw;
 }
 
 body.light-theme #PostForm textarea {
@@ -44,11 +46,11 @@ body.light-theme #PostForm textarea {
 }
 
 body.light-theme #title-input {
-    max-height: 65px;
+    height: 7vh;
 }
 
 body.light-theme #textarea-input {
-    max-height: 150px;
+    height: 15vh;
 }
 
 body.light-theme #PostForm textarea::placeholder {
@@ -69,11 +71,13 @@ body.light-theme #save-post {
     color: #fff;
     float: right;
     transition: .1s;
+    height: 5.5vh;
 }
 
 body.light-theme #save-post:hover {
     box-shadow: 0 0 10px #cad2e4;
 }
+
 
 
 
@@ -107,7 +111,8 @@ body.light-theme .block-post {
     padding: 10px;
     display: flex;
     position: relative;
-    width: 45vw;
+    width: 40vw;
+    height: auto;
     border-radius: 10px;
     border: 1px solid #cad2e4;
     box-shadow: 0 0 10px #cad2e4;
@@ -125,8 +130,8 @@ body.light-theme .block-user-img {
     display: flex;
     margin-right: 20px;
     flex-shrink: 0;
-    width: 55px;
-    height: 55px;
+    width: 3.5vw;
+    height: 3.5vw;
     border-radius: 50%;
     align-items: center;
     justify-content: center;
@@ -147,21 +152,21 @@ body.light-theme .info-post {
 }
 
 body.light-theme .block-post-author {
-    font-size: 18px;
+    font-size: 1.2vw;
 }
 
 body.light-theme .block-post-title {
     display: flex;
     margin-bottom: 5px;
     flex-wrap: wrap;
-    font-size: 24px;
+    font-size: 1.5vw;
     width: 100%;
 }
 
 body.light-theme .block-post-text {
     display: flex;
     flex-wrap: wrap;
-    font-size: 20px;
+    font-size: 1.2vw;
     color: #292e38;
     width: 100%;
 }
@@ -183,24 +188,24 @@ body.light-theme .block-post-date-created {
     margin: 5px;
     padding: 5px;
     display: flex;
-    position: relative;
-    font-size: 14px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 1vw;
     justify-content: flex-end;
     align-items: flex-end;
-    height: 100%;
+    height: auto;
 }
 
 body.light-theme .block-post-buttons {
     margin: 5px;
-    padding: 5px;
-    margin-bottom: auto;
     display: flex;
     justify-content: flex-end;
-    height: 100%;
+    height: auto;
 }
 
 body.light-theme .block-post-button button {
-    margin: 5px;
+    margin: 2px;
     padding: 5px;
     border: none;
     border-radius: 10px;
@@ -213,8 +218,8 @@ body.light-theme .block-post-button button:hover {
 }
 
 body.light-theme .block-post-button img {
-    height: 20px;
-    min-width: 20px;
+    height: 1.2vw;
+    width: 1.2vw;
 }
 
 
@@ -246,7 +251,7 @@ body.dark-theme .container {
 body.dark-theme .title-page {
     padding: 5px 10px;
     margin: 5px 5px 20px 5px;
-    font-size: 28px;
+    font-size: 1.5vw;
 }
 
 body.dark-theme .title-page h2 {
@@ -263,6 +268,7 @@ body.dark-theme .block-post-form {
     margin-bottom: calc(100vh - 1000px);
     padding-right: 20px;
     width: 30%;
+    font-size: 1vw;
 }
 
 body.dark-theme #PostForm textarea {
@@ -280,11 +286,11 @@ body.dark-theme #PostForm textarea {
 }
 
 body.dark-theme #title-input {
-    max-height: 65px;
+    height: 7vh;
 }
 
 body.dark-theme #textarea-input {
-    max-height: 150px;
+    height: 15vh;
 }
 
 body.dark-theme #PostForm textarea::placeholder {
@@ -305,6 +311,7 @@ body.dark-theme #save-post {
     color: #fff;
     float: right;
     transition: .1s;
+    height: 5.5vh;
 }
 
 body.dark-theme #save-post:hover {
@@ -342,7 +349,7 @@ body.dark-theme .block-post {
     padding: 10px;
     display: flex;
     position: relative;
-    width: 45vw;
+    width: 40vw;
     border-radius: 10px;
     border: 1px solid #292e38;
     box-shadow: 0 0 10px #292e38;
@@ -360,8 +367,8 @@ body.dark-theme .block-user-img {
     display: flex;
     margin-right: 20px;
     flex-shrink: 0;
-    width: 55px;
-    height: 55px;
+    width: 3.5vw;
+    height: 3.5vw;
     border-radius: 50%;
     align-items: center;
     justify-content: center;
@@ -382,21 +389,21 @@ body.dark-theme .info-post {
 }
 
 body.dark-theme .block-post-author {
-    font-size: 18px;
+    font-size: 1.2vw;
 }
 
 body.dark-theme .block-post-title {
     display: flex;
     margin-bottom: 5px;
     flex-wrap: wrap;
-    font-size: 24px;
+    font-size: 1.5vw;
     width: 100%;
 }
 
 body.dark-theme .block-post-text {
     display: flex;
     flex-wrap: wrap;
-    font-size: 20px;
+    font-size: 1.2vw;
     color: #9EA6B8;
     width: 100%;
 }
@@ -418,24 +425,24 @@ body.dark-theme .block-post-date-created {
     margin: 5px;
     padding: 5px;
     display: flex;
-    position: relative;
-    font-size: 14px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 1vw;
     justify-content: flex-end;
     align-items: flex-end;
-    height: 100%;
+    height: auto;
 }
 
 body.dark-theme .block-post-buttons {
     margin: 5px;
-    padding: 5px;
-    margin-bottom: auto;
     display: flex;
     justify-content: flex-end;
-    height: 100%;
+    height: auto;
 }
 
 body.dark-theme .block-post-button button {
-    margin: 5px;
+    margin: 2px;
     padding: 5px;
     border: none;
     border-radius: 10px;
@@ -448,6 +455,18 @@ body.dark-theme .block-post-button button:hover {
 }
 
 body.dark-theme .block-post-button img {
-    height: 20px;
-    min-width: 20px;
+    height: 1.2vw;
+    min-width: 1.2vw;
+}
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+    /* body.light-theme .post-layout {
+        flex-direction: column;
+    } */
 }

@@ -16,10 +16,6 @@ User = get_user_model()
 
 class LoginView(APIView):
     permission_classes = [permissions.AllowAny]
-    
-    user_admin = User.objects.get(pk=1)
-    user_admin.set_password('admin')
-    user_admin.save()
 
     def post(self, request, *args, **kwargs):
         username = request.data.get('username')
@@ -66,6 +62,7 @@ class SignupView(APIView):
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
                 'user_id': user.id,
+                'status': 201,
             }, status=status.HTTP_201_CREATED)
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -150,6 +147,19 @@ class UserViewSet(viewsets.ModelViewSet):
         user.friends.remove(current_user)
         current_user.friends.remove(user)
         return Response({'success': 'Пользователь успешно удален из друзей', 'status': '200'}, status=status.HTTP_200_OK)
+    
+    @action(detail=True, methods=['patch'])
+    def update_avatar(self, request, pk):
+        user = self.get_object()
+        avatar = request.FILES.get('avatar')
+                
+        if avatar:
+            user.avatar = avatar
+            user.save()
+            serializer = self.get_serializer(user)
+            return Response({'success': 'Аватар успешно обновлен'}, status=status.HTTP_200_OK)
+        
+        return Response({'error': 'No avatar provided'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class RoomViewSet(viewsets.ModelViewSet):

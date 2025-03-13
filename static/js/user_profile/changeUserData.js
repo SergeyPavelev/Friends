@@ -1,5 +1,6 @@
 const observerChangeUserData = new MutationObserver(async () => {
-    const formsChangeUserData = document.querySelectorAll('.user-data');   
+    const formsChangeUserData = document.querySelectorAll('.user-data');
+    const formUploadAvatar = document.getElementById('formUploadAvatar');
     
     formsChangeUserData.forEach(form => {        
         form.addEventListener('submit', async function (event) {
@@ -75,6 +76,38 @@ const observerChangeUserData = new MutationObserver(async () => {
                 addNotification(error.responseJSON.text, true);
             }            
         });
+    });
+
+    formUploadAvatar.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        try {
+            var userId = localStorage.getItem('userId');
+
+            var formData = new FormData;
+            var avatar = formUploadAvatar.querySelector('#upload').files[0];
+            formData.append('avatar', avatar);
+            
+            var responseUploadAvatar = await ajaxWithAuth({
+                url: `/api/users/${userId}/update_avatar/`,
+                type: 'PATCH',
+                data: formData,
+                processData: false,
+                contentType: false,
+            });            
+
+            document.getElementById('userAvatar').setAttribute('src', `/media/${avatar.name}`);
+            document.getElementById('profileAvatar').setAttribute('src', `/media/${avatar.name}`);
+
+            console.log('Avatar loaded');
+            addNotification(responseUploadAvatar.success, false);
+            
+        } catch (error) {
+            console.log('Error avatar load');
+            console.log(error);
+            
+            addNotification('Ошибка при загрузке аватара', true);
+        }; 
     });
 });
 

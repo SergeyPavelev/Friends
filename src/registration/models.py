@@ -7,7 +7,7 @@ class User(AbstractUser):
     middle_name = models.CharField(max_length=50, null=True, default='')
     first_login = models.DateTimeField(null=True)
     phone = models.CharField(max_length=14, unique=True)
-    avatar = models.ImageField(null=True, blank=True)
+    avatar = models.ImageField(default='', null=True, blank=True)
     friends = models.ManyToManyField('self', blank=True, default=None)
     theme = models.CharField(max_length=15, default='Light')
     is_online = models.BooleanField(default=True)

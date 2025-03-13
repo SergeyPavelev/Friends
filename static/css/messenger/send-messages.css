@@ -2,7 +2,7 @@ body.light-theme .container {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 92vh;
     flex-grow: 1;
 }
 
@@ -13,7 +13,7 @@ body.light-theme #receiver-name {
 body.light-theme #receiver-name a {
     text-decoration: none;
     color: #000;
-    font-size: 26px;
+    font-size: 1.5vw;
 }
 
 body.light-theme .block-messages {
@@ -86,12 +86,14 @@ body.light-theme .block-message-me .message-sender {
     display: flex;
     color: #9EA6B8;
     justify-content: right;
+    font-size: 1vw;
 }
 
 body.light-theme .block-message-receiver .message-sender {
     display: flex;
     color: #9EA6B8;
     justify-content: left;
+    font-size: 1vw;
 }
 
 body.light-theme .message-text p {
@@ -132,7 +134,7 @@ body.light-theme .message-time-created {
     align-items: flex-end;
     justify-content: flex-end;
     align-self: flex-end;
-    font-size: 14px;
+    font-size: 0.8vw;
 }
 
 body.light-theme .block-message-buttons {
@@ -170,10 +172,13 @@ body.light-theme .block-message-button button:hover {
 
 body.light-theme .block-message-form {
     margin: 15px 50px;
+    margin-bottom: 45px;
     display: flex;
     align-items: center;
-    position: relative;
-    height: 60px;
+    position: absolute;
+    bottom: 0;
+    font-size: 1vw;
+    width: 70vw;
 }
 
 body.light-theme .block-message-form textarea {
@@ -221,7 +226,7 @@ body.light-theme .submit-message {
     position: absolute;
     right: 10px;
     height: 5vh;
-    width: 100px;
+    width: 6vw;
     border: none;
     border-radius: 10px;
     background: #3f62ff;
@@ -255,7 +260,7 @@ body.dark-theme .container {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 92vh;
     flex-grow: 1;
 }
 
@@ -266,7 +271,7 @@ body.dark-theme #receiver-name {
 body.dark-theme #receiver-name a {
     text-decoration: none;
     color: #fff;
-    font-size: 26px;
+    font-size: 1.5vw;
 }
 
 body.dark-theme .block-messages {
@@ -339,12 +344,14 @@ body.dark-theme .block-message-me .message-sender {
     display: flex;
     color: #9EA6B8;
     justify-content: right;
+    font-size: 1vw;
 }
 
 body.dark-theme .block-message-receiver .message-sender {
     display: flex;
     color: #9EA6B8;
     justify-content: left;
+    font-size: 1vw;
 }
 
 body.dark-theme .message-text p {
@@ -385,7 +392,7 @@ body.dark-theme .message-time-created {
     align-items: flex-end;
     justify-content: flex-end;
     align-self: flex-end;
-    font-size: 14px;
+    font-size: 0.8vw;
 }
 
 body.dark-theme .block-message-buttons {
@@ -423,10 +430,13 @@ body.dark-theme .block-message-button button:hover {
 
 body.dark-theme .block-message-form {
     margin: 15px 50px;
+    margin-bottom: 45px;
     display: flex;
     align-items: center;
-    position: relative;
-    height: 60px;
+    position: absolute;
+    bottom: 0;
+    font-size: 1vw;
+    width: 70vw;
 }
 
 body.dark-theme .block-message-form textarea {
@@ -474,7 +484,7 @@ body.dark-theme .submit-message {
     position: absolute;
     right: 10px;
     height: 5vh;
-    width: 100px;
+    width: 6vw;
     border: none;
     border-radius: 10px;
     background: #3f62ff;
@@ -482,4 +492,40 @@ body.dark-theme .submit-message {
     justify-content: center;
     color: #fff;
     font-size: 1vw;
+}
+
+
+
+
+
+@media (max-width: 768px) {
+    body.light-theme .block-message-form {
+        display: flex;
+        justify-content: center;
+        width: 65vw;
+    }
+
+    body.light-theme .block-message-form textarea {
+        height: 5vh;
+    }
+
+    body.light-theme .submit-message {
+        height: 3.5vh;
+    }
+
+
+
+    body.dark-theme .block-message-form {
+        display: flex;
+        justify-content: center;
+        width: 65vw;
+    }
+
+    body.dark-theme .block-message-form textarea {
+        height: 5vh;
+    }
+
+    body.dark-theme .submit-message {
+        height: 3.5vh;
+    }
 }

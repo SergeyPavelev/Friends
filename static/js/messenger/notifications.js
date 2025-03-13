@@ -8,8 +8,6 @@ function getGreeting(username) {
     ];
 
     const randomIndex = Math.floor(Math.random() * greetings.length);
-
-    console.log(greetings[randomIndex].replace("[Имя]", username));
     
     return greetings[randomIndex].replace("[Имя]", username);
 };

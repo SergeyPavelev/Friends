@@ -49,6 +49,27 @@
                 </a>
             </div>
         </div>
+        <div class="block-hidden-menu">
+            <div class="button-activate-menu">
+                <button id="buttonActivateMenu">
+                    <img src="" alt="activate menu">
+                </button>
+            </div>
+            <div class="hidden-menu hidden">
+                <a href="{% url 'messenger:messenger' %}" class="menu-link">
+                    <span>Messenger</span>
+                </a>
+                <a href="{% url 'posts:posts' %}" class="menu-link">
+                    <span>Posts</span>
+                </a>
+                <a href="{% url 'messenger:my_friends' %}" class="menu-link">
+                    <span>My friends</span>
+                </a>
+                <a href="{% url 'messenger:all_users' %}" class="menu-link">
+                    <span>All users</span>
+                </a>
+            </div>
+        </div>
     </section>
         
     <section class="navigation">

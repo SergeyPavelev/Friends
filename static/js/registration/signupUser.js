@@ -24,7 +24,7 @@ $(document).ready(function() {
                 if (response.status != 201) return;
                 localStorage.setItem('accessToken', response['access']);
                 localStorage.setItem('refreshToken', response['refresh']);
-                localStorage.setItem('userId', response['user_id']);
+                localStorage.setItem('userId', response['user_id']);                
                 
                 window.location.href = `/messenger/im/?notification=${formData['username']}`;
             },

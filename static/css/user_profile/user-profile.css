@@ -19,8 +19,8 @@ body.light-theme .block-load-photo {
 }
 
 body.light-theme .block-load-photo .user-avatar {
-    width: 100px;
-    height: 100px;
+    width: 7vw;
+    height: 7vw;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -33,11 +33,11 @@ body.light-theme .upload-form {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100px;
-    height: 100px;
+    width: 7vw;
+    height: 7vw;
     background-color: #cad2e4c9;
     opacity: 0;
-    transition: opacity .3s ease;
+    transition: .3s;
     cursor: pointer;
     border-radius: 50%;
     object-fit: cover;
@@ -48,9 +48,9 @@ body.light-theme .upload-form:hover {
 }
 
 body.light-theme .upload-label {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     color: #292e38;
-    font-size: 1vw;
+    font-size: 0.8vw;
 }
 
 body.light-theme .upload-label:hover {
@@ -58,9 +58,9 @@ body.light-theme .upload-label:hover {
 }
 
 body.light-theme .upload-button {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     color: #000;
-    font-size: 1vw;
+    font-size: 0.8vw;
     background: none;
     border: none;
 }
@@ -95,7 +95,6 @@ body.light-theme .profile-button {
     border-radius: 10px;
     background-color: #cad2e4;
     transition: .1s;
-    
 }
 
 body.light-theme .profile-button:hover {
@@ -103,21 +102,20 @@ body.light-theme .profile-button:hover {
 }
 
 body.light-theme .profile-button img {
-    width: 25px;
-    height: 25px;
-    min-width: 20px;
-    min-height: 20px;
+    width: 1.5vw;
+    height: 1.5vw;
 }
 
 body.light-theme .link-to-messenger {
+    font-size: 1vw;
     text-decoration: none;
 }
 
 body.light-theme .block-data-user {
     padding: 20px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 30vw 30vw;
     flex-direction: column;
-    justify-content: space-between;
     flex-wrap: wrap;
     height: 60vh;
     overflow-y: auto;
@@ -219,8 +217,8 @@ body.dark-theme .block-load-photo {
 }
 
 body.dark-theme .block-load-photo .user-avatar {
-    width: 100px;
-    height: 100px;
+    width: 7vw;
+    height: 7vw;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -233,8 +231,8 @@ body.dark-theme .upload-form {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100px;
-    height: 100px;
+    width: 7vw;
+    height: 7vw;
     background-color: #292e38cc;
     opacity: 0;
     transition: opacity .3s ease;
@@ -248,9 +246,9 @@ body.dark-theme .upload-form:hover {
 }
 
 body.dark-theme .upload-label {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     color: #fff;
-    font-size: 1vw;
+    font-size: 0.8vw;
 }
 
 body.dark-theme .upload-label:hover {
@@ -258,9 +256,9 @@ body.dark-theme .upload-label:hover {
 }
 
 body.dark-theme .upload-button {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     color: #fff;
-    font-size: 1vw;
+    font-size: 0.8vw;
     background: none;
     border: none;
 }
@@ -303,21 +301,20 @@ body.dark-theme .profile-button:hover {
 }
 
 body.dark-theme .profile-button img {
-    width: 25px;
-    height: 25px;
-    min-width: 20px;
-    min-height: 20px;
+    width: 1.5vw;
+    height: 1.5vw;
 }
 
 body.dark-theme .link-to-messenger {
     text-decoration: none;
+    font-size: 1vw;
 }
 
 body.dark-theme .block-data-user {
     padding: 20px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 30vw 30vw;
     flex-direction: column;
-    justify-content: space-between;
     flex-wrap: wrap;
     height: 60vh;
     overflow-y: auto;
@@ -373,4 +370,57 @@ body.dark-theme .profile-data-button {
 
 body.dark-theme .profile-data-button:hover {
     box-shadow: 0 0 7px rgba(0, 0, 0, .5);
+}
+
+
+
+
+@media (max-width: 768px) {
+    body.light-theme .container {
+        padding: 5px;
+    }
+
+    body.light-theme .block-header {
+        display: flex;
+        justify-content: center;
+    }
+
+    body.light-theme .block-username {
+        margin: 15px;
+    }
+
+    body.light-theme .block-data-user {
+        justify-content: center;
+        grid-template-columns: 60vw;
+    }
+
+    body.light-theme .block-info-profile {
+        display: flex;
+        justify-content: center;
+    }
+
+
+
+    body.dark-theme .container {
+        padding: 5px;
+    }
+
+    body.dark-theme .block-header {
+        display: flex;
+        justify-content: center;
+    }
+
+    body.dark-theme .block-username {
+        margin: 15px;
+    }
+
+    body.dark-theme .block-data-user {
+        justify-content: center;
+        grid-template-columns: 60vw;
+    }
+
+    body.dark-theme .block-info-profile {
+        display: flex;
+        justify-content: center;
+    }
 }

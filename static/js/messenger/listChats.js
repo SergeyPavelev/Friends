@@ -81,22 +81,22 @@ async function listUserChats () {
     blockChats = document.getElementById('blockChats');
     
     myRooms.forEach(async (room) => {
+        var userChat = (await getUserChat(userId, myRoomsDict[room])) || 'Unknown user';
         let userAvatar;
-        if (user.avatar) {
-            userAvatar = `${user.avatar}`;
+        if (userChat.avatar) {
+            userAvatar = `${userChat.avatar}`;
         } else {
             if (user.theme == 'Light') {
                 userAvatar = '/static/img/user-avatar-black.png';
             } else if (user.theme == 'Dark') {
                 userAvatar = '/static/img/user-avatar-white.png';
             }
-        }
+        };
 
         if (lastMessageMyRooms[room]) {
             var textMessage = lastMessageMyRooms[room].text_message;
             var sender = lastMessageMyRooms[room].sender;
             var timeSubmit = lastMessageMyRooms[room].date_created;
-            var userChat = (await getUserChat(userId, myRoomsDict[room])) || 'Unknown user';
             
             var chatBlock = `
             <div class='chat'>
@@ -124,7 +124,6 @@ async function listUserChats () {
             };            
 
             var textMessage = lastMessageMyRooms[room].text_message;
-            var userChat = (await getUserChat(userId, myRoomsDict[room])) || 'Unknown user';
 
             var chatBlock = `
                 <div class='chat'>

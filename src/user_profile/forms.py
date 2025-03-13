@@ -6,16 +6,16 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class ProfileImageForm(forms.ModelForm):
-    photo = forms.ImageField(widget=forms.FileInput(attrs={
+    avatar = forms.ImageField(widget=forms.FileInput(attrs={
         'type': 'file',
         'id': 'upload',
         'class': 'upload-input',
-        'name': 'photo',
+        'name': 'avatar',
     }))
     
     class Meta:
         model = User
-        fields = ('photo',)
+        fields = ('avatar',)
         
 
 class ChangeDataProfileForm(forms.ModelForm):
