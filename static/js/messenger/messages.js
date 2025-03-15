@@ -54,6 +54,12 @@ function createMessageBlock (user, message) {
         var trashIkon = '/static/img/trash-white.png';
     };
 
+    if (user.id == message.sender.id && message.is_readed) {
+        var checkMark = "/static/img/double-check-mark.png";
+    } else if (user.id == message.sender.id && !message.is_readed) {
+        var checkMark = "/static/img/check-mark.png";
+    }
+
     if (senderMessage.id == user.id) {
         messageBlock = `
             <div id="messageId${message.id}" class="block-message-me">
@@ -82,7 +88,10 @@ function createMessageBlock (user, message) {
                         <span class="message-sender">${senderMessage.username}</span>
                         <div class="message-text">
                             <p>${textMessage}</p>
-                            <span class="message-time-created">${timeSendMessage}</span>
+                            <div class="data-message">
+                                <span class="message-time-created">${timeSendMessage}</span>
+                                <img class="check-mark" src=${checkMark}>
+                            </div>
                         </div>
                     </div>
 
@@ -104,7 +113,9 @@ function createMessageBlock (user, message) {
                         <span class="message-sender">${senderMessage.username}</span>
                         <div class="message-text">
                             <p>${textMessage}</p>
-                            <span class="message-time-created">${timeSendMessage}</span>
+                            <div class="data-message">
+                                <span class="message-time-created">${timeSendMessage}</span>
+                            </div>
                         </div>
                     </в>
                 </div>
@@ -129,6 +140,22 @@ function createMessageBlock (user, message) {
     return messageBlock;
 };
 
+async function messageRead(message) {
+    return await ajaxWithAuth({
+        url: `/api/messages/${message.id}/`,
+        type: 'PATCH',
+        data: JSON.stringify({
+            'is_readed': true,
+        }),
+        dataType: 'json',
+        contentType: 'application/json',
+
+        error: function(xhr, status, error) {
+            console.log('Ошибка при прочтении сообщения');
+        },
+    });  
+};
+
 async function displayMessages() {
     const userId = localStorage.getItem('userId');
     const receiverId = window.location.pathname.split('/').reverse()[1];
@@ -142,6 +169,11 @@ async function displayMessages() {
 
     document.getElementById('receiverName').textContent = receiver.username;
     document.getElementById('receiverLink').setAttribute('href', `/profile/${receiver.id}/`);
+    if (receiver.is_online) {
+        document.getElementById('userStatus').textContent = 'Online';
+    } else {
+        document.getElementById('userStatus').textContent = 'Offline';
+    };
 
     try {
         var rooms = await ajaxWithAuth({
@@ -158,12 +190,16 @@ async function displayMessages() {
     };
 
     var room = await getRoom(rooms, parseInt(userId, 10), parseInt(receiverId, 10));
-    var messagesRoom = await getMessagesRoom(room, messages); // !!!!!!!!!!!!!!
+    var messagesRoom = await getMessagesRoom(room, messages);
     messagesRoom.sort((a, b) => new Date(a.date_created) - new Date(b.date_created));
     var blockMessages = document.getElementById('listMessages');
     
     messagesRoom.forEach(message => {
         if ((message.sender.id == userId && message.sender_visibility) || (message.receiver.id == userId && message.receiver_visibility)) {
+            if (user.id==message.receiver.id && !message.is_readed) {
+                messageRead(message);
+            };
+
             var messageBlock = createMessageBlock(user, message);            
             blockMessages.insertAdjacentHTML('afterbegin', messageBlock);
         };

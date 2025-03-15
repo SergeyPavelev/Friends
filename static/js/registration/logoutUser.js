@@ -18,6 +18,20 @@ $(document).ready(function() {
         });
 
         if (response.status == 200) {
+            await $.ajax({
+                url: `/api/users/${localStorage.getItem('userId')}/`,
+                type: 'PATCH',
+                data: JSON.stringify({
+                    'is_online': false,
+                }),
+                dataType: 'json',
+                contentType: 'application/json',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                },
+            });
+            
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
             localStorage.removeItem('userId');
@@ -26,7 +40,6 @@ $(document).ready(function() {
             window.location.href = "/auth/login/";
         } else {
             console.log('Не удалось выйти из аккаунта: ', response.error);
-            
-        }
+        };
     });
 });

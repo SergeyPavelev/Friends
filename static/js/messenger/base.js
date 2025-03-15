@@ -107,3 +107,37 @@ const observerNavButtons = new MutationObserver(async () => {
 });
 
 observerNavButtons.observe(document.getElementById('blockNavButtons'), { childList: true, subtree: true });
+
+let inactivityTime = 0;
+
+function resetTimer() {
+    inactivityTime = 0;
+};
+
+setInterval(function() {
+    inactivityTime += 1000;
+    if (inactivityTime >= 300000) {
+        updateStatus(false);
+    };
+}, 1000);
+
+window.onload = resetTimer;
+window.onmousemove = resetTimer;
+window.onkeydown = resetTimer;
+window.onscroll = resetTimer;
+
+window.addEventListener('beforeunload', async function () {
+    return await $.ajax({
+        url: `/api/users/${localStorage.getItem('userId')}/`,
+        type: 'PATCH',
+        data: JSON.stringify({
+            'is_online': false,
+        }),
+        dataType: 'json',
+        contentType: 'application/json',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${getAccessToken()}`
+        },
+    });
+});

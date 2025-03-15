@@ -11,8 +11,8 @@ function saveTokens(accessToken, refreshToken) {
     if (refreshToken) localStorage.setItem('refreshToken', refreshToken);
 };
 
-function refreshAccessToken() {
-    return $.ajax({
+async function refreshAccessToken() {
+    return await $.ajax({
         url: `/api/token/refresh/`,
         type: 'POST',
         dataType: 'json',
@@ -30,8 +30,28 @@ function refreshAccessToken() {
 
         error: function(xhr, status, error) {
             console.error('Не удалось обновить токен. Возможно, refresh токен недействителен.' + xhr);
-            addNotification(error.responseJSON.text, true);
+            addNotification('Ошибка при обновлении токена, обновите страницу', true);
         }, 
+    });
+};
+
+async function updateStatus(status) {
+    return await $.ajax({
+        url: `/api/users/${localStorage.getItem('userId')}/`,
+        type: 'PATCH',
+        data: JSON.stringify({
+            'is_online': status,
+        }),
+        dataType: 'json',
+        contentType: 'application/json',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${getAccessToken()}`
+        },
+
+        error: function(xhr, status, error) {
+            console.log('Error in status update');
+        },
     });
 };
 
@@ -42,7 +62,7 @@ async function ajaxWithAuth(options) {
     options.headers.Authorization = `Bearer ${accessToken}`;
 
     try {
-        return await $.ajax(options);
+        var response = await $.ajax(options);
     } catch (jqXHR) {
         if (jqXHR.status == 401) {
             try {
@@ -52,11 +72,21 @@ async function ajaxWithAuth(options) {
                 return await $.ajax(options);
             } catch (error) {
                 console.error('Ошибка при повторном запросе после обновления токена.' + xhr);
-                // window.location.href = '/auth/login/';
+                window.location.href = '/auth/login/';
                 throw new Error('Ошибка авторизации');
             };
         } else {
             throw jqXHR;
         };
     };
+
+    try {
+        // if (!user.is_online) {
+        await updateStatus(true);
+        // };
+    } catch (error) {
+        console.log('Error in change the user status');
+    };
+
+    return response;
 };

@@ -8,12 +8,21 @@ body.light-theme .container {
 
 body.light-theme #receiver-name {
     margin-left: 50px;
+    display: flex;
 }
 
 body.light-theme #receiver-name a {
     text-decoration: none;
     color: #000;
     font-size: 1.5vw;
+}
+
+body.light-theme #userStatus {
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 0.8vw;
+    color: #000;
 }
 
 body.light-theme .block-messages {
@@ -130,11 +139,22 @@ body.light-theme .block-message-receiver .message-text {
     height: 100%;
 }
 
+body.light-theme .data-message {
+    display: flex;
+    justify-content: right;
+}
+
 body.light-theme .message-time-created {
     align-items: flex-end;
     justify-content: flex-end;
     align-self: flex-end;
     font-size: 0.8vw;
+}
+
+body.light-theme .check-mark {
+    margin-left: 2px;
+    height: auto;
+    width: 1.2vw;
 }
 
 body.light-theme .block-message-buttons {
@@ -266,12 +286,21 @@ body.dark-theme .container {
 
 body.dark-theme #receiver-name {
     margin-left: 50px;
+    display: flex;
 }
 
 body.dark-theme #receiver-name a {
     text-decoration: none;
     color: #fff;
     font-size: 1.5vw;
+}
+
+body.dark-theme #userStatus {
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 0.8vw;
+    color: #fff;
 }
 
 body.dark-theme .block-messages {
@@ -388,11 +417,22 @@ body.dark-theme .block-message-receiver .message-text {
     height: 100%;
 }
 
+body.dark-theme .data-message {
+    display: flex;
+    justify-content: right;
+}
+
 body.dark-theme .message-time-created {
     align-items: flex-end;
     justify-content: flex-end;
     align-self: flex-end;
     font-size: 0.8vw;
+}
+
+body.dark-theme .check-mark {
+    margin-left: 2px;
+    height: auto;
+    width: 1.2vw;
 }
 
 body.dark-theme .block-message-buttons {

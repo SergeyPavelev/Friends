@@ -82,7 +82,7 @@ class MessageSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Message
-        fields = ['id', 'sender', 'receiver', 'room', 'text_message', 'date_created', 'time_created', 'sender_visibility', 'receiver_visibility']
+        fields = '__all__'
         extra_kwargs = {
             'sender': {'required': False},
             'receiver': {'required': False},

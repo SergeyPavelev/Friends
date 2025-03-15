@@ -54,7 +54,7 @@ const observerChangeUserData = new MutationObserver(async () => {
             }
             
             try {
-                var responseUser = await ajaxWithAuth({
+                await ajaxWithAuth({
                     url: `/api/users/${user.id}/`,
                     type: 'PATCH',
                     data: JSON.stringify(formData),
@@ -62,7 +62,7 @@ const observerChangeUserData = new MutationObserver(async () => {
                     contentType: 'application/json',
                 });
 
-                var responseProfile = await ajaxWithAuth({
+                await ajaxWithAuth({
                     url: `/api/profiles/${user.id}/`,
                     type: 'PATCH',
                     data: JSON.stringify(formData),
