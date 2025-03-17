@@ -20,9 +20,9 @@ async function getRoom(rooms, userId, receiverId) {
     return room;
 }
 
-async function getMessagesRoom(roomId, messages) {
-    return messages.filter(message => message.room == roomId.id);
-}
+// async function getMessagesRoom(roomId, messages) {
+//     return messages.filter(message => message.room == roomId.id);
+// }
 
 function formatTime(inputTime) {
     // Разделяем строку по символу ":"
@@ -156,17 +156,55 @@ async function messageRead(message) {
     });  
 };
 
-async function displayMessages() {
-    const userId = localStorage.getItem('userId');
-    const receiverId = window.location.pathname.split('/').reverse()[1];
+let currentPage = 1;
+let loading = false;
 
-    if (userId && receiverId) {
-        var user = await getUserData(userId);             
-        var receiver = await getUserData(receiverId);             
-    } else {
-        console.error('UserId и receiverId не найдены');
+async function loadMessages(user, receiver, methodInsert) {
+    if (loading) return;
+    loading = true;
+
+    try {
+        var rooms = await ajaxWithAuth({
+            url: '/api/rooms/',
+            type: 'GET',
+        });
+
+        var room = await getRoom(rooms, parseInt(user.id, 10), parseInt(receiver.id, 10));
+    
+        var messagesResponse = await ajaxWithAuth({
+            url: `/api/messages?room_id=${room.id}&page=${currentPage}`,
+            type: 'GET',
+        });
+
+        var messages = messagesResponse.results;
+    } catch (error) {
+        console.log('Error in load messages');
     };
 
+    if (!messagesResponse) return;
+
+    messages.sort((a, b) => new Date(a.date_created) - new Date(b.date_created));
+    var blockMessages = document.getElementById('listMessages');
+    
+    messages.forEach(message => {
+        if ((message.sender.id == user.id && message.sender_visibility) || (message.receiver.id == user.id && message.receiver_visibility)) {
+            if (user.id==message.receiver.id && !message.is_readed) {
+                messageRead(message);
+            };
+
+            var messageBlock = createMessageBlock(user, message);            
+            blockMessages.insertAdjacentHTML(methodInsert, messageBlock);
+        };
+    });
+
+    if (methodInsert == 'afterbegin') {
+        blockMessages.scrollTop = blockMessages.scrollHeight;
+    };
+    currentPage++;
+    loading = false;
+};
+
+async function displayMessages(user, receiver) {
     document.getElementById('receiverName').textContent = receiver.username;
     document.getElementById('receiverLink').setAttribute('href', `/profile/${receiver.id}/`);
     if (receiver.is_online) {
@@ -175,42 +213,10 @@ async function displayMessages() {
         document.getElementById('userStatus').textContent = 'Offline';
     };
 
-    try {
-        var rooms = await ajaxWithAuth({
-            url: '/api/rooms/',
-            type: 'GET',
-        });
-    
-        var messages = await ajaxWithAuth({
-            url: '/api/messages/',
-            type: 'GET',
-        });
-    } catch (error) {
-        addNotification(error.responseJSON.text, true);
-    };
-
-    var room = await getRoom(rooms, parseInt(userId, 10), parseInt(receiverId, 10));
-    var messagesRoom = await getMessagesRoom(room, messages);
-    messagesRoom.sort((a, b) => new Date(a.date_created) - new Date(b.date_created));
-    var blockMessages = document.getElementById('listMessages');
-    
-    messagesRoom.forEach(message => {
-        if ((message.sender.id == userId && message.sender_visibility) || (message.receiver.id == userId && message.receiver_visibility)) {
-            if (user.id==message.receiver.id && !message.is_readed) {
-                messageRead(message);
-            };
-
-            var messageBlock = createMessageBlock(user, message);            
-            blockMessages.insertAdjacentHTML('afterbegin', messageBlock);
-        };
-    });
-
-    blockMessages.scrollTop = blockMessages.scrollHeight;
+    await loadMessages(user, receiver, 'afterbegin');
 };
 
-async function sendMessage() {
-    var user = await getUserData(localStorage.getItem('userId'));
-    var receiver = await getUserData(window.location.pathname.split('/').reverse()[1]);
+async function sendMessage(user, receiver) {
     var rooms = await ajaxWithAuth({
         url: '/api/rooms/',
         type: 'GET',
@@ -232,7 +238,7 @@ async function sendMessage() {
     
     try {
         var message = await ajaxWithAuth({
-            url: '/api/messages/',
+            url: `/api/messages/?room_id=${room.id}`,
             type: 'POST',
             data: JSON.stringify(formData),
             dataType: 'json',
@@ -240,7 +246,7 @@ async function sendMessage() {
         });
     } catch (error) {
         console.error('Ошибка при отправки сообщения:', error);
-        addNotification(error.responseJSON.text, true);
+        addNotification('Ошибка при отправки сообщения', true);
         return;
     };    
 
@@ -253,13 +259,31 @@ async function sendMessage() {
 };
 
 document.addEventListener('DOMContentLoaded', async function() {
-    await displayMessages();
+    const userId = localStorage.getItem('userId');
+    const receiverId = window.location.pathname.split('/').reverse()[1];
+
+    if (userId && receiverId) {
+        var user = await getUserData(userId);
+        var receiver = await getUserData(receiverId);             
+    } else {
+        console.error('UserId и receiverId не найдены');
+    };
+
+    await displayMessages(user, receiver);
+
+    var listMessages = document.getElementById('listMessages');
+
+    listMessages.addEventListener('scroll', async function () {
+        if (listMessages.clientHeight + Math.ceil(Math.abs(listMessages.scrollTop)) >= listMessages.scrollHeight) {
+            await loadMessages(user, receiver, 'beforeend');
+        };
+    });
 
     $('#input-message-form').click(async function(e) {
         e.preventDefault();
         e.stopPropagation();
 
-        await sendMessage();        
+        await sendMessage(user, receiver);        
     });
 });
 

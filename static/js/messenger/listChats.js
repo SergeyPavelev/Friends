@@ -45,11 +45,13 @@ async function listUserChats () {
         dataType: 'json',
     });
 
-    var messages = await ajaxWithAuth({
+    var messagesResponse = await ajaxWithAuth({
         url: '/api/messages/',
         type: 'GET',
         dataType: 'json',
     });
+
+    var messages = messagesResponse.results;
 
     var myRooms = [];
     var myRoomsDict = {};

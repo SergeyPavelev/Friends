@@ -31,7 +31,7 @@ body.light-theme .block-messages {
     padding-right: 80px;
     margin: 0;
     color: #000;
-    max-height: calc(100vh - 370px);
+    max-height: 60vh;
     overflow-y: auto;
     flex-direction: column-reverse;
     border-radius: 10px;
@@ -76,8 +76,8 @@ body.light-theme .block-info-message {
 body.light-theme .block-message-img {
     margin: 2px 10px;
     display: flex;
-    width: 30px;
-    height: 30px;
+    width: 2vw;
+    height: 2vw;
     border-radius: 50%;
     overflow: hidden;
     align-items: center;
@@ -309,7 +309,7 @@ body.dark-theme .block-messages {
     padding-right: 80px;
     margin: 0;
     color: #fff;
-    max-height: calc(100vh - 370px);
+    max-height: 60vh;
     overflow-y: auto;
     flex-direction: column-reverse;
     border-radius: 10px;
@@ -354,8 +354,8 @@ body.dark-theme .block-info-message {
 body.dark-theme .block-message-img {
     margin: 2px 10px;
     display: flex;
-    width: 30px;
-    height: 30px;
+    width: 2vw;
+    height: 2vw;
     border-radius: 50%;
     overflow: hidden;
     align-items: center;

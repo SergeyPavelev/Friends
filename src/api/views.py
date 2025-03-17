@@ -9,6 +9,7 @@ from ..posts.models import Post
 from ..messenger.models import *
 from ..user_profile.models import UserProfile
 from .serializers import *
+from .pagination import *
 
 
 User = get_user_model()
@@ -89,12 +90,21 @@ class PostViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    pagination_class = PostPagination
     
 
 class MessageViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
+    pagination_class = MessagePagination
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        room_id = self.request.query_params.get('room_id', None)
+        if room_id is not None:
+            queryset = queryset.filter(room_id=room_id)
+        return queryset
     
 
 class UserViewSet(viewsets.ModelViewSet):

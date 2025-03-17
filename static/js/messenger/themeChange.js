@@ -35,19 +35,19 @@ $(document).ready(function() {
                             $(this).attr('src', imgSrc);
                         });
                           
-                        if (/\d/.test(currentPath.split('/messenger/im/')[1])) {
-                            $('link[href*="send-messages-dark-theme.css"]').remove();
-                            $('head').append('<link rel="stylesheet" href="/static/css/messenger/send-messages-light-theme.css">');
-                        } else if (currentPath.includes('/posts/')) {
-                            $('link[href*="posts-dark-theme.css"]').remove();
-                            $('head').append('<link rel="stylesheet" href="/static/css/posts/posts-light-theme.css">');
-                        } else if (currentPath.includes('/all_users/') || currentPath.includes('/my_friends/')) {
-                            $('link[href*="list-users-dark-theme.css"]').remove();
-                            $('head').append('<link rel="stylesheet" href="/static/css/messenger/list-users-light-theme.css">'); 
-                        } else if (currentPath.includes('/profile/')) {
-                            $('link[href*="user-profile-dark-theme.css"]').remove();
-                            $('head').append('<link rel="stylesheet" href="/static/css/user_profile/user-profile-light-theme.css">');
-                        };
+                        // if (/\d/.test(currentPath.split('/messenger/im/')[1])) {
+                        //     $('link[href*="send-messages-dark-theme.css"]').remove();
+                        //     $('head').append('<link rel="stylesheet" href="/static/css/messenger/send-messages-light-theme.css">');
+                        // } else if (currentPath.includes('/posts/')) {
+                        //     $('link[href*="posts-dark-theme.css"]').remove();
+                        //     $('head').append('<link rel="stylesheet" href="/static/css/posts/posts-light-theme.css">');
+                        // } else if (currentPath.includes('/all_users/') || currentPath.includes('/my_friends/')) {
+                        //     $('link[href*="list-users-dark-theme.css"]').remove();
+                        //     $('head').append('<link rel="stylesheet" href="/static/css/messenger/list-users-light-theme.css">'); 
+                        // } else if (currentPath.includes('/profile/')) {
+                        //     $('link[href*="user-profile-dark-theme.css"]').remove();
+                        //     $('head').append('<link rel="stylesheet" href="/static/css/user_profile/user-profile-light-theme.css">');
+                        // };
                     } else if (response.theme == 'Dark') {
                         document.querySelector('body').classList.remove('light-theme');
                         document.querySelector('body').classList.add('dark-theme');
@@ -58,19 +58,19 @@ $(document).ready(function() {
                             $(this).attr('src', imgSrc);
                         });
     
-                        if (/\d/.test(currentPath.split('/messenger/im/')[1])) {
-                            $('link[href*="send-messages-light-theme.css"]').remove();
-                            $('head').append('<link rel="stylesheet" href="/static/css/messenger/send-messages-dark-theme.css">');
-                        } else if (currentPath.includes('/posts/')) {
-                            $('link[href*="posts-light-theme.css"]').remove();
-                            $('head').append('<link rel="stylesheet" href="/static/css/posts/posts-dark-theme.css">');
-                        } else if (currentPath.includes('/all_users/') || currentPath.includes('/my_friends/')) {
-                            $('link[href*="list-users-light-theme.css"]').remove();
-                            $('head').append('<link rel="stylesheet" href="/static/css/messenger/list-users-dark-theme.css">');
-                        } else if (currentPath.includes('/profile/')) {
-                            $('link[href*="user-profile-light-theme.css"]').remove();
-                            $('head').append('<link rel="stylesheet" href="/static/css/user_profile/user-profile-dark-theme.css">');
-                        };
+                        // if (/\d/.test(currentPath.split('/messenger/im/')[1])) {
+                        //     $('link[href*="send-messages-light-theme.css"]').remove();
+                        //     $('head').append('<link rel="stylesheet" href="/static/css/messenger/send-messages-dark-theme.css">');
+                        // } else if (currentPath.includes('/posts/')) {
+                        //     $('link[href*="posts-light-theme.css"]').remove();
+                        //     $('head').append('<link rel="stylesheet" href="/static/css/posts/posts-dark-theme.css">');
+                        // } else if (currentPath.includes('/all_users/') || currentPath.includes('/my_friends/')) {
+                        //     $('link[href*="list-users-light-theme.css"]').remove();
+                        //     $('head').append('<link rel="stylesheet" href="/static/css/messenger/list-users-dark-theme.css">');
+                        // } else if (currentPath.includes('/profile/')) {
+                        //     $('link[href*="user-profile-light-theme.css"]').remove();
+                        //     $('head').append('<link rel="stylesheet" href="/static/css/user_profile/user-profile-dark-theme.css">');
+                        // };
                     };
                     
                     console.log('Тема обновлена на ', response.theme);

@@ -1,7 +1,7 @@
 function friendsIncludesPostAuthor(user, postAuthor) {
     for (let i = 0; i < user.friends.length; i++) {
         const friend = user.friends[i];
-            if (friend.id === postAuthor.id) return true;
+        if (friend == postAuthor.id) return true;
     }
 };
 
@@ -20,37 +20,46 @@ function formatDate(dateString) {
   
     // Форматируем дату и время
     return `${day}.${month}.${year} ${hours}:${minutes}`;
-  }
+};
 
-async function displayPosts() {
-    const userId = localStorage.getItem('userId');
+let currentPage = 1;
+let loading = false;
 
-    if (userId) {
-        var user = await getUserData(userId);             
-    } else {
-        console.error('userId отсутствует в localStorage');
+async function displayPosts(user, methodInsert) {
+    if (loading) return;
+    loading = true;
+
+    try {
+        var postsResponse = await ajaxWithAuth({
+            url: `/api/posts/?page=${currentPage}`,
+            type: 'GET',
+            dataType: 'json',
+        });
+
+        var posts = postsResponse.results;       
+        
+    } catch (error) {
+        console.log('Error in load posts');
     };
 
-    var posts = await ajaxWithAuth({
-        url: '/api/posts/',
-        type: 'GET',
-        dataType: 'json',
-    });
+    if (!postsResponse) return;
 
     var blockPosts = document.getElementById('blockListPosts');
 
     posts.forEach(post => {
-        if ((post.author.id == userId || friendsIncludesPostAuthor(user, post.author)) && post.visibility) {
-            
+        console.log(post);
+        
+        if ((post.author.id == user.id || friendsIncludesPostAuthor(user, post.author)) && post.visibility) {
             var postBlock = createPostBlock(user, post);
-            blockPosts.insertAdjacentHTML('afterbegin', postBlock);
+            blockPosts.insertAdjacentHTML(methodInsert, postBlock);
         };
     });
+
+    currentPage++;
+    loading = false;  
 };
 
-async function sendPost() {
-    user = await getUserData(localStorage.getItem('userId'));
-
+async function sendPost(user) {
     titlePost = $('#title-input').val();
     textPost = $('#textarea-input').val();
 
@@ -182,12 +191,28 @@ function createPostBlock(user, post) {
 };
 
 document.addEventListener('DOMContentLoaded', async function() {
-    await displayPosts();
+    const userId = localStorage.getItem('userId');
+
+    if (userId) {
+        var user = await getUserData(userId);            
+    } else {
+        console.error('UserId не найден');
+    };
+
+    await displayPosts(user, 'beforeend');
+
+    var listPosts = document.getElementById('blockListPosts');
+
+    listPosts.addEventListener('scroll', async function () {        
+        if (listPosts.clientHeight + Math.ceil(Math.abs(listPosts.scrollTop)) >= listPosts.scrollHeight) {
+            await displayPosts(user, 'beforeend');
+        };
+    });
 
     $('#save-post').click(async function(e){
         e.preventDefault();
         e.stopPropagation();
 
-        await sendPost();
+        await sendPost(user);
     });    
 });

@@ -84,8 +84,8 @@ body.light-theme #save-post:hover {
 body.light-theme .block-list-posts {
     margin-left: 75px;
     display: flex;
-    max-height: calc(100vh - 300px);
-    max-width: calc(100vh - 50px);
+    height: 70vh;
+    width: 30vw;
     overflow-y: auto;
     overflow-x: hidden;
     flex-direction: column;
@@ -324,8 +324,8 @@ body.dark-theme #save-post:hover {
 
 body.dark-theme .block-list-posts {
     margin-left: 75px;
-    max-height: calc(100vh - 300px);
-    max-width: calc(100vh - 50px);
+    height: 70vh;
+    width: 30vw;
     overflow-y: auto;
     overflow-x: hidden;
 }

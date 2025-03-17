@@ -14,6 +14,6 @@ class Post(models.Model):
     visibility = models.BooleanField('Отображение поста', default=True)
     
     class Meta:
-        ordering = ['date_created']
+        ordering = ['-date_created']
         verbose_name = 'Post'
         verbose_name_plural = 'Posts'
