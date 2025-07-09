@@ -1,5 +1,18 @@
 @use 'reset';
 
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
 :root {
-  // переменные со стилями
+
+  // text-color
+  --text: #757678;
+  --input-placeholder: #AEACAC;
+  --field-text: #182737;
+
+  // common
+  --primary-gray: #4d4d4d;
+  --bg-color: #FAFAFA;
+  --error-color: #ED1C24;
 }
