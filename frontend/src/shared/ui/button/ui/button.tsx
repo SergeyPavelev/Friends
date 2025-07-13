@@ -1,10 +1,29 @@
-import s from './button.module.scss'
-import type { ButtonHTMLAttributes } from 'react';
+import s from './button.module.scss';
+import type { ReactNode } from 'react';
 
-export const ButtonUi = ({className, ...props}: ButtonHTMLAttributes<HTMLButtonElement> ) => {
+interface ButtonProps {
+    children?: ReactNode;
+    className?: string;
+    disabled?: boolean;
+    onClick?: () => void;
+}
+
+export const ButtonUi = (
+    {
+        className,
+        disabled,
+        children,
+        ...props
+    }: ButtonProps,
+) => {
     return (
-        <button className={`${s.button} ${className}`} {...props}>
-            {props.children}
+        <button
+            className={`${s.button} 
+            ${className}`}
+            disabled={disabled}
+            {...props}
+        >
+            {children}
         </button>
     );
 };
