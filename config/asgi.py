@@ -11,16 +11,15 @@ import os
 
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
-from channels.auth import AuthMiddlewareStack
-from config.routing import websocket_urlpatterns
+from channels.auth import AuthMiddlewareStack, CookieMiddleware, SessionMiddleware
+from  ..config import routing
+
+
+acgi = get_asgi_application()
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 
 application = ProtocolTypeRouter({
-    "http": get_asgi_application(),
-    "websocket": AuthMiddlewareStack(
-        URLRouter(
-            websocket_urlpatterns
-        )
-    ),
+    "http": acgi,
+    "websocket": CookieMiddleware(SessionMiddleware(URLRouter(routing.websocket_urlpatterns))),
 })

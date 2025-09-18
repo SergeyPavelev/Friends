@@ -3,10 +3,10 @@ const observerActivateMessageButtons = new MutationObserver(() => {
     const blockMessage = document.querySelectorAll('.message-text');
 
     blockMessage.forEach((message, index) => {
-        message.addEventListener('click', () => {
+        message.addEventListener('click', () => {                        
             blockMessageButtons[index].classList.toggle('active');
         });
-    });
+    });    
 });
 
-observerActivateMessageButtons.observe(document.body, { childList: true, subtree: true });
+observerActivateMessageButtons.observe(document.getElementById('listMessages'), { childList: true, subtree: true });

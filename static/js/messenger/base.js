@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         // };
 
         var friendLink = `
-            <a id="navLinkUser${friendData.id}" class='nav-link' href='/messenger/im/${friendData.id}/'>
+            <a id="navLinkUser${friendData.id}" class='nav-link' href='/messenger/${friendData.id}/'>
                 <div class='block-nav-icon'>
                     <img src="${friendAvatar}" alt="User-avatar">
                 </div>

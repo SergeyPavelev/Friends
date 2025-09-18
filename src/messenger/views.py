@@ -15,9 +15,8 @@ class IndexMessagesView(View):
 class Send_Messages_View(View):
     def get(self, request, receiver_id):
         form = MessageForm()
-        receiver = User.objects.get(pk=receiver_id)
         data = {
-            'title': f"Messenger with {receiver}",
+            'title': "Messenger",
             'form': form,
         }
         

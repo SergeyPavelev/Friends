@@ -26,7 +26,7 @@ $(document).ready(function() {
                 localStorage.setItem('refreshToken', response['refresh']);
                 localStorage.setItem('userId', response['user_id']);                
                 
-                window.location.href = `/messenger/im/?notification=${formData['username']}`;
+                window.location.href = `/messenger/?notification=${formData['username']}`;
             },
 
             error: function(xhr, status, error) {

@@ -1,6 +1,6 @@
-async function getMessages() {
+async function getMessage(messageId) {
     return await ajaxWithAuth({
-        url: '/api/messages/',
+        url: `/api/messages/${messageId}/`,
         type: 'GET',
     });
 };
@@ -69,6 +69,7 @@ async function deleteMessageMe(message, user) {
 async function editMessage(message, newText) {
     var formData = {
         'text_message': newText,
+        'is_edited': true,
     };
 
     try {
@@ -101,8 +102,7 @@ const observerMessageButtons = new MutationObserver(async () => {
     deleteButtonsAll.forEach(button => {
         button.addEventListener('click', async () => {
             var messageId = parseInt(button.value, 10);
-            var messages = await getMessages();
-            var message = messages.find(message => message.id === messageId);
+            var message = await getMessage(messageId);
             var blockMessage = document.getElementById(`messageId${messageId}`);
 
             await deleteMessageAll(message, user);
@@ -113,8 +113,7 @@ const observerMessageButtons = new MutationObserver(async () => {
     deleteButtonsMe.forEach(button => {
         button.addEventListener('click', async () => {
             var messageId = parseInt(button.value, 10);
-            var messages = await getMessages();
-            var message = messages.find(message => message.id === messageId);
+            var message = await getMessage(messageId);
             var blockMessage = document.getElementById(`messageId${messageId}`);
             
             await deleteMessageMe(message, user);
@@ -125,8 +124,7 @@ const observerMessageButtons = new MutationObserver(async () => {
     editButtons.forEach(button => {
         button.addEventListener('click', async () => {
             var messageId = parseInt(button.value, 10);
-            var messages = await getMessages();
-            var message = messages.find(message => message.id === messageId);
+            var message = await getMessage(messageId);
             var textMessageInput = $('#message-input');
             textMessageInput.val(`${message.text_message}`);
             textMessageInput.focus();
@@ -141,6 +139,10 @@ const observerMessageButtons = new MutationObserver(async () => {
                 await editMessage(message, newText);
                 var blockMessage = document.getElementById(`messageId${message.id}`);
                 blockMessage.querySelector('.message-text p').textContent = newText;
+                var blockEdited = `
+                    <span class="edit-label">Edited</span>
+                `;
+                document.querySelector(`#messageId${message.id} .data-message`).insertAdjacentHTML('afterbegin', blockEdited);
             });
         });
     });

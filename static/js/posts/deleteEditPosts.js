@@ -1,6 +1,6 @@
-async function getPosts() {
+async function getPost(postId) {
     return await ajaxWithAuth({
-        url: '/api/posts/',
+        url: `/api/posts/${postId}/`,
         type: 'GET',
 
         error: function(xhr, status, error) {
@@ -61,8 +61,7 @@ const observerPostButtons = new MutationObserver(async () => {
     deleteButtonsAll.forEach(button => {
         button.addEventListener('click', async () => {
             var postId = parseInt(button.value, 10);
-            var posts = await getPosts();
-            var post = posts.find(post => post.id === postId);
+            var post = await getPost(postId);
             var blockMessage = document.getElementById(`postId${postId}`);            
 
             try {
@@ -77,8 +76,7 @@ const observerPostButtons = new MutationObserver(async () => {
     editButtons.forEach(button => {
         button.addEventListener('click', async () => {
             var postId = parseInt(button.value, 10);
-            var posts = await getPosts();
-            var post = posts.find(post => post.id === postId);
+            var post = await getPost(postId);
             var titlePostInput = $('#title-input');
             var textPostInput = $('#textarea-input');
             

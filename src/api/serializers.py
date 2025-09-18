@@ -2,7 +2,7 @@ from django.dispatch import receiver
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from ..posts.models import Post
-from ..messenger.models import Message, Room
+from ..messenger.models import Conversation, Message, Conversation
 from ..user_profile.models import UserProfile
 
 
@@ -78,56 +78,31 @@ class PostSerializer(serializers.ModelSerializer):
 
 class MessageSerializer(serializers.ModelSerializer):
     sender = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
-    receiver = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     
     class Meta:
         model = Message
-        fields = '__all__'
-        extra_kwargs = {
-            'sender': {'required': False},
-            'receiver': {'required': False},
-            'date_created': {'required': False},
-            'time_created': {'required': False},
-        }
-
+        fields = ['id', 'conversation', 'sender', 'text', 'timestamp', 'read', 'sender_visibility', 'receiver_visibility']
+        read_only_fields = ['id', 'sender', 'timestamp']
     
-    def to_representation(self, instance):
-        """
-        Переопределяем метод для возврата полной информации о пользователях при GET-запросе.
-        """
-        representation = super().to_representation(instance)
-        representation['sender'] = UserSerializer(instance.sender).data
-        representation['receiver'] = UserSerializer(instance.receiver).data
-        return representation
-
-    def to_internal_value(self, data):
-        """
-        Переопределяем метод для обработки только ID пользователей при POST-запросе.
-        """
-        internal_value = super().to_internal_value(data)
-        # Проверяем, что sender и receiver переданы как ID
-        if data.get('sender') or data.get('receiver'):
-            if not isinstance(data.get('sender'), int):
-                raise serializers.ValidationError({'sender': 'Sender must be an integer ID.'})
-            if not isinstance(data.get('receiver'), int):
-                raise serializers.ValidationError({'receiver': 'Receiver must be an integer ID.'})
-        return internal_value
     
-        
-class RoomSerializer(serializers.ModelSerializer):    
+class ConversationSerializer(serializers.ModelSerializer):
+    participants = UserSerializer(many=True, read_only=True)
+    last_message = serializers.SerializerMethodField()
+    unread_count = serializers.SerializerMethodField()
+    
     class Meta:
-        model = Room
-        fields = ['id', 'users']
+        model = Conversation
+        fields = ['id', 'participants', 'last_message', 'unread_count', 'modified_at']
     
     
-    def to_representation(self, instance):
-        """
-        Overriding the method to return full information about users on GET requests.
-        """
-        representation = super().to_representation(instance)
-        representation['users'] = UserSerializer(instance.users.all(), many=True).data
-        return representation
-        
+    def get_last_message(self, object):
+        last_message = object.messages.last()
+        return MessageSerializer(last_message).data if last_message else None
+    
+    def get_unread_count(self, object):
+        user = self.context['request'].user
+        return object.messages.filter(read=False).exclude(sender=user).count()
+         
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:

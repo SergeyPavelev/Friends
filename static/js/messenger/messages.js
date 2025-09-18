@@ -1,40 +1,38 @@
-async function getRoom(rooms, userId, receiverId) {
-    var room = rooms.find(room =>
-        (room.users[0].id == userId && room.users[1].id == receiverId) || 
-        (room.users[0].id == receiverId && room.users[1].id == userId)
-    );
-    
-    if (!room) {
-        var room = await ajaxWithAuth({
-            url: '/api/rooms/',
+async function getConversation(userId, recipientId) {
+    try {
+        var conversation = await ajaxWithAuth({
+            url: `/api/conversations/get_by_participants/?user1=${userId}&user2=${recipientId}`,
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+        });
+    } catch (error) {
+        var conversation = await ajaxWithAuth({
+            url: '/api/conversations/',
             type: 'POST',
             data: JSON.stringify({
-                'users': [userId, receiverId],
+                'recipient': recipientId,
             }),
             dataType: 'json',
             contentType: 'application/json',
         });
-        console.log('Чат создан!');
+        console.log('Беседа создана');
     };
     
-    return room;
+    return conversation;
 }
-
-// async function getMessagesRoom(roomId, messages) {
-//     return messages.filter(message => message.room == roomId.id);
-// }
 
 function formatTime(inputTime) {
     // Разделяем строку по символу ":"
-    const [hours, minutes] = inputTime.split(':');
+    const [hours, minutes] = inputTime.split('T')[1].split(':');
     // Возвращаем только часы и минуты
     return `${hours}:${minutes}`;
-}
+};
 
-function createMessageBlock (user, message) {
-    var senderMessage = message.sender;
-    var textMessage = message.text_message;
-    var timeSendMessage = formatTime(message.time_created);
+async function createMessageBlock(user, message) {
+    var senderMessage = await getUserData(message.sender);
+    var textMessage = message.text;
+    var timestampMessage = formatTime(message.timestamp);
     
     if (senderMessage.avatar) {
         var avatarSender = senderMessage.avatar;
@@ -54,9 +52,9 @@ function createMessageBlock (user, message) {
         var trashIkon = '/static/img/trash-white.png';
     };
 
-    if (user.id == message.sender.id && message.is_readed) {
+    if (user.id == message.sender && message.read) {
         var checkMark = "/static/img/double-check-mark.png";
-    } else if (user.id == message.sender.id && !message.is_readed) {
+    } else if (user.id == message.sender && !message.read) {
         var checkMark = "/static/img/check-mark.png";
     }
 
@@ -89,7 +87,7 @@ function createMessageBlock (user, message) {
                         <div class="message-text">
                             <p>${textMessage}</p>
                             <div class="data-message">
-                                <span class="message-time-created">${timeSendMessage}</span>
+                                <span class="message-time-created">${timestampMessage}</span>
                                 <img class="check-mark" src=${checkMark}>
                             </div>
                         </div>
@@ -114,7 +112,7 @@ function createMessageBlock (user, message) {
                         <div class="message-text">
                             <p>${textMessage}</p>
                             <div class="data-message">
-                                <span class="message-time-created">${timeSendMessage}</span>
+                                <span class="message-time-created">${timestampMessage}</span>
                             </div>
                         </div>
                     </в>
@@ -136,7 +134,7 @@ function createMessageBlock (user, message) {
             </div>
         `;
     };
-
+    
     return messageBlock;
 };
 
@@ -145,7 +143,7 @@ async function messageRead(message) {
         url: `/api/messages/${message.id}/`,
         type: 'PATCH',
         data: JSON.stringify({
-            'is_readed': true,
+            'read': true,
         }),
         dataType: 'json',
         contentType: 'application/json',
@@ -164,36 +162,74 @@ async function loadMessages(user, receiver, methodInsert) {
     loading = true;
 
     try {
-        var rooms = await ajaxWithAuth({
-            url: '/api/rooms/',
-            type: 'GET',
-        });
-
-        var room = await getRoom(rooms, parseInt(user.id, 10), parseInt(receiver.id, 10));
-    
+        var conversation = await getConversation(parseInt(user.id, 10), parseInt(receiver.id, 10));        
+        
         var messagesResponse = await ajaxWithAuth({
-            url: `/api/messages?room_id=${room.id}&page=${currentPage}`,
+            url: `/api/messages?conversation=${conversation.id}&page=${currentPage}`,
             type: 'GET',
         });
 
         var messages = messagesResponse.results;
     } catch (error) {
         console.log('Error in load messages');
+        console.log(error);        
     };
 
     if (!messagesResponse) return;
 
     messages.sort((a, b) => new Date(a.date_created) - new Date(b.date_created));
     var blockMessages = document.getElementById('listMessages');
+
+    let lastDate = null;
+    const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
     
     messages.forEach(message => {
-        if ((message.sender.id == user.id && message.sender_visibility) || (message.receiver.id == user.id && message.receiver_visibility)) {
-            if (user.id==message.receiver.id && !message.is_readed) {
+        if ((message.sender == user.id && message.sender_visibility) || (message.sender == receiver.id && message.receiver_visibility)) {
+            if (message.sender == receiver.id && !message.is_readed) {
                 messageRead(message);
             };
+            
+            var messageBlockPromise = createMessageBlock(user, message);
+            messageBlockPromise.then(messageBlock => {
+                blockMessages.insertAdjacentHTML(methodInsert, messageBlock);
+            });
 
-            var messageBlock = createMessageBlock(user, message);            
-            blockMessages.insertAdjacentHTML(methodInsert, messageBlock);
+            if (message.edit) {
+                var blockEdited = `
+                    <span class="edit-label">Edited</span>
+                `;
+                
+                document.querySelector(`#messageId${message.id} .data-message`).insertAdjacentHTML('afterbegin', blockEdited);
+            };
+
+            const messageDate = new Date(message.timestamp);            
+            const messageDateString = messageDate.toDateString();
+            const todayDate = new Date();
+            
+            if (lastDate != messageDateString) {
+                const month = monthNames[messageDate.getMonth()];
+                const day = messageDate.getDate();
+                const year = messageDate.getFullYear();
+
+                // Форматируем строку
+                let formattedDate = `${month} ${day}`;                
+                
+                // Проверяем, отличается ли год от текущего
+                if (year !== todayDate.getFullYear()) {
+                    formattedDate += ` ${year}`;
+                };
+
+                var dataLabel = `
+                    <span class="block-messages-date">${formattedDate}</span>
+                `;
+                
+                document.querySelector(`#messageId${message.id}`).insertAdjacentHTML('afterend', dataLabel);
+                lastDate = messageDateString;
+                
+            }
         };
     });
 
@@ -217,28 +253,23 @@ async function displayMessages(user, receiver) {
 };
 
 async function sendMessage(user, receiver) {
-    var rooms = await ajaxWithAuth({
-        url: '/api/rooms/',
-        type: 'GET',
-    });
-    var room = await getRoom(rooms, user.id, receiver.id);
+    var conversation = await getConversation(user.id, receiver.id);
     var textMessage = $('#message-input').val();
 
     var formData = {
-        'text_message': textMessage,
+        'text': textMessage,
         'sender': user.id,
-        'receiver': receiver.id,
-        'room': room.id,
-    };    
-
-    if(!formData.text_message) {
-        addNotification('Поле должно быть заполнено', true);
+        'conversation': conversation.id,
+    };
+    
+    if(!formData.text) {
+        // addNotification('Поле должно быть заполнено', true);
         return;
     };
     
     try {
         var message = await ajaxWithAuth({
-            url: `/api/messages/?room_id=${room.id}`,
+            url: `/api/messages/`,
             type: 'POST',
             data: JSON.stringify(formData),
             dataType: 'json',
@@ -248,7 +279,13 @@ async function sendMessage(user, receiver) {
         console.error('Ошибка при отправки сообщения:', error);
         addNotification('Ошибка при отправки сообщения', true);
         return;
-    };    
+    };
+
+    // try{
+    //     chatSocket.send(JSON.stringify(formData));
+    // } catch (error) {
+    //     console.log(error);
+    // };
 
     $('#message-input').val('');
     var blockMessages = document.getElementById('listMessages');
@@ -269,7 +306,19 @@ document.addEventListener('DOMContentLoaded', async function() {
         console.error('UserId и receiverId не найдены');
     };
 
+    // const url = 'ws://' + window.location.host + '/ws/chat/' + userId + '/' + receiverId + '/';
+    // const chatSocket = new WebSocket(url);
+
+    // chatSocket.onmessage = function(e) {
+    //     const data = JSON.parse(e.data);
+    //     console.log('Ooooh');
+        
     await displayMessages(user, receiver);
+    // };
+
+    // chatSocket.onclose = function(e) {
+    //     console.error('Chat socket closed unexpectedly');
+    // };
 
     var listMessages = document.getElementById('listMessages');
 
@@ -286,6 +335,3 @@ document.addEventListener('DOMContentLoaded', async function() {
         await sendMessage(user, receiver);        
     });
 });
-
-
-

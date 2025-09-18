@@ -1,4 +1,3 @@
-from operator import truediv
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import status, viewsets, permissions
 from rest_framework.views import APIView
@@ -94,17 +93,66 @@ class PostViewSet(viewsets.ModelViewSet):
     
 
 class MessageViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
-    queryset = Message.objects.all()
     serializer_class = MessageSerializer
     pagination_class = MessagePagination
+    permission_classes = [permissions.IsAuthenticated]
     
     def get_queryset(self):
-        queryset = super().get_queryset()
-        room_id = self.request.query_params.get('room_id', None)
-        if room_id is not None:
-            queryset = queryset.filter(room_id=room_id)
-        return queryset
+        return Message.objects.filter(
+            conversation__participants=self.request.user
+        ).select_related('sender', 'conversation')
+    
+    
+class ConversationViewSet(viewsets.ModelViewSet):
+    serializer_class = ConversationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        return Conversation.objects.filter(participants=self.request.user).prefetch_related('participants', 'messages')
+    
+    def create(self, request):
+        recipient_id = request.data.get('recipient')
+        try:
+            recipient = User.objects.get(pk=recipient_id)
+        except User.DoesNotExist:
+            return Response({'error': 'Recipient not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        # Check if conversation already exists
+        conversation = Conversation.objects.filter(participants=request.user).filter(participants=recipient).first()
+        if conversation:
+            return Response(self.get_serializer(conversation).data, status=status.HTTP_200_OK)
+        
+        conversation = Conversation.objects.create()
+        conversation.participants.add(request.user, recipient)
+        return Response(self.get_serializer(conversation).data, status=status.HTTP_201_CREATED)
+    
+    @action(detail=True, methods=['get'])
+    def messages(self, request, pk=None):
+        try:
+            conversation = self.get_queryset().get(pk=pk)
+        except Conversation.DoesNotExist:
+            return Response({'error': 'Conversation not found'}, status=status.HTTP_404_NOT_FOUND)
+        # Mark unread messages as read
+        Message.objects.filter(conversation=conversation, read=False).exclude(sender=request.user).update(read=True)
+        messages = conversation.messages.all().select_related('sender')
+        serializer = MessageSerializer(messages, many=True)
+        return Response(serializer.data)
+    
+    @action(detail=False, methods=['get'])
+    def get_by_participants(self, request):
+        user_id_1 = request.query_params.get('user1')
+        user_id_2 = request.query_params.get('user2')
+        try:
+            user1 = User.objects.get(pk=user_id_1)
+            user2 = User.objects.get(pk=user_id_2)
+        except User.DoesNotExist:
+            return Response({'error': 'One or both users not found'}, status=status.HTTP_404_NOT_FOUND)
+        # Поиск беседы между двумя пользователями
+        conversation = Conversation.objects.filter(participants=user1).filter(participants=user2).first()
+        if conversation:
+            return Response(self.get_serializer(conversation).data, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Conversation not found'}, status=status.HTTP_404_NOT_FOUND)
     
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -170,12 +218,6 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response({'success': 'Аватар успешно обновлен'}, status=status.HTTP_200_OK)
         
         return Response({'error': 'No avatar provided'}, status=status.HTTP_400_BAD_REQUEST)
-
-
-class RoomViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
-    queryset = Room.objects.all()
-    serializer_class = RoomSerializer
     
 
 class UserProfileViewSet(viewsets.ModelViewSet):

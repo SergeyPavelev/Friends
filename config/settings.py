@@ -14,6 +14,7 @@ from pathlib import Path
 from datetime import timedelta
 import os
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -45,13 +46,15 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'channels',
-
+    # new application added
     'src.main',
     'src.registration',
     'src.messenger',
     'src.posts',
     'src.user_profile',
     'src.api',
+    # the debug toolbar
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -59,6 +62,10 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    
+    # debug toolbar middleware
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -90,7 +97,6 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'config.wsgi.application'
 ASGI_APPLICATION = 'config.asgi.application'
 
 DATABASES = {
@@ -105,6 +111,21 @@ DATABASES = {
     }
 }
 
+# A dictionary named CACHES, which contains caching configurations.
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+INTERNAL_IPS = [
+    # ...
+    '127.0.0.1',  # Add your development machine's IP address here
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -178,13 +199,4 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
-}
-
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            'hosts': [('127.0.0.1', 8000)],
-        },
-    },
 }
